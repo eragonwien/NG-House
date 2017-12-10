@@ -1,17 +1,26 @@
-# Project Title
+# NG-HOUSE
 
-One Paragraph of project description goes here
+A simple full-stack application managing housing using MEAN (MySQL, ExpressJS, AngularJS, NodeJS)
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
+See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
+NG-HOUSE application requires MySQL, ExpressJS, AngularJS and NodeJS.
+MySQL can be obtained from https://dev.mysql.com/downloads/
+NodeJS can be downloaded from nodejs.org
+Since Node versions changes very often. You can use the NVM (Node Version Manager) on Ubuntu and Mac with:
 ```
-Give examples
+# download NPM
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash
+# load NPM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+# Install latest stable version
+nvm install stable
 ```
 
 ### Installing
