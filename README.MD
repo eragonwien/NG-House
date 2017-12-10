@@ -11,7 +11,7 @@ See deployment for notes on how to deploy the project on a live system.
 
 NG-HOUSE application requires MySQL, ExpressJS, AngularJS and NodeJS.
 MySQL can be obtained from [MySQL Homepage](https://dev.mysql.com/downloads/)
-NodeJS can be downloaded from nodejs.org
+NodeJS can be downloaded from [NodeJS Homepage](https://nodejs.org/en/)
 Since Node versions changes very often. You can use the NVM (Node Version Manager) on Ubuntu and Mac with:
 ```
 # download NPM
