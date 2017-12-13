@@ -8,8 +8,14 @@ var db = require('../database/db');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-
-	res.send(db.donothing());
+	var cmd = "SHOW TABLES;";
+	db.query(cmd, null, function(error, results, fields){
+		if (error) {
+			console.log(error);
+			return next(error);
+		}
+		res.send(results);
+	});
 });
 
 module.exports = router;
