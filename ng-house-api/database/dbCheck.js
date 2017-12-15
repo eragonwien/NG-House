@@ -86,7 +86,7 @@ function useDatabase(dbname) {
 }
 
 function createTables() {
-	var cmd = dbConfig.sql_create_table_details + dbConfig.sql_create_table_house;
+	var cmd = dbConfig.sql_create_table_house;
 
 	query(cmd, null, function(err) {
 		if (err) {
@@ -94,7 +94,7 @@ function createTables() {
 			return;
 		}
 		else {
-			console.log("TABLES ARE CREATED");
+			console.log("TABLE ARE CREATED");
 		}
 		closePool();
 	});
