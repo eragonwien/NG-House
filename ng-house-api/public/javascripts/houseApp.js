@@ -1,0 +1,1 @@
+var app_module = angular.module('ng-house', ['ngResource']);
