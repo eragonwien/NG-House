@@ -3,7 +3,13 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+	if (true) {
+		res.render('index', {title: 'NG-House'});
+	}
+	else {
+		res.redirect('/ng-house');
+	}
+  
 });
 
 module.exports = router;
