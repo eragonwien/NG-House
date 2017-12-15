@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <title>Title</title>
+  </head>
+  <body ng-app="ng-house" ng-controller="houseController">
+
+    <div class="container-fluid">
+        <div ng-include="'html/navbar.html'"></div>
+    </div>
+    
+    <!-- HOUSE LIST -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-4 house-entry" ng-repeat="house in houses">
+                <div class="card">
+                    <img class="card-img-top img-fluid" ng-src="images/{{house.Image}}" alt="">
+                    <div class="card-body">
+                        <div class="details" ng-hide="showingDetails === true">
+                            <h3 class="card-title"><span class="fa fa-tag"></span> {{house.Price}} €</h3>
+                            <h4 class="card-text"><span class="fa fa-home"></span> {{house.Address}}
+                                <span class="badge badge-primary">{{house.Type}}</span>
+                            </h4>
+                            <button class="btn btn-default btn-outline-success btn-sm"
+                                ng-hide="showingDetails"
+                                ng-click="showingDetails = true"
+                            >More Details</button>
+                        </div>
+                        
+                        <div class="details" ng-show="showingDetails === true">
+                            <button class="btn btn-default btn-outline-success btn-sm"
+                                ng-show="showingDetails"
+                                ng-click="showingDetails = !showingDetails"
+                            >Less Details</button> 
+
+                            <button class="btn btn-default btn-outline-success btn-sm" 
+                                    ng-if="showingDetails && !editListing"
+                                    ng-click="editHouse(house)"
+                                    >Edit</button>
+
+                            <button class="btn btn-default btn-outline-danger btn-sm" 
+                                    ng-if="showingDetails"
+                                    ng-click="deleteHouse(house)"
+                                    >Remove</button>
+
+                            <h4>
+                                <span class="badge badge-primary">Bedrooms: {{house.Bedrooms}}</span>
+                                <span class="badge badge-primary">Bathrooms: {{house.Bathrooms}}</span>
+                                <span class="badge badge-primary">{{house.Area}} m<sup>2</sup></span>
+                            </h4>
+                            <p>{{house.Description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <pre>{{houses | json}}</pre>
+
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+    <!-- ANGULAR -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.7/angular-resource.min.js"></script>
+    <script type="text/javascript" src="javascripts/houseApp.js"></script>
+    <script type="text/javascript" src="javascripts/houseController.js"></script>
+    <script type="text/javascript" src="javascripts/houseFactory.js"></script>
+  </body>
+</html>
