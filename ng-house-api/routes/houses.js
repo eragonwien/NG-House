@@ -3,19 +3,19 @@ var router = express.Router();
 
 var mysql = require('mysql');
 var dbCheck = require('../database/dbCheck');
-var db = require('../database/db');
 var dbConfig = require('../database/dbConfig');
+var models = require('../models/houses');
 var dbname = dbConfig.dbname_test;
 
 
-/* GET all houses */
+// Render Start Page
 router.get('/', function(req, res, next) {
 	res.render('houses');
 });
 
+// GET all houses
 router.get('/houses', function(req, res, next) {
-	var cmd = "SELECT * FROM Houses;";
-	db.query(cmd, [dbname], function(error, results, fields){
+	models.getAllHouses(function(error, results){
 		if (error) {
 			console.log(error);
 			return next(error);
@@ -24,26 +24,48 @@ router.get('/houses', function(req, res, next) {
 	});
 });
 
+// GET house by ID
 router.get('/houses/:id', function(req, res, next) {
-	var cmd = "SELECT * FROM Houses WHERE ID=?;";
-	db.query(cmd, [dbname, req.params.id], function(error, results, fields){
+	models.getHouseById(req.params.id, function(error, result){
 		if (error) {
 			console.log(error);
 			return next(error);
 		}
-		res.send(results);
+		res.send(result);
 	});
 });
 
-router.get('/insert', function(req, res, next) {
-	var cmd = "INSERT INTO Houses (Price, Type, Address, Bathrooms, Bedrooms, Area) VALUES (?, ?, ?, ?, ?, ?);";
-	db.query(cmd, [1000, 'Villa', 'Sesam Street 12', 1, 1, 20], function(error, results, fields){
+// CREATE new house entry
+router.post('/houses', function(req, res, next) {
+	models.createNewHouse(req.body, function(error, result){
 		if (error) {
 			console.log(error);
 			return next(error);
 		}
-		res.redirect('/ng-house');
+		res.send(result);
 	});
-}); 
+});
+
+// UPDATE existing house entry by ID
+router.put('/houses/:id', function(req, res, next) {
+	models.updateHouseById(req.params.id, req.body, function(error, result){
+		if (error) {
+			console.log(error);
+			return next(error);
+		}
+		res.send('house' + req.params.id + ' is updated');
+	});
+});
+
+// DELETE existing house entry by ID
+router.delete('/houses/:id', function(req, res, next) {
+	models.deleteHouseById(req.params.id, function(error, result){
+		if (error) {
+			console.log(error);
+			return next(error);
+		}
+		res.send('house' + req.params.id + ' is deleted');
+	});
+});
 
 module.exports = router;
