@@ -1,14 +1,8 @@
-var mysql = require('mysql');
 var dbConfig = require('./dbConfig');
-var pool  = mysql.createPool({
-  host     : dbConfig.host,
-  user     : dbConfig.user,
-  password : dbConfig.password,
-  connectionLimit : 10,
-  multipleStatements : true
-});
+var db = require('../database/db');
+var pool = db.pool_no_database;
 
-var dbname = dbConfig.dbname_test;
+var dbname = dbConfig.DB_TEST;
 checkIfDatabaseExist(dbname);
 
 function query(cmd, params, callback){
