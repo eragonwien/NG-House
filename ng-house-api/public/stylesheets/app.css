@@ -1,0 +1,37 @@
+nav .navbar-light {
+  background-color: #D5D5D5; }
+
+nav .navbar-icon {
+  height: 50px;
+  width: 50px;
+  margin-right: 20px; }
+
+body {
+  background-color: #D5D5D5; }
+  body .card-col {
+    margin-bottom: 15px; }
+    body .card-col .card {
+      background-color: #D5D5D5;
+      border-radius: 10px; }
+      body .card-col .card .card-img-top {
+        border-radius: 10px 10px 0 0; }
+      body .card-col .card .card-block {
+        padding: 10px;
+        border-radius: 0 0 10px 10px; }
+
+.forms {
+  margin-top: 10px;
+  margin-bottom: 10px; }
+  .forms .jumbotron {
+    background-color: #9099A2;
+    background-size: cover; }
+  .forms .row {
+    margin-top: 10px;
+    margin-bottom: 10px; }
+
+.animate-show-hide.ng-hide {
+  opacity: 0; }
+
+.animate-show-hide.ng-hide-add,
+.animate-show-hide.ng-hide-remove {
+  transition: all ease 0.5s; }

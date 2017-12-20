@@ -1,16 +1,68 @@
-$navbar-height: 50px;
+$color-paper: #D5D5D5;
+$color-lavendar: #6D7993;
+$color-overcast: #9099A2;
 
-.navbar-icon {
+
+$navbar-height: 50px;
+nav {
+	.navbar-light {
+		background-color: $color-paper;
+	}
+
+	.navbar-icon {
 	height: $navbar-height;
 	width: $navbar-height;
 	margin-right: 20px;
+	}
 }
 
+
+body {
+	background-color: $color-paper;
+	.card-col {
+		margin-bottom: 15px;
+
+		.card{
+			background-color: $color-paper;
+			border-radius: 10px;
+			.card-img-top {
+				border-radius: 10px 10px 0 0;
+			}
+			.card-block {
+				padding: 10px;
+				border-radius: 0 0 10px 10px;
+				}
+		}
+		.card-back {
+		}
+		.card-front {
+		}
+	}
+	
+}
+
+
+
+
+
 .forms {
-	margin-top: 10px;
-	margin-bottom: 10px;
+margin-top: 10px;
+margin-bottom: 10px;
+	.jumbotron {
+		background-color: $color-overcast;
+		background-size: cover;
+	}
 	.row {
 		margin-top: 10px;
 		margin-bottom: 10px;
 	}
+}
+
+.animate-show-hide.ng-hide {
+  	opacity: 0;
+}
+
+.animate-show-hide.ng-hide-add,
+.animate-show-hide.ng-hide-remove {
+  transition: all ease 0.5s;
 }
