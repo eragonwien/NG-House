@@ -5,7 +5,8 @@ exports.pool_test = mysql.createPool({
   user     : dbConfig.USER,
   password : dbConfig.PASSWORD,
   database : dbConfig.DB_TEST,
-  connectionLimit: dbConfig.LIMIT
+  connectionLimit: dbConfig.LIMIT,
+  multipleStatements: true
 });
 
 exports.pool_production = mysql.createPool({
@@ -13,18 +14,20 @@ exports.pool_production = mysql.createPool({
   user     : dbConfig.USER,
   password : dbConfig.PASSWORD,
   database : dbConfig.DB_PRODUCTION,
-  connectionLimit: dbConfig.LIMIT
+  connectionLimit: dbConfig.LIMIT,
+  multipleStatements: true
 });
 
 exports.pool_no_database = mysql.createPool({
   host     : dbConfig.HOST,
   user     : dbConfig.USER,
   password : dbConfig.PASSWORD,
-  connectionLimit: dbConfig.LIMIT
+  connectionLimit: dbConfig.LIMIT,
+  multipleStatements: true
 });
 
-exports.closePool = function() {
+exports.closePool = function(pool) {
 	pool.end(function(){
-		console.log('Pool closed');
+		//console.log('Pool closed');
 	});
 }
