@@ -1,17 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
+var housesController = require('../controllers/housesController')
 var mysql = require('mysql');
-var dbCheck = require('../database/dbCheck');
 var dbConfig = require('../database/dbConfig');
 var models = require('../models/houses');
 var dbname = dbConfig.dbname_test;
 
 
 // Render Start Page
-router.get('/', function(req, res, next) {
-	res.render('houses');
-});
+router.get('/', housesController.showStartPage);
 
 // GET all houses
 router.get('/houses', function(req, res, next) {
