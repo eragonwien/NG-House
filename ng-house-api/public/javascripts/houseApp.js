@@ -1,1 +1,1 @@
-var app_module = angular.module('ng-house', ['ngResource']);
+var app_module = angular.module('ng-house', ['ngResource', 'ngAnimate']);
