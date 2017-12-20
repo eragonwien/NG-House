@@ -1,77 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
     <!--FONT AWESOME-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Title</title>
-  </head>
-  <body ng-app="ng-house" ng-controller="houseController">
+    <title>NG-House</title>
+</head>
+<body ng-app="ng-house" ng-controller="houseController">
 
-    <div class="container-fluid">
         <div ng-include="'html/navbar.html'"></div>
 
         <!-- PRICE FILTER -->
         <div class="forms">
-            <div class="row price-form-row">
-                <div class="col-sm-4" ng-if="!addNewHouse && !editHouseEnabled">
-                    <div class="input-group">
-                        <span class="input-group-addon">Min Price</span>
-                        <select name="minPrice" id="minPrice" ng-model="priceInfo.min" class="form-control">
-                            <option value="1000">1.000 €</option>
-                            <option value="2000">2.000 €</option>
-                            <option value="3000">3.000 €</option>
-                            <option value="4000">4.000 €</option>
-                            <option value="5000">5.000 €</option>
-                            <option value="6000">6.000 €</option>
-                            <option value="7000">7.000 €</option>
-                            <option value="8000">8.000 €</option>
-                            <option value="9000">9.000 €</option>
-                            <option value="10000">10.000 €</option>
-                        </select>
+
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-3">Price Filter</h1>
+                    <div class="row">
+                        <div class="col-5">
+                            <label class="display-5" for="minPrice">Min Price</label>
+                        </div>
+                        <div class="col-5">
+                            <label class="display-5" for="maxPrice">Max Price</label>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            
+                            <div class="input-group">
+                                <select name="minPrice" id="minPrice" ng-model="priceInfo.min" class="form-control">
+                                    <option value="1000">1.000 €</option>
+                                    <option value="2000">2.000 €</option>
+                                    <option value="3000">3.000 €</option>
+                                    <option value="4000">4.000 €</option>
+                                    <option value="5000">5.000 €</option>
+                                    <option value="6000">6.000 €</option>
+                                    <option value="7000">7.000 €</option>
+                                    <option value="8000">8.000 €</option>
+                                    <option value="9000">9.000 €</option>
+                                    <option value="10000">10.000 €</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-5">
+                            
+                            <div class="input-group">
+                                <select name="maxPrice" id="maxPrice" ng-model="priceInfo.max" class="form-control">
+                                    <option value="1000">1.000 €</option>
+                                    <option value="2000">2.000 €</option>
+                                    <option value="3000">3.000 €</option>
+                                    <option value="4000">4.000 €</option>
+                                    <option value="5000">5.000 €</option>
+                                    <option value="6000">6.000 €</option>
+                                    <option value="7000">7.000 €</option>
+                                    <option value="8000">8.000 €</option>
+                                    <option value="9000">9.000 €</option>
+                                    <option value="10000">10.000 €</option>
+                                    <option value="0">>10.000 €</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+
+                        <div class="col-2">
+                            <button class="btn btn-primary bg-primary" ng-click="resetFilter()">
+                                <i class="fa fa-refresh" aria-hidden="true" data-toggle="tooltip" title="Reset Filter"></i>
+                            </button>
+                            <button class="btn btn-primary" ng-click="toggleAdding()" ng-hide="addNewHouse">
+                                <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" title="Add new house"></i>
+                            </button>
+                            <button class="btn btn-success" ng-show="addNewHouse" ng-click="addHouse(newHouse)">
+                                <i class="fa fa-check" aria-hidden="true" data-toggle="tooltip" title="Create house"></i>
+                            </button>
+                            <button class="btn btn-success" ng-show="editHouseEnabled" ng-click="saveChanges()">
+                                <i class="fa fa-check" aria-hidden="true" data-toggle="tooltip" title="Save changes"></i>
+                            </button>      
+                        </div>
                     </div>
                 </div>
-                    
-                <div class="col-sm-4" ng-if="!addNewHouse && !editHouseEnabled">
-                    <div class="input-group">
-                        <span class="input-group-addon">Max Price</span>
-                        <select name="maxPrice" id="maxPrice" ng-model="priceInfo.max" class="form-control">
-                            <option value="1000">1.000 €</option>
-                            <option value="2000">2.000 €</option>
-                            <option value="3000">3.000 €</option>
-                            <option value="4000">4.000 €</option>
-                            <option value="5000">5.000 €</option>
-                            <option value="6000">6.000 €</option>
-                            <option value="7000">7.000 €</option>
-                            <option value="8000">8.000 €</option>
-                            <option value="9000">9.000 €</option>
-                            <option value="10000">10.000 €</option>
-                            <option value="> 10000">>10.000 €</option>
-                        </select>
-                    </div>
-                </div>
+            </div><!--END JUMBO-->
+        
 
-
-                <div class="col-sm-3">
-                    <button class="btn btn-default  btn-outline-success" 
-                                ng-click="toggleAdding()">{{addNewHouse && "CLOSE" || "NEW"}}
-                    </button>
-
-                    <button class="btn btn-default  btn-outline-success" ng-if="addNewHouse == false" ng-click="resetFilter()">RESET FILTER
-                    </button>
-                    <button class="btn btn-default  btn-outline-success" ng-show="addNewHouse" ng-click="addHouse(newHouse)">CREATE
-                    </button>
-                    <button class="btn btn-default  btn-outline-success" ng-show="editHouseEnabled" ng-click="saveChanges()">SAVE
-                    </button>      
-                </div>
-            </div>
+            
 
             <!--ADD NEW HOUSE-->
             <div ng-if="addNewHouse">
@@ -134,187 +155,102 @@
                     </div>
                 </div>
             </div>
-
             
 
             <!--EDIT LIST-->
-            <div ng-if="editHouseEnabled">
-
-                <div class= "row listing-form-row ">
-
-                    <div class="col-6 col-md-4">
-                        <div class="input-group ">
-                            <span class="input-group-addon">Address</span>
-                            <input type="text" name="addressInput" class="form-control" placeholder="Address" ng-model="editingHouse.Address">
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-addon">Price</span>
-                            <input type="text" name="priceInput" class="form-control" placeholder="Price in VND" ng-model="editingHouse.Price">
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-addon">Type</span>
-                            <select name="newListingType" id="newListingType" ng-model="editingHouse.Type" class="form-control">
-                                <option value="Tent">Tent</option>
-                                <option value="House">House</option>
-                                <option value="Villa">Villa</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class= "row listing-form-row ">
-                    <div class="col-6 col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-addon">Description</span>
-                            <input type="text" name="typeInput" class="form-control" placeholder="Short description" ng-model="editingHouse.Description">
-                        </div>
-                    </div>
-
-                    <div class="col-3 col-md-2">
-                        <div class="input-group">
-                            <span class="input-group-addon">Bedrooms</span>
-                            <input type="text" name="typeInput" class="form-control" placeholder="Number of Bedrooms" ng-model="editingHouse.Bedrooms">
-                        </div>
-                    </div>
-
-                    <div class="col-3 col-md-2">
-                        <div class="input-group">
-                            <span class="input-group-addon">Bathrooms</span>
-                            <input type="text" name="typeInput" class="form-control" placeholder="Number of Bathrooms" ng-model="editingHouse.Bathrooms">
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-addon">Arena</span>
-                            <input type="text" name="typeInput" class="form-control" placeholder="m&sup2" ng-model="editingHouse.Arena">
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
 
+        <div class="alert alert-dismissable" ng-class="alertClass" ng-if="alertOn">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{alertMessage}}
+       </div> 
 
         <!-- HOUSE LIST -->
-        <div class="card-deck">
-            <div class="card" ng-repeat="house in houses | houseFilter: priceInfo | orderBy: house.ID : true">
-                <img class="card-img-top" ng-src="images/{{house.Image}}" alt="" ng-hide="showingDetails">
-                <div class="card-block">
-                    <div class="details" ng-hide="showingDetails">
-                        <h3 class="card-title"><span class="fa fa-tag"></span> {{house.Price}} €</h3>
-                        <h4 class="card-text"><span class="fa fa-home"></span> {{house.Address}}
-                            <span class="badge badge-primary">{{house.Type}}</span>
-                        </h4>
-                        <button class="btn btn-default btn-outline-success btn-sm"
-                            ng-hide="showingDetails"
-                            ng-click="showingDetails = !showingDetails">
-                        More Details</button>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-lg-4 card-col" ng-repeat="house in houses | houseFilter: priceInfo | orderBy: house.ID : true">
+                    <div class="card card-front h-100" ng-hide="editMode">
+                        <img class="card-img-top" ng-src="images/{{house.Image}}" alt="">
+                        <div class="card-block">
+                            <h3 class="card-title"><span class="fa fa-tag"></span> {{house.Price}} €</h3>
+                            <h4 class="card-text"><span class="fa fa-home"></span> {{house.Address}}</h4>
+                            <p>
+                                <span class="badge badge-primary">{{house.Type}}</span>
+                                <span class="badge badge-primary">Beds: {{house.Bedrooms}}</span>
+                                <span class="badge badge-primary">Baths: {{house.Bathrooms}}</span>
+                                <span class="badge badge-primary">{{house.Area}} m<sup>2</sup></span>
+                            </p>
+                            <button class="btn btn-primary btn-outline-primary btn-sm" 
+                                    ng-click="editMode = true; editHouse = house">Edit
+                            </button>
+                            
+                        </div>
                     </div>
+                    <div class="card card-back h-100" ng-show="editMode">
+                        <div class="card-block">
+                            
+                            <form>
+                                <div class="container-fluid">
+                                    <div class="form-group">
+                                        <label for="editHouseAddress">Type</label>
+                                        <input type="text" class="form-control" id="editHouseAddress" aria-describedby="adressInput" placeholder="Address" ng-model="editHouse.Type">
+                                    </div>
 
-                    <div class="hidden-details" ng-show="showingDetails">
-                        <button class="btn btn-default btn-outline-success btn-sm" 
-                                ng-if="showingDetails && !editHouseEnabled"
-                                ng-click="enableEditHouse(house)"
-                                >Edit</button>
+                                    <div class="form-group">
+                                        <label for="editHouseAddress">Address</label>
+                                        <input type="text" class="form-control" id="editHouseAddress" aria-describedby="adressInput" placeholder="Address" ng-model="editHouse.Address">
+                                    </div>
 
-                        <button class="btn btn-default btn-outline-danger btn-sm" 
-                                ng-if="showingDetails && !editHouseEnabled"
-                                ng-click="deleteHouse(house)"
-                                >Remove</button>
-                        <button class="btn btn-default btn-outline-success btn-sm"
-                            ng-show="showingDetails"
-                            ng-click="showingDetails = !showingDetails">
-                        Less Details</button>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="editHouseAddress">Bedrooms</label>
+                                                <input type="text" class="form-control" id="editHouseAddress" aria-describedby="adressInput" placeholder="Address" ng-model="editHouse.Bedrooms">
+                                            </div>
+                                        </div>
 
-                        <h4>
-                            <span class="badge badge-primary">Bedrooms: {{house.Bedrooms}}</span>
-                            <span class="badge badge-primary">Bathrooms: {{house.Bathrooms}}</span>
-                            <span class="badge badge-primary">{{house.Area}} m<sup>2</sup></span>
-                        </h4>
-                        <p>{{house.Description}}</p>
-                        
-                        <form>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <div class="form-group">
-    <label for="exampleSelect1">Example select</label>
-    <select class="form-control" id="exampleSelect1">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleSelect2">Example multiple select</label>
-    <select multiple class="form-control" id="exampleSelect2">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleTextarea">Example textarea</label>
-    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputFile">File input</label>
-    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-    <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
-  </div>
-  <fieldset class="form-group">
-    <legend>Radio buttons</legend>
-    <div class="form-check">
-      <label class="form-check-label">
-        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-        Option one is this and that&mdash;be sure to include why it's great
-      </label>
-    </div>
-    <div class="form-check">
-    <label class="form-check-label">
-        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
-        Option two can be something else and selecting it will deselect option one
-      </label>
-    </div>
-    <div class="form-check disabled">
-    <label class="form-check-label">
-        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
-        Option three is disabled
-      </label>
-    </div>
-  </fieldset>
-  <div class="form-check">
-    <label class="form-check-label">
-      <input type="checkbox" class="form-check-input">
-      Check me out
-    </label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="editHouseAddress">Bathrooms</label>
+                                                <input type="text" class="form-control" id="editHouseAddress" aria-describedby="adressInput" placeholder="Address" ng-model="editHouse.Bathrooms">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="editHouseAddress">Area</label>
+                                        <input type="text" class="form-control" id="editHouseAddress" aria-describedby="adressInput" placeholder="Address" ng-model="editHouse.Area">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="editHouseAddress">Price</label>
+                                        <input type="text" class="form-control" id="editHouseAddress" aria-describedby="adressInput" placeholder="Address" ng-model="editHouse.Price">
+                                    </div>
+
+                                    <button class="btn btn-primary btn-sm" type="submit" 
+                                            ng-click="editMode = false; saveChanges(editHouse)">Save
+                                    </button>
+
+                                    <button class="btn btn-primary btn-outline-primary btn-sm" 
+                                            ng-click="deleteHouse(house)">Remove
+                                    </button>
+
+                                    <button class="btn btn-primary btn-outline-primary btn-sm" 
+                                            ng-click="editMode = false">Cancel
+                                    </button>
+                                    
+                                </div>
+                               
+                            </form>
+
+                            
+                        </div>
                     </div>
-                        
+                    
                 </div>
             </div>
         </div>
-
-        </div><!--END CONTAINER-->
-    </div>
 
 
     <!-- jQuery library -->
@@ -328,6 +264,8 @@
     <!-- ANGULAR -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.7/angular-resource.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+    <script type="text/javascript" src="javascripts/custom.js"></script>
     <script type="text/javascript" src="javascripts/houseApp.js"></script>
     <script type="text/javascript" src="javascripts/houseController.js"></script>
     <script type="text/javascript" src="javascripts/houseFactory.js"></script>
