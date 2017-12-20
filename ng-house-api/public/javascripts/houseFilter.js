@@ -10,9 +10,9 @@ angular
 			
 			angular.forEach(houses, function(house){
 
-				if(max == -1 || (house.Price >= min && house.Price <= max)) {
+				if((house.Price >= min && (house.Price <= max || max == 0))) {
 					filtered.push(house);
-				}
+					}
 			});
 			
 			return filtered;
