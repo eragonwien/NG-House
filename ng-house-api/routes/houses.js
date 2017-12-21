@@ -2,10 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 var housesController = require('../controllers/housesController')
-var mysql = require('mysql');
-var dbConfig = require('../database/dbConfig');
 var models = require('../models/houses');
-var dbname = dbConfig.dbname_test;
+var dbname = process.env.DB_TEST;
 
 
 // Render Start Page

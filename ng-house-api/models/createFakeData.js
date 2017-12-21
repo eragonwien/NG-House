@@ -1,7 +1,7 @@
-var db = require('../database/db');
+var db = require('../database/pool');
 var dbConfig = require('../database/dbConfig');
 var pool = db.pool_test;
-var numberOfFakeData = dbConfig.NUM_OF_FAKE_DATA;
+var numberOfFakeData = dbConfig.DB_NUM_OF_FAKE_DATA;
 
 var pricemin = 1000, pricemax = 10000;
 var bedmax = 5, bathmax = 5, areamin = 10, areamax = 1000;
@@ -12,8 +12,8 @@ insertRandomHouse(numberOfFakeData, insertRandomHouse);
 
 function insertRandomHouse(count, done) {
 	if (count < 1) {
-		console.log("INSERTION COMPLETED.");
 		db.closePool(pool);
+		console.log("INSERTION COMPLETED.");
 		return;
 	}
 	var cmd = "INSERT INTO Houses SET ?;";

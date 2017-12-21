@@ -1,4 +1,4 @@
-var db = require('../database/db');
+var db = require('../database/pool');
 var pool = db.pool_test;
 
 exports.getAllHouses = function(done) {

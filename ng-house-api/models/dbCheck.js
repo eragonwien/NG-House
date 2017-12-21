@@ -1,8 +1,10 @@
-var db = require('../database/db');
+var db = require('../database/pool');
 var pool = db.pool_no_database;
+var dbconfig = require('../database/dbConfig');
 
-var dbname = process.env.DB_TEST;
-var numberOfFakeData = process.env.DB_NUM_OF_FAKE_DATA;
+var dbname = dbconfig.DB_TEST;
+var numberOfFakeData = dbconfig.DB_NUM_OF_FAKE_DATA;
+
 checkIfDatabaseExist(dbname);
 
 function checkIfDatabaseExist(dbname) {
@@ -16,7 +18,6 @@ function checkIfDatabaseExist(dbname) {
 		if (results !== null & results.length > 0) {
 			console.log("DATABASE " + dbname + " exists.");
 			db.closePool(pool);
-			return;
 		}
 		else {
 			console.log("DATABASE " + dbname + " does not exist.");
@@ -36,6 +37,7 @@ function createDatabase(dbname) {
 		else {
 			console.log("DATABASE " + dbname + " CREATED");
 			db.closePool(pool);
+
 		}
 	});
 }

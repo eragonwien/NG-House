@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sass = require('node-sass-middleware');
-var env = require('dotenv').config();
 
 var index = require('./routes/index');
 var houses = require('./routes/houses');
