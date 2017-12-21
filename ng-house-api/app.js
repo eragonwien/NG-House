@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sass = require('node-sass-middleware');
+var env = require('dotenv').config();
 
 var index = require('./routes/index');
 var houses = require('./routes/houses');
@@ -55,7 +56,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-var mysql = require('mysql');
 
 module.exports = app;

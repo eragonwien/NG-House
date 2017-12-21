@@ -1,9 +1,8 @@
-var dbConfig = require('../database/dbConfig');
 var db = require('../database/db');
 var pool = db.pool_no_database;
 
-var dbname = dbConfig.DB_TEST;
-var numberOfFakeData = dbConfig.NUM_OF_FAKE_DATA
+var dbname = process.env.DB_TEST;
+var numberOfFakeData = process.env.DB_NUM_OF_FAKE_DATA;
 checkIfDatabaseExist(dbname);
 
 function checkIfDatabaseExist(dbname) {
