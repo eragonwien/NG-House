@@ -3,17 +3,20 @@ $color-lavendar: #6D7993;
 $color-overcast: #9099A2;
 
 
-$navbar-height: 50px;
 nav {
 	.navbar-light {
 		background-color: $color-paper;
+		.navbar-brand {
+			.navbar-icon {
+				height: 10px;
+				margin-right: 20px;
+				}
+		}
+		
 	}
 
-	.navbar-icon {
-	height: $navbar-height;
-	width: $navbar-height;
-	margin-right: 20px;
-	}
+	
+
 }
 
 

@@ -4,6 +4,12 @@ angular
 
 		// Show All Houses
 		$scope.houses = houseFactory.query();
+		
+		$scope.test = function(){
+			var type = null;
+			var bath = 3
+			$scope.houses = houseFactory.query({'Type': type, 'Bathrooms': bath});
+		}
 		// House Filter
 
 		// Add new House
