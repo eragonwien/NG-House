@@ -1,32 +1,37 @@
 {
   "name": "ng-house",
   "version": "1.0.0",
-  "description": "housing app using mean",
-  "main": "index.js",
+  "description": "simple house searching web application",
+  "main": "bin/www",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha tests/mainTest.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eragonwien/NG-House.git"
   },
   "keywords": [
-    "house",
-    "ng-house",
-    "mean",
-    "mysql",
+    "nguyen",
+    "js",
+    "web",
+    "application",
     "expressjs",
     "angularjs",
     "nodejs"
   ],
-  "author": "hoang son nguyen",
+  "author": "Hoang Son Nguyen",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/eragonwien/NG-House/issues"
   },
   "homepage": "https://github.com/eragonwien/NG-House#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
-    "mysql": "^2.15.0"
+    "morgan": "^1.9.0",
+    "mysql": "^2.15.0",
+    "node-sass-middleware": "^0.11.0",
+    "serve-favicon": "^2.4.5"
   }
 }
