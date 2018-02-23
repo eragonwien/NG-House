@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sass = require('node-sass-middleware');
-
+var ejs = require('ejs');
 var index = require('./routes/index');
 var houses = require('./routes/houses');
 
@@ -13,7 +13,8 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.engine('html', ejs.renderFile);
+app.set('view engine', 'html');
 
 
 // uncomment after placing your favicon in /public
@@ -27,9 +28,9 @@ app.use(cookieParser());
 app.use(
 	sass({
 		src: __dirname + '/public/stylesheets/sass', 
-     	dest: __dirname + '/public/stylesheets',
-        prefix:  '/stylesheets',
-		debug: true
+    dest: __dirname + '/public/stylesheets',
+    debug: true,
+    prefix: '/stylesheets', 
 	})
 );
 
