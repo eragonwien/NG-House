@@ -1,6 +1,4 @@
-var db = require('../database/pool');
-var pool = db.pool_test;
-
+var pool = require('../config/db');
 exports.getAllHouses = function(done) {
 	var cmd = 'SELECT * FROM Houses';
 	pool.query(cmd, function(error, results){
