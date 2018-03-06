@@ -4,7 +4,9 @@
   "description": "simple house searching web application",
   "main": "bin/www",
   "scripts": {
-    "test": "mocha tests/mainTest.js"
+    "start": "node bin/www",
+    "setup": "node setup/setup.js",
+    "test": "mocha test.js"
   },
   "repository": {
     "type": "git",
@@ -28,12 +30,13 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
-    "dotenv": "^5.0.0",
+    "dotenv": "^5.0.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "morgan": "^1.9.0",
     "mysql": "^2.15.0",
     "node-sass-middleware": "^0.11.0",
+    "readline-sync": "^1.4.9",
     "serve-favicon": "^2.4.5"
   },
   "devDependencies": {
