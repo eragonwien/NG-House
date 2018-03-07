@@ -7,7 +7,10 @@ var user = require('./user/userController');
 var address = require('./address/addressController');
 var currency = require('./currency/currencyController');
 var role = require('./role/roleController');
-var houseType = require('./house_type/houseTypeController');
+var houseType = require('./houseType/houseTypeController');
+var offerStatus = require('./offerStatus/offerStatusController');
+var offer = require('./offer/offerController');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   	res.render('index');
@@ -48,5 +51,20 @@ router.get('/api/houseTypes', houseType.getAllHouseType);
 router.get('/api/houseTypes/:htid', houseType.getHouseTypeById);
 router.put('/api/houseTypes/:htid', houseType.updateHouseTypeById);
 router.delete('/api/houseTypes/:htid', houseType.deleteHouseTypeById);
+
+// Offer Status
+router.post('/api/offerStatuses', offerStatus.createOfferStatus);
+router.get('/api/offerStatuses', offerStatus.getAllOfferStatuses);
+router.get('/api/offerStatuses/:osid', offerStatus.getOfferStatusById);
+router.put('/api/offerStatuses/:osid', offerStatus.updateStatusById);
+router.delete('/api/offerStatuses/:osid', offerStatus.deleteStatusById);
+
+// Offer
+router.post('/api/offers', offer.createOffer);
+router.get('/api/offers', offer.getAllOffer);
+router.get('/api/offers/:oid', offer.getOfferById);
+router.put('/api/offers/:oid', offer.updateOfferById);
+router.delete('/api/offers/:oid', offer.deleteOfferById);
+
 
 module.exports = router;
