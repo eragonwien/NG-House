@@ -10,10 +10,12 @@ describe('Houses Models Test', function () {
         user_id: 1,
         address_id: 1,
         house_type_id: 1,
+        price: 1000,
+        currency_id: 1,
         bathrooms: 1,
         bedrooms: 2,
         size: 40
-    }
+    };
     var model = require('./houseModels');
     it('should create a house', function (done) {
         model.createHouse(house, function (error, result) {
@@ -44,6 +46,7 @@ describe('Houses Models Test', function () {
             expect(result).to.have.property('user_id').which.is.equal(house.user_id);
             expect(result).to.have.property('address_id').which.is.equal(house.address_id);
             expect(result).to.have.property('house_type_id').which.is.equal(house.house_type_id);
+            expect(result).to.have.property('price').which.is.equal(house.price);
             expect(result).to.have.property('bathrooms').which.is.equal(house.bathrooms);
             expect(result).to.have.property('bedrooms').which.is.equal(house.bedrooms);
             expect(result).to.have.property('size').which.is.equal(house.size);
@@ -71,4 +74,75 @@ describe('Houses Models Test', function () {
             done();
         });
     });
-})
+});
+
+describe('House Request Test', function () {
+    var house = {
+        id: null,
+        user_id: 1,
+        address_id: 1,
+        house_type_id: 1,
+        price: 1000,
+        currency_id: 1,        
+        bathrooms: 1,
+        bedrooms: 2,
+        size: 40
+    };
+    it('should create a house per POST on /api/houses', function (done) {
+        chai.request(app)
+            .post('/api/houses')
+            .send(house)
+            .end(function (error, result) {
+                expect(result).to.have.status(200);
+                expect(result.body).to.have.property('insertId');
+                house.id = result.body.insertId;
+                done();
+            });
+    });
+    it('should get all houses per GET on /api/houses', function (done) {
+        chai.request(app)
+            .get('/api/houses')
+            .end(function (error, result) {
+                expect(result).to.have.status(200);
+                expect(result.body).to.be.an('array');
+                done();
+            });
+    });
+    it('should get a house by id per GET on /api/houses/:hid', function (done) {
+        chai.request(app)
+            .get('/api/houses/' + house.id)
+            .end(function (error, result) {
+                expect(result).to.have.status(200);
+                expect(result).to.be.json;
+                expect(result.body).to.have.property('user_id').which.is.equal(house.user_id);
+                expect(result.body).to.have.property('address_id').which.is.equal(house.address_id);
+                expect(result.body).to.have.property('house_type_id').which.is.equal(house.house_type_id);
+                expect(result.body).to.have.property('price').which.is.equal(house.price);
+                expect(result.body).to.have.property('bathrooms').which.is.equal(house.bathrooms);
+                expect(result.body).to.have.property('bedrooms').which.is.equal(house.bedrooms);
+                expect(result.body).to.have.property('size').which.is.equal(house.size);
+                done();
+            });
+    });
+    it('should update a house per PUT on /api/houses/:hid', function (done) {
+        chai.request(app)
+            .put('/api/houses/' + house.id)
+            .send(house)
+            .end(function (error, result) {
+                expect(result).to.have.status(200);
+                expect(result).to.be.json;
+                expect(result.body).to.have.property('affectedRows').which.is.greaterThan(0);
+                done();
+            });
+    });
+    it('should delete a house per DELETE on /api/houses/:hid', function (done) {
+        chai.request(app)
+            .delete('/api/houses/' + house.id)
+            .end(function (error, result) {
+                expect(result).to.have.status(200);
+                expect(result).to.be.json;
+                expect(result.body).to.have.property('affectedRows').which.is.greaterThan(0);
+                done();
+            });
+    });
+});
