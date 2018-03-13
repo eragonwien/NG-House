@@ -1,0 +1,90 @@
+<div class="card-panel {{profile.alertMode}}" ng-if="profile.message">
+    <span class="white-text">{{profile.message}}</span>
+    <a href="" class="right white-text" ng-click="profile.closeAlert()"><i class="material-icons">close</i></a>
+</div>
+<div ng-if="!profile.user">
+    <h1>Error</h1>
+    <p>User's profile cannot be loaded. Click this <a href="" ui-sref="index">link</a> to return to the main page</p>
+</div>
+<h1 ng-if="profile.user">Profile of {{::profile.user.first_name}} {{::profile.user.last_name}}</h1>   
+<div ng-if="profile.user && !profile.editing">
+    <div class="fixed-action-btn">
+        <button class="btn-floating btn-large green" ng-click="profile.editing = true" ng-if="!profile.editing">
+            <i class="large material-icons">mode_edit</i>
+        </button>
+    </div>        
+    <div class="row">
+        <div class="col s12">
+            <div class="card blue darken-4">
+                <div class="card-content white-text">
+                    <div class="row">
+                        <div class="col s12"><span class="card-title">Personal Information</span></div>
+                        <div class="col s5 m3"><strong>Name</strong></div>
+                        <div class="col s7 m9">{{::profile.user.first_name}} {{::profile.user.last_name}}</div>
+                        <div class="col s5 m3"><strong>Username</strong></div>
+                        <div class="col s7 m9">{{::profile.user.username}}</div>
+                        <div class="col s5 m3"><strong>Email</strong></div>
+                        <div class="col s7 m9">{{::profile.user.email}}</div>
+                        <div class="col s5 m3"><strong>Address</strong></div>
+                        <div class="col s7 m9">{{::profile.user.address}}</div>
+                        <div class="col s7 offset-s5 m9 offset-m3">{{::profile.user.postal_code}} {{::profile.user.city}}, {{::profile.user.land}}</div>
+                        <div class="col s5 m3"><strong>Role</strong></div>
+                        <div class="col s7 m9">{{::profile.user.role}}</div>
+                        <div class="col s5 m3"><strong>Last Updated</strong></div>
+                        <div class="col s7 m9">{{::profile.user.last_update | date}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="profile.user && profile.editing">
+    <form name="profileForm" method="post">
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <input class="validate" type="text" id="user.username" name="user.username" ng-model="profile.user.username" required>
+                <label class="active" for="user.username">Username</label>
+            </div>
+            <div class="input-field col s12 m6">
+                <input class="validate" type="password" id="user.password" name="user.password" ng-model="profile.user.password" required>
+                <label class="active" for="user.password">Password</label>
+            </div>
+            <div class="input-field col s12 m6">
+                <input class="validate" type="text" name="user.first_name" id="user.first_name" ng-model="profile.user.first_name" required>
+                <label class="active" for="user.first_name">Firstname</label>
+            </div>
+            <div class="input-field col s12 m6">
+                <input class="validate" type="text" name="user.last_name" id="user.last_name" ng-model="profile.user.last_name" required>
+                <label class="active" for="user.last_name">Lastname</label>
+            </div>
+            <div class="input-field col s12 m6">
+                <input class="validate" type="email" name="user.email" id="user.email" ng-model="profile.user.email" required>
+                <label class="active" for="user.email">Email</label>
+            </div>
+            <div class="input-field">
+                <input class="validate" type="hidden" name="user.role_id" id="user.role_id" ng-init="profile.user.role_id=1">
+            </div>
+            <div class="input-field col s12 m6">
+                <input class="validate" type="text" name="user.address" id="user.address" ng-model="profile.user.address" required>
+                <label class="active" for="user.address">Address</label>
+            </div>
+            <div class="input-field col s6 m3">
+                <input class="validate" type="text" name="user.postal_code" id="user.postal_code" ng-model="profile.user.postal_code" required>
+                <label class="active" for="user.postal_code">Postal Code</label>
+            </div>
+            <div class="input-field col s6 m3">
+                <input class="validate" type="text" name="user.city" id="user.city" ng-model="profile.user.city" required>
+                <label class="active" for="user.city">City</label>
+            </div>
+            <div class="input-field col s6 m6">
+                <input class="validate" type="text" name="user.land" id="user.land" ng-model="profile.user.land" required>
+                <label class="active" for="user.land">Land</label>
+            </div>
+            <div class="fixed-action-btn">
+                <button class="btn-floating btn-large green" ng-click="profile.save(profileForm)">
+                    <i class="large material-icons">save</i>
+                </button>
+            </div>  
+        </div>
+    </form>
+</div>

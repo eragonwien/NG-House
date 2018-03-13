@@ -1,0 +1,53 @@
+<div class="card-panel {{signup.alertMode}}" ng-if="signup.message">
+    <span class="white-text">{{signup.message}}</span>
+    <a href="" class="right white-text" ng-click="signup.closeAlert()"><i class="material-icons">close</i></a>
+</div>
+<h1>Sign up</h1>
+<form name="signupForm" method="post">
+    <div class="row">
+        <div class="input-field col s12 m6">
+            <input class="validate" type="text" id="user.username" name="user.username" ng-model="signup.user.username" required>
+            <label class="active" for="user.username">Username</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input class="validate" type="password" id="user.password" name="user.password" ng-model="signup.user.password" required>
+            <label class="active" for="user.password">Password</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input class="validate" type="text" name="user.first_name" id="user.first_name" ng-model="signup.user.first_name" required>
+            <label class="active" for="user.first_name">Firstname</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input class="validate" type="text" name="user.last_name" id="user.last_name" ng-model="signup.user.last_name" required>
+            <label class="active" for="user.last_name">Lastname</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input class="validate" type="email" name="user.email" id="user.email" ng-model="signup.user.email" required>
+            <label class="active" for="user.email">Email</label>
+        </div>
+        <div class="input-field">
+            <input class="validate" type="hidden" name="user.role_id" id="user.role_id" ng-init="signup.user.role_id=1">
+        </div>
+        <div class="input-field col s12 m6">
+            <input class="validate" type="text" name="user.address" id="user.address" ng-model="signup.user.address" required>
+            <label class="active" for="user.address">Address</label>
+        </div>
+        <div class="input-field col s6 m3">
+            <input class="validate" type="text" name="user.postal_code" id="user.postal_code" ng-model="signup.user.postal_code" required>
+            <label class="active" for="user.postal_code">Postal Code</label>
+        </div>
+        <div class="input-field col s6 m3">
+            <input class="validate" type="text" name="user.city" id="user.city" ng-model="signup.user.city" required>
+            <label class="active" for="user.city">City</label>
+        </div>
+        <div class="input-field col s6 m6">
+            <input class="validate" type="text" name="user.land" id="user.land" ng-model="signup.user.land" required>
+            <label class="active" for="user.land">Land</label>
+        </div>
+        <div class="col s12">
+            <button type="submit" class="wave-effect waves-light btn blue darken-4" ng-click="signup.signup(signupForm)">Sign up</button>
+            <button ui-sref="login" class="wave-effect waves-light btn-flat">Login</button>
+        </div>
+    </div>
+</form>
+
