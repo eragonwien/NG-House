@@ -2,7 +2,7 @@ var fs = require('fs');
 var readline = require('readline-sync');
 var db = require('../config/db');
 const sqlCreatePath = './config/sql/create.sql';
-const tablesList = ['address', 'currency', 'house', 'offer', 'offer_status', 'role', 'house_type', 'user'];
+const tablesList = ['address', 'currency', 'house', 'role', 'house_type', 'user'];
 
 var pool = db.pool;
 var pool_no_database = db.pool_no_database;

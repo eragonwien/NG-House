@@ -1,16 +1,50 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="stylesheets/main.css">
-    <title>INDEX</title>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Material Design for Bootstrap fonts and icons -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+<!-- Material Design Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- Material Design for Bootstrap CSS -->
+<link type="text/css" rel="stylesheet" href="stylesheets/main.css">
+<title>Nghouse</title>
 </head>
-<body>
-    <h1><strong>Bold</strong></h1>
-    <a class="waves-effect waves-light- btn">Button</a>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="javascripts/materialize.min.js"></script>
-</body>
+    <body ng-app="house">
+        <div ui-view name="navbar"></div>
+        <div class="container">
+            <div ui-view name="content" style="padding: 1rem 0rem;"></div>        
+        </div>
+
+        <!-- JQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- Materialize CSS -->
+        <script src="javascripts/materialize.min.js"></script>
+        <!-- AngularJS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+        <script src="javascripts/angular/app.module.js"></script>
+        <script src="javascripts/angular/app.routes.js"></script>
+        <script src="javascripts/angular/general.service.js"></script>
+        <script src="javascripts/angular/navbar/navbar.controller.js"></script>
+        <script src="javascripts/angular/house/index/index.controller.js"></script>
+        <script src="javascripts/angular/house/create/create.house.controller.js"></script>
+        <script src="javascripts/angular/house/house.service.js"></script>
+        <script src="javascripts/angular/house/house.type.service.js"></script>
+        <script src="javascripts/angular/house/currency.service.js"></script>
+        <script src="javascripts/angular/user/login/login.controller.js"></script>
+        <script src="javascripts/angular/user/signup/signup.controller.js"></script>
+        <script src="javascripts/angular/user/logout/logout.controller.js"></script>
+        <script src="javascripts/angular/user/profile/profile.controller.js"></script>
+        <script src="javascripts/angular/user/user.service.js"></script>
+        <!-- Others -->
+        <script src="javascripts/custom.js"></script>    
+        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    </body>
 </html>
