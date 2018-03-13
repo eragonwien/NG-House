@@ -1,0 +1,15 @@
+<nav>
+	<div class="nav-wrapper blue darken-4 white-text text-lighten-4">
+		<a href="#" class="brand-logo left" ui-sref="index" ui-sref-active="active">Nghouse</a>
+		<ul class="right">
+			<li>
+				<a href="" ng-click="navbar.reload()">
+					<i class="material-icons">refresh</i>
+				</a>
+			</li>
+			<li><a href="" ui-sref="login" ui-sref-active="active" ng-if="!navbar.user">Login</a></li>
+			<li><a href="" ui-sref="profile" ui-sref-active="active" ng-if="navbar.user">Profile</a></li>
+			<li><a href="" ng-click="navbar.logout()" ng-if="navbar.user">Logout</a></li>
+		</ul>
+	</div>
+</nav>
