@@ -7,7 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sass = require('node-sass-middleware');
 var ejs = require('ejs');
-
+var session = require('express-session');
 var app = express();
 
 // routes
@@ -19,14 +19,13 @@ app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
 
 
-// uncomment after placing your favicon in /public
+// your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 // logger
-if (app.get('env' == 'production')) {
-  app.use(logger('combined'));
-} else if (app.get('env') != 'test') {
+if (app.get('env') != 'test' && app.get('env') != 'production') {
   app.use(logger('dev'));
-} 
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,6 +41,10 @@ app.use(
 	})
 );
 
+// Session
+var sessionConfig = require('./config/session').config;
+app.use(session(sessionConfig));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
@@ -54,14 +57,14 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(error, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  //res.locals.message = err.message;
+  //res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.status(error.status || 500).json(error);
+  //res.render('error');
 });
 
 module.exports = app;
