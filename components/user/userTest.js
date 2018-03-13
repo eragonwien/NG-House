@@ -14,7 +14,10 @@ describe('User Models Test', function () {
         username: 'JTest_' + new Date().getTime(),
         password: 'test',
         email: 'JTest_' + new Date().getTime() + '@mail.com',
-        address_id: 1
+        address: 'Neubaugasse 78',
+        postal_code: '1070',
+        city: 'Vienna',
+        land: 'Austria'
     }
     var model = require('./userModel');
 
@@ -40,6 +43,8 @@ describe('User Models Test', function () {
             expect(result).to.have.property('last_name').which.is.equal(user.last_name);
             expect(result).to.have.property('email').which.is.equal(user.email);
             expect(result).to.have.property('role_id').which.is.equal(user.role_id);
+            expect(result).to.have.property('address_id');
+            user.address_id = result.address_id;
             expect(result).to.have.property('username').which.is.equal(user.username);
             done();
         })
@@ -55,6 +60,7 @@ describe('User Models Test', function () {
             expect(result).to.have.property('first_name').which.is.equal(user.first_name);
             expect(result).to.have.property('last_name').which.is.equal(user.last_name);
             expect(result).to.have.property('role_id').which.is.equal(user.role_id);
+            expect(result).to.have.property('address_id').which.is.equal(user.address_id);
             expect(result).to.have.property('email').which.is.equal(user.email);
             expect(result).to.have.property('username').which.is.equal(user.username);
             done();
