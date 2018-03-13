@@ -14,7 +14,7 @@ var app = express();
 var index = require('./components/routes');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'public', 'views'));
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
 
@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-//SASS
+// sass
 app.use(
 	sass({
 		src: __dirname + '/public/stylesheets/sass', 
@@ -41,7 +41,7 @@ app.use(
 	})
 );
 
-// Session
+// session
 var sessionConfig = require('./config/session').config;
 app.use(session(sessionConfig));
 
