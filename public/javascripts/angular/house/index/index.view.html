@@ -1,0 +1,48 @@
+<!-- Message Panel -->
+<div class="card-panel {{index.alertMode}}" ng-if="index.message">
+    <span class="white-text">{{index.message}}</span>
+    <a href="" class="right white-text" ng-click="index.closeAlert()"><i class="material-icons">close</i></a>
+</div>
+<!-- Search bar -->
+<div class="row">
+    <div class="col s12">
+        <form>
+            <div class="input-field">
+                <i class="material-icons prefix">search</i>
+                <input type="text" name="seach_house" id="search_house" ng-model="index.searchInput">
+                <label for="search_house">Search</label>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <!-- House listing -->
+    <div class="col s12 m6" ng-repeat="house in index.houses">
+        <div class="card hoverable sticky-action">
+            <div class="card-image wave-effect waves-block waves-light">
+                <img src="stylesheets/images/default.jpg" alt="house_image">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator">
+                    {{house.house_type}} in {{ house.address }}
+                </span>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title">{{ house.address }}</span>
+                <p><strong>Owner:</strong> {{house.first_name}} {{house.last_name}}</p>
+                <p><strong>Price:</strong> {{house.currency_short}} {{house.price}} </p>
+                <p><strong>Address:</strong> {{house.address}}, {{house.postal_code}} {{house.city}}, {{house.land}}</p>
+                <p><strong>Details:</strong> {{house.house_type}}, {{house.bathrooms}} bathrooms, {{house.bedrooms}} bedrooms, {{house.size}} m&sup2;</p>
+            </div>
+            <div class="card-action blue darken-4">
+                <a href="" class="" ng-click="index.showHouse(house)">Buy</a>
+            </div>
+        </div>      
+    </div>
+</div>
+<!-- Floating buttons -->
+<div class="fixed-action-btn">
+    <button ui-sref="createHouse" class="btn-floating btn-large green">
+        <i class="large material-icons">add</i>
+    </button>
+</div>
