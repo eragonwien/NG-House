@@ -1,0 +1,55 @@
+<!-- House adding -->
+<div class="col s12">
+    <form name="houseAddingForm">
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <input type="text" name="house.user.full_name" id="house.user.full_name" value="{{createHouse.user.first_name}} {{createHouse.user.last_name}} " disabled>
+                <label class="active" for="house.user.full_name">Owner</label>
+            </div>
+            <div class="input-field col s12 m6">
+                <input type="text" name="house.user.email" id="house.user.email" ng-value="createHouse.user.email" disabled>
+                <label class="active" for="house.user.email">Contact Email</label>
+            </div>
+            <input type="hidden" ng-model="createHouse.newHouse.user_id" ng-init="createHouse.newHouse.user_id = createHouse.user.id">
+            <div class="input-field col s8 m4">
+                <input type="text" name="house.price" id="house.price" ng-model="createHouse.newHouse.price">
+                <label class="active" for="house.price">Price</label>
+            </div>
+            <div class="input-field col s4 m2">
+                <select id="house.currency" name="house.currency" ng-model="createHouse.newHouse.currency_id">
+                    <option value="" disabled selected></option>
+                    <option ng-repeat="currency in createHouse.currencies" ng-value="currency.id">{{currency.name}}</option>
+                </select>
+                <label for="house.currency">Currency</label>
+            </div>
+            <div class="input-field col s12 m6">
+                <select name="house.type" id="house.type" ng-model="createHouse.newHouse.house_type_id">
+                    <option value="" disabled selected></option>
+                    <option ng-repeat="houseType in createHouse.houseTypes" ng-value="houseType.id">{{houseType.name}}</option>
+                </select>
+            </div>
+            <div class="input-field col s4 m2">
+                <input type="text" name="house.bathrooms" id="house.bathrooms" ng-model="createHouse.newHouse.bathrooms">
+                <label class="active" for="house.bathrooms">Bathrooms</label>
+            </div>
+            <div class="input-field col s4 m2">
+                <input type="text" name="house.bedrooms" id="house.bedrooms" ng-model="createHouse.newHouse.bedrooms">
+                <label class="active" for="house.bedrooms">Bedrooms</label>
+            </div>
+            <div class="input-field col s4 m2">
+                <input type="text" name="house.size" id="house.size" ng-model="createHouse.newHouse.size">
+                <label class="active" for="house.size">Size</label>
+            </div>
+            <div class="fixed-action-btn">
+                <button type="submit" class="btn-floating btn-large green" ng-click="createHouse.addHouse(createHouse.newHouse)">
+                    <i class="large material-icons">save</i>
+                </button>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+        </script>
+    </form>
+</div>
