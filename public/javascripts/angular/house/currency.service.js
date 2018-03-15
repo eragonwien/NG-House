@@ -2,8 +2,8 @@ angular
     .module('house')
     .factory('currencyService', currencyService);
 
-currencyService.$inject = ['$http'];
-function currencyService(http) {
+currencyService.$inject = ['$http', '$q'];
+function currencyService(http, q) {
     var service = {
         getCurrencies: getCurrencies
     }

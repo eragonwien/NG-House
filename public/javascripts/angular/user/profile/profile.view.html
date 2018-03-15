@@ -1,7 +1,3 @@
-<div class="card-panel {{profile.alertMode}}" ng-if="profile.message">
-    <span class="white-text">{{profile.message}}</span>
-    <a href="" class="right white-text" ng-click="profile.closeAlert()"><i class="material-icons">close</i></a>
-</div>
 <div ng-if="!profile.user">
     <h1>Error</h1>
     <p>User's profile cannot be loaded. Click this <a href="" ui-sref="index">link</a> to return to the main page</p>

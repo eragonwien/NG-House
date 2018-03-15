@@ -1,6 +1,27 @@
 var pool = require('../../config/db').pool;
+var addressModel = require('../address/addressModel');
+exports.createHouse = function (house, done) {
+	if (house.address_id) {
+		return insertHouse(house, done);
+	}
+	// if no address id available, query for one first
+	var address = {
+		address: house.address,
+		postal_code: house.postal_code,
+		city: house.city,
+		land: house.land
+	}
+	addressModel.createNewAddress(address, function (error, result) {
+		if (error) {
+			return done(error);
+		}
+		house.address_id = result.insertId;
+		insertHouse(house, done);
+	})
+}
 
-exports.createHouse = function(house, done) {
+exports.insertHouse = insertHouse;
+function insertHouse(house, done) {
 	var cmd = 'INSERT INTO house(user_id, address_id, house_type_id, price, currency_id, bathrooms, bedrooms, size) VALUES(?,?,?,?,?,?,?,?);';
 	var params = [house.user_id, house.address_id, house.house_type_id, house.price, house.currency_id, house.bathrooms, house.bedrooms, house.size];
 	pool.query(cmd, params, function(error, result){

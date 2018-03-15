@@ -2,19 +2,33 @@ angular
     .module('house')
     .controller('createHouseController', createHouseController);
 
-createHouseController.$inject = ['houseService', 'currencyService', 'userService', 'houseTypeService', 'generalService']
-function createHouseController(houseService, currencyService, userService, houseTypeService, generalService) {
+createHouseController.$inject = ['houseService', 'currencyService', 'userService', 'houseTypeService', 'appService']
+function createHouseController(houseService, currencyService, userService, houseTypeService, appService) {
     var vm = this;
     vm.user = userService.getLocalUser();
     vm.getCurrencies = getCurrencies;
-    vm.addHouse = addHouse;
-
+    vm.submit = submit;
+    
     getCurrencies();
     getHouseTypes();
 
+
     /* Create House */
-    function addHouse(house) {
-        generalService.alert(JSON.stringify(house));
+    function submit(form) {
+        if (!form.$valid) {
+            alert('Invalid Form');
+            return;
+        }
+        houseService.addHouse(vm.newHouse).then(addHouseHandler);
+
+        function addHouseHandler(response) {
+            if (response.status == 200) {
+                alert('Successfully added.');
+                moveTo();
+                return;
+            }
+            alert(response.data);
+        }
     }
 
     /* Currency */
@@ -26,7 +40,7 @@ function createHouseController(houseService, currencyService, userService, house
                 vm.currencies = response.data;
                 return;
             }
-            generalService.alert(response.data);
+            alert(response.data, 10000);
         }
     }
 
@@ -39,7 +53,15 @@ function createHouseController(houseService, currencyService, userService, house
                 vm.houseTypes = response.data;
                 return;
             }
-            generalService.alert(response.data);
+            alert(response.data);
         }
+    }
+
+    function alert(message, duration) {
+        appService.alert(message, duration);
+    }
+
+    function moveTo(path) {
+        appService.moveTo(path);
     }
 }

@@ -1,14 +1,14 @@
 angular
     .module('house')
     .controller('indexController', indexController);
-indexController.$inject = ['houseService', 'userService', 'currencyService'];
-function indexController(houseService, userService, currencyService) {
+indexController.$inject = ['houses', 'houseService', 'userService', 'currencyService', 'appService'];
+function indexController(houses, houseService, userService, currencyService, appService) {
     var vm = this;
     vm.user = userService.getLocalUser();
     vm.showHouse = showHouse;
-    vm.closeAlert = closeAlert;
-    getHouses();
-
+    vm.createHouse = createHouse;
+    //getHouses();
+    alert(houses, 10000);
 
     /* House */
     function getHouses() {
@@ -20,23 +20,29 @@ function indexController(houseService, userService, currencyService) {
                 vm.houses = response.data;
                 return;
             }
-            alert(response.data, false);
+            alert(response.data);
         }
     }
 
+    function createHouse() {
+        if (!vm.user) {
+            alert('Please login first!');
+            return;
+        }
+        moveTo('createHouse');
+    }
+
     function showHouse(house) {
-        alert(house, true);
+        alert(house);
     }
 
     /* General */
 
-    function alert(message, success) {
-        vm.message += message + '\n';
-        vm.alertMode = (success) ? 'green':'red';
+    function alert(message) {
+        appService.alert(message);
     }
 
-    function closeAlert() {
-        vm.message = null;
-        vm.alertMode = null;
+    function moveTo(path) {
+        appService.moveTo(path);
     }
 }

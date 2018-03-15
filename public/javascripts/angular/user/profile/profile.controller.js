@@ -2,14 +2,12 @@ angular
     .module('house')
     .controller('profileController', profileController);
 
-profileController.$inject = ['userService'];
-function profileController(userService) {
+profileController.$inject = ['userService', 'appService'];
+function profileController(userService, appService) {
     var vm = this;
     vm.user = userService.getLocalUser();
     vm.editing = false;
     vm.save = save;
-    vm.closeAlert = closeAlert;
-    closeAlert();
 
     function save(form) {
         if (!form.$valid) {
@@ -22,21 +20,15 @@ function profileController(userService) {
             var status = response.status;
             if (status == 200) {
                 userService.setLocalUser(vm.user);
-                alert('Changes saved.', true);
+                alert('Changes saved.');
                 vm.editing = false;               
                 return; 
             }
-            alert('Error: ' + response, false);
+            alert('Error: ' + response);
         }
     }
 
-    function alert(message, success) {
-        vm.message = message;
-        vm.alertMode = (success) ? 'green':'red';
-    }
-
-    function closeAlert() {
-        vm.message = null;
-        vm.alertMode = null;
+    function alert(message) {
+        appService.alert(message);
     }
 }

@@ -11,7 +11,7 @@ var session = require('express-session');
 var app = express();
 
 // routes
-var index = require('./components/routes');
+var index = require('./backend/components/routes');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'public', 'views'));
@@ -42,7 +42,7 @@ app.use(
 );
 
 // session
-var sessionConfig = require('./config/session').config;
+var sessionConfig = require('./backend/config/session').config;
 app.use(session(sessionConfig));
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -51,9 +51,10 @@ app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  //var err = new Error('Not Found');
+  //err.status = 404;
+  //next(err);
+  res.render('error');
 });
 
 // error handler

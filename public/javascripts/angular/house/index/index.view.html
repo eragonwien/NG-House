@@ -1,8 +1,3 @@
-<!-- Message Panel -->
-<div class="card-panel {{index.alertMode}}" ng-if="index.message">
-    <span class="white-text">{{index.message}}</span>
-    <a href="" class="right white-text" ng-click="index.closeAlert()"><i class="material-icons">close</i></a>
-</div>
 <!-- Search bar -->
 <div class="row">
     <div class="col s12">
@@ -15,12 +10,13 @@
         </form>
     </div>
 </div>
+
 <div class="row">
     <!-- House listing -->
     <div class="col s12 m6" ng-repeat="house in index.houses">
         <div class="card hoverable sticky-action">
             <div class="card-image wave-effect waves-block waves-light">
-                <img src="stylesheets/images/default.jpg" alt="house_image">
+                <img src="stylesheets/images/{{house.house_type}}.jpg" alt="house_image">
             </div>
             <div class="card-content">
                 <span class="card-title activator">
@@ -42,7 +38,7 @@
 </div>
 <!-- Floating buttons -->
 <div class="fixed-action-btn">
-    <button ui-sref="createHouse" class="btn-floating btn-large green">
+    <button class="btn-floating btn-large green" ng-click="index.createHouse()">
         <i class="large material-icons">add</i>
     </button>
 </div>

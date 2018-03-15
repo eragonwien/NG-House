@@ -2,14 +2,14 @@ angular
     .module('house')
     .controller('logoutController', logoutController);
 
-logoutController.$inject = ['userService', '$location'];
-function logoutController(userService, location) {
+logoutController.$inject = ['userService', 'appService'];
+function logoutController(userService, appService) {
     var vm = this;
     
     if (userService.getLocalUser()) {
-        location.url('/');
+        userService.deleteLocalUser();
     }
-    else {
-        vm.message = "You are logged out";
-    }
+    vm.message = "Redirecting to Homepage ...";
+    appService.moveTo();
+    appService.alert('You are logged out');
 }

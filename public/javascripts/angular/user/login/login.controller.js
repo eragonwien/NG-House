@@ -2,21 +2,21 @@ angular
     .module('house')
     .controller('loginController', loginController);
 
-loginController.$inject = ['userService', '$location'];
-function loginController(userService, location) {
+loginController.$inject = ['userService', 'appService'];
+function loginController(userService, appService) {
     var vm = this;
     vm.loginMode = true;
     vm.login = login;
     vm.signup = signup;
     
     if (userService.getLocalUser()) {
-        toHome();
+        home();
         return;
     }
 
     function login(form) {
         if (!validateForm(form)) {
-            showAlert('Form invalid');
+            alert('Form invalid');
             return;
         }
         userService.login(vm.user.username, vm.user.password).then(loginHandler);
@@ -25,16 +25,16 @@ function loginController(userService, location) {
             var status = response.status;
             if (status == 200) {
                 userService.setLocalUser(response.data);
-                toHome();
+                home();
                 return;
             }
-            showAlert(response.data.message);
+            alert(response.data.message);
         }
     }
 
     function signup(form) {
         if (!validateForm(form)) {
-            showAlert('Form invalid');
+            alert('Form invalid');
             return;
         }
         userService.signup(vm.user).then(signupHandler);
@@ -45,7 +45,7 @@ function loginController(userService, location) {
                 vm.loginMode = true;
                 return;
             }
-            showAlert(response)
+            alert(response)
         }
     }
 
@@ -53,11 +53,11 @@ function loginController(userService, location) {
         return form.$valid;
     }
 
-    function toHome() {
-        location.url('/');
+    function home() {
+        appService.moveTo();
     }
 
-    function showAlert(message) {
-        console.log(message);
+    function alert(message) {
+        appService.alert(message);
     }
 }

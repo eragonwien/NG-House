@@ -16,7 +16,10 @@ function routing(stateProvider, urlRouterProvider) {
             content: {
                 templateUrl: 'javascripts/angular/house/index/index.view.html',
                 controller: 'indexController',
-                controllerAs: 'index'
+                controllerAs: 'index',
+                resolve: {
+                    houses: getHouses
+                }
             }
         }
     }
@@ -120,5 +123,14 @@ function checkUser(q, location, userService) {
     if (!userService.getLocalUser()) {
         location.path('/');
         return;
+    }
+}
+
+getHouses.$inject = ['houseService']
+function getHouses(houseService) {
+    return houseService.getHouses().then(getHousesHandler);
+
+    function getHousesHandler(response) {
+        return response.data;
     }
 }

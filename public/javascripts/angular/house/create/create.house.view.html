@@ -1,4 +1,5 @@
 <!-- House adding -->
+<h1>Add new house</h1>
 <div class="col s12">
     <form name="houseAddingForm">
         <div class="row">
@@ -12,44 +13,59 @@
             </div>
             <input type="hidden" ng-model="createHouse.newHouse.user_id" ng-init="createHouse.newHouse.user_id = createHouse.user.id">
             <div class="input-field col s8 m4">
-                <input type="text" name="house.price" id="house.price" ng-model="createHouse.newHouse.price">
+                <input class="validate" type="text" name="house.price" id="house.price" ng-model="createHouse.newHouse.price" required>
                 <label class="active" for="house.price">Price</label>
             </div>
             <div class="input-field col s4 m2">
-                <select id="house.currency" name="house.currency" ng-model="createHouse.newHouse.currency_id">
-                    <option value="" disabled selected></option>
+                <select class="validate" class="house-currency-select" id="house.currency" name="house.currency" ng-model="createHouse.newHouse.currency_id" required>
                     <option ng-repeat="currency in createHouse.currencies" ng-value="currency.id">{{currency.name}}</option>
                 </select>
                 <label for="house.currency">Currency</label>
             </div>
             <div class="input-field col s12 m6">
-                <select name="house.type" id="house.type" ng-model="createHouse.newHouse.house_type_id">
-                    <option value="" disabled selected></option>
+                <select class="validate" class="house-type-select" name="house.type" id="house.type" ng-model="createHouse.newHouse.house_type_id" required>
                     <option ng-repeat="houseType in createHouse.houseTypes" ng-value="houseType.id">{{houseType.name}}</option>
                 </select>
+                <label for="house.type">Type</label>
             </div>
             <div class="input-field col s4 m2">
-                <input type="text" name="house.bathrooms" id="house.bathrooms" ng-model="createHouse.newHouse.bathrooms">
+                <input class="validate" type="number" min="0" name="house.bathrooms" id="house.bathrooms" ng-model="createHouse.newHouse.bathrooms" required>
                 <label class="active" for="house.bathrooms">Bathrooms</label>
             </div>
             <div class="input-field col s4 m2">
-                <input type="text" name="house.bedrooms" id="house.bedrooms" ng-model="createHouse.newHouse.bedrooms">
+                <input class="validate" type="number" min="0" name="house.bedrooms" id="house.bedrooms" ng-model="createHouse.newHouse.bedrooms" required>
                 <label class="active" for="house.bedrooms">Bedrooms</label>
             </div>
             <div class="input-field col s4 m2">
-                <input type="text" name="house.size" id="house.size" ng-model="createHouse.newHouse.size">
+                <input class="validate" type="number" name="house.size" id="house.size" ng-model="createHouse.newHouse.size" required>
                 <label class="active" for="house.size">Size</label>
             </div>
+            <div class="input-field col s12 m6">
+                <input class="validate" type="text" name="house.address" id="house.address" ng-model="createHouse.newHouse.address" required>
+                <label class="active" for="house.address">Address</label>
+            </div>
+            <div class="input-field col s4 m2">
+                <input class="validate" type="text" name="house.postal_code" id="house.postal_code" ng-model="createHouse.newHouse.postal_code" required>
+                <label class="active" for="house.postal_code">Postal Code</label>
+            </div>
+            <div class="input-field col s4 m2">
+                <input class="validate" type="text" name="house.city" id="house.city" ng-model="createHouse.newHouse.city" required>
+                <label class="active" for="house.city">City</label>
+            </div>
+            <div class="input-field col s4 m2">
+                <input class="validate" type="text" name="house.land" id="house.land" ng-model="createHouse.newHouse.land" required>
+                <label class="active" for="house.land">Land</label>
+            </div>
             <div class="fixed-action-btn">
-                <button type="submit" class="btn-floating btn-large green" ng-click="createHouse.addHouse(createHouse.newHouse)">
+                <button type="submit" class="btn-floating btn-large green" ng-click="createHouse.submit(houseAddingForm)">
                     <i class="large material-icons">save</i>
                 </button>
             </div>
         </div>
-        <script>
-            $(document).ready(function() {
-                $('select').material_select();
-            });
-        </script>
     </form>
 </div>
+<script>
+    $(document).ready(function() {
+        $('select').material_select();
+    });
+</script>
