@@ -1,5 +1,5 @@
 var express = require('express');
-var dotenv = require('dotenv').config();
+var dotenv = require('dotenv');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -9,6 +9,9 @@ var sass = require('node-sass-middleware');
 var ejs = require('ejs');
 var session = require('express-session');
 var app = express();
+
+// read .env
+dotenv.config();
 
 // routes
 var index = require('./backend/components/routes');

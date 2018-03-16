@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+require('dotenv').config();
 exports.pool = mysql.createPool({
   host     : process.env.DB_HOST,
   user     : process.env.DB_USER,

@@ -1,7 +1,19 @@
-var readline = require('readline-sync');
 var fs = require('fs');
+var readline = require('readline-sync');
+var envPath = '.env';
+require('dotenv').config();
+var dbConfigPath = './backend/config/db.js';
 
-exports.setEnv = setEnv;
+console.log('Checking environtment file.');
+if (!fs.existsSync(envPath)) {
+    console.log('File .env does not exist.');
+    setEnv(envPath);
+}
+console.log('Checking for config file.');
+if (!fs.existsSync(dbConfigPath)) {
+    console.log('Config file for database does not exist.');
+    return;
+}
 
 function setEnv(path) {
     var env = '';
@@ -44,5 +56,3 @@ function setEnv(path) {
     }
     console.log('Canceled');    
 }
-
-

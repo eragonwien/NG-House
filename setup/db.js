@@ -1,14 +1,20 @@
 var fs = require('fs');
+require('dotenv').config();
 var readline = require('readline-sync');
-var db = require('../config/db');
-const sqlCreatePath = './config/sql/create.sql';
+var db = require('../backend/config/db');
+const sqlCreatePath = './backend/config/sql/create.sql';
 const tablesList = ['address', 'currency', 'house', 'role', 'house_type', 'user'];
 
 var pool = db.pool;
 var pool_no_database = db.pool_no_database;
 
-exports.start = start;
-function start() {
+start();
+
+function start() {  
+    if (!process.env.NODE_ENV) {
+        console.log('Error reading .env file. Please re-run the setup.');
+        return;
+    }
     createDatabase(checkTables);
 }
 

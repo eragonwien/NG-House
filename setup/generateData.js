@@ -79,7 +79,7 @@ function getUser() {
         var time = new Date().getTime();
         return {
             role_id: 1,
-            firstname: 'first_' + 
+            firstname: 'first_'
         }
     }
 }
