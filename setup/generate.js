@@ -1,6 +1,8 @@
 /**
+ * This script generates data based on user input
+ * 
  * 1. let the user choose which data are going to be generated 
- * 2. check if variables for test generation is available. if not, use time value
+ * 2. check if variables for test generation is available. if not, abort
  * 3. ask the user to input how many data are going to be generated. user can abort from here.
  * 4. count the current number of data
  * 5. generate data base from the input
@@ -9,7 +11,7 @@
  * Following test data can be generated:
  * address is generated from ADDRESS, POSTAL_CODE, CITY and LAND
  * 
- * user is generated from USER_NAME. email is firstname_lastname_time@laatname.com
+ * user is generated from USER_NAME. email is firstname_lastname_time@lastname.com
  * for address, all address ids are queried and is randomly chosen.
  * role is always standard which has id of 1
  * 
@@ -24,9 +26,14 @@
 var readline = require('readline-sync');
 var dotenv = require('dotenv');
 var fs = require('fs');
+var helper = require('./helper');
 var pool = require('../backend/config/db').pool;
 var supportedTypes = ['house', 'user', 'address'];
 start();
+
+/*  start the data generation
+    the user is asked to choose the type of the generated data
+*/
 function start() {
     console.log('Supported Data: house, user, address');
     var type = readline.question('Which data is going to be generated ? ');
@@ -36,6 +43,11 @@ function start() {
     prepareGenerating(type);
 }
 
+/**
+ * checks if the .env file exists 
+ * the user is asked for the number of data which are going to be generated
+ * @param {string} type The type of the data
+ */
 function prepareGenerating(type) {
     var path = '.env';
     fs.exists(path, function (fileIsExist) {
@@ -50,7 +62,11 @@ function prepareGenerating(type) {
         generateData(type, count);
     });
 }
-
+/**
+ * pass data to generation function
+ * @param {string} type type of the generated data
+ * @param {int} count number of the data
+ */
 function generateData(type, count) {
     switch (type) {
         case 'house':
@@ -67,31 +83,54 @@ function generateData(type, count) {
     }
 }
 
+/**
+ * generates User
+ * @param {*} count number of user being generated
+ */
 function generateUser(count) {
-    // create a random user
-    var user = getUser();
-    var model = require('../backend/components/user/userModel');
-   
-}
-
-function getUser() {
     if (!process.env.USER_NAME) {
-        var time = new Date().getTime();
-        return {
-            role_id: 1,
-            firstname: 'first_'
-        }
+        return console.log('no USER_NAME variables found. Abort.');
     }
+    var names = helper.getListFromString(process.env.USER_NAME);
+    var users = getUsers(names); // CONTINUE HERE
+    var model = require('../backend/components/user/userModel');
+    
 }
 
+/**
+ * return a list of users from a list of names
+ * @param {array} names list of names
+ * @returns {array} list of users
+ */
+function getUsers(names) {
+    var users = [];
+    names.forEach(function (value, index, arr) {
+        var user = {
+            role_id: 1,
+            first_name: value
+        };
+        users.push(user);
+    });
+}
+
+/**
+ * generates addresses
+ * @param {int} count number of addresses
+ */
 function generateAddress(count) {
     var model = require('../backend/components/address/addressModel');
 
 }
 
+/**
+ * generates houses
+ * @param {int} count number of houses 
+ */
 function generateHouse(count) {
    var model = require('../backend/components/house/houseModels');
     
 }
+
+
 
 

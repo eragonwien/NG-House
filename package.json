@@ -8,7 +8,7 @@
     "set-env": "node setup/env.js",
     "build-database": "node setup/db.js",
     "setup": "npm run set-env && npm run build-database",
-    "generate": "node setup/generateData.js",
+    "generate": "node setup/generate.js",
     "test": "mocha test.js"
   },
   "repository": {
