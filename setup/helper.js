@@ -1,7 +1,7 @@
 /**
  * returns a list of strings
  * @param {string} str string contains items separated by comma
- * @returns {array} list of strings
+ * @returns {string[]} list of strings
  */
 function getListFromString(str) {
     var list = [];
@@ -28,3 +28,18 @@ function getListFromString(str) {
     return list;
 }
 exports.getListFromString = getListFromString;
+
+/**
+ * returns a integer between the min and max values
+ * @param {number} min min value
+ * @param {number} max max value
+ * @returns {number} a random integer
+ */
+function getRandomInt(min, max) {
+    if (!max) {
+        max = min;
+        min = 0;
+    }
+    return Math.floor((Math.random() * max) + min);
+}
+exports.getRandomInt = getRandomInt;
