@@ -29,6 +29,9 @@ var fs = require('fs');
 var helper = require('./helper');
 var pool = require('../backend/config/db').pool;
 var supportedTypes = ['house', 'user', 'address'];
+
+var userModel = require('../backend/components/user/userModel');
+var addressModel = require('../backend/components/address/addressModel');
 start();
 
 /*  start the data generation
@@ -65,7 +68,7 @@ function prepareGenerating(type) {
 /**
  * pass data to generation function
  * @param {string} type type of the generated data
- * @param {int} count number of the data
+ * @param {number} count number of the data
  */
 function generateData(type, count) {
     switch (type) {
@@ -84,51 +87,128 @@ function generateData(type, count) {
 }
 
 /**
- * generates User
- * @param {*} count number of user being generated
+ * generates user
+ * first checks if the .env file has variable USER_NAME, cancel process if not
+ * query all address ids 
+ * create queries to add user to the database
+ * @param {number} count number of user being generated
  */
 function generateUser(count) {
     if (!process.env.USER_NAME) {
-        return console.log('no USER_NAME variables found. Abort.');
+        return finish(null, 'no USER_NAME variables found.');
     }
     var names = helper.getListFromString(process.env.USER_NAME);
-    var users = getUsers(names); // CONTINUE HERE
-    var model = require('../backend/components/user/userModel');
+    var addressModel = require('../backend/components/address/addressModel');
+    addressModel.getAllAddresses(function (error, results) {
+        if (error) {
+            return console.log(error);
+        } 
+        // extract only the address id from the results
+        var address_ids = [];
+        results.forEach(function (value, index, array) {
+           address_ids.push(value.id); 
+        });
+        spawnUsers(count, names, address_ids); 
+    });
     
 }
 
 /**
- * return a list of users from a list of names
- * @param {array} names list of names
- * @returns {array} list of users
+ * generate users
+ * @param {number} count number of users to be generated
+ * @param {string[]} names list of names
+ * @param {string[]} addressList list of addresses
+ * @param {string[]} successCount number of successful query
  */
-function getUsers(names) {
-    var users = [];
-    names.forEach(function (value, index, arr) {
-        var user = {
-            role_id: 1,
-            first_name: value
-        };
-        users.push(user);
+function spawnUsers(count, names, addressList, successCount) {
+    if (!successCount) {
+        successCount = 0;
+    }
+    if (count <= 0) {
+        return finish(null, 'Success: ' + successCount);
+    }
+    var first_name = names[helper.getRandomInt(names.length)];
+    var last_name = names[helper.getRandomInt(names.length)];
+    var randomValue = helper.getRandomInt(1000);
+    var username = first_name + last_name + randomValue;
+    var user = {
+        role_id: 1,
+        first_name: first_name,
+        last_name: last_name,
+        email: username + '@' + last_name + '.com',
+        username: username,
+        password: 'test',
+        address_id: addressList[helper.getRandomInt(addressList.length)]
+    }
+    userModel.createUser(user, function (error, result) {
+        successCount = (error) ? successCount : successCount + 1;
+        count--;
+        spawnUsers(count, names, addressList, successCount);
     });
 }
 
 /**
  * generates addresses
- * @param {int} count number of addresses
+ * @param {number} count number of addresses
  */
 function generateAddress(count) {
-    var model = require('../backend/components/address/addressModel');
+    if (!process.env.USER_NAME) {
+        return finish(null, 'no USER_NAME variables found.');
+    }
+    // set postal code length as 4 if no value in .env found
+    var postalCodeLength = (process.env.POSTAL_CODE) ? process.env.POSTAL_CODE : 4;
+    var names = helper.getListFromString(process.env.USER_NAME);
+    // spawn addresses
+    spawnAddresses(count, names, postalCodeLength)
+}
 
+/**
+ * spawns recursively addresses
+ * @param {number} count number of addresses
+ * @param {string[]} names list of names
+ * @param {number} postalCodeLength length of the random postal code
+ * @param {number} successCount number of successful actions
+ */
+function spawnAddresses(count, names, postalCodeLength, successCount) {
+    if (!successCount) {
+        successCount = 0;
+    }
+    if (count <= 0) {
+        return finish(null, 'Success: ' + successCount);
+    }
+    var address = {
+        address: names[helper.getRandomInt(names.length)] + 'Street ' + helper.getRandomInt(100),
+        postal_code: helper.getRandomInt(postalCodeLength),
+        city: names[helper.getRandomInt(names.length)] + ' City',
+        land: names[helper.getRandomInt(names.length)] + ' Land'
+    }
+    addressModel.createNewAddress(address, function (error, result) {
+        successCount = (error) ? successCount : successCount + 1;
+        count--;
+        spawnAddresses(count, names, postalCodeLength, successCount);
+    });
 }
 
 /**
  * generates houses
- * @param {int} count number of houses 
+ * @param {number} count number of houses 
  */
 function generateHouse(count) {
    var model = require('../backend/components/house/houseModels');
     
+}
+
+/**
+ * close the process
+ */
+function finish(error, message) {
+    if (error) {
+        console.log(error);
+    }
+    if (message) {
+        console.log(message);
+    }
+    process.exit();
 }
 
 
