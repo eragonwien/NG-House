@@ -48,10 +48,16 @@ function setEnv(path) {
     }
     env += ('DB_POOL_LIMIT=' + dbPoolLimit + '\n');
 
-    if (readline.keyInYN('Do you want to set name variables for test data ?')) {
+    if (readline.keyInYN('Do you want to set variables for test data ?')) {
+        // User 
         console.log('Please write all the names you can think of, separated by commas');
         var names = readline.question('Name: ');
-        env += 'USER_NAME=' + names + '\n';      
+        env += 'USER_NAME=' + names + '\n';     
+
+        // Postal Code 
+        console.log('Please write the length of the postal code');
+        var post = Math.abs(readline.questionInt('postal code length: '));
+        env += 'POSTAL_CODE=' + post + '\n';    
     }
 
     console.log('\n' + env);
