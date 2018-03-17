@@ -48,6 +48,12 @@ function setEnv(path) {
     }
     env += ('DB_POOL_LIMIT=' + dbPoolLimit + '\n');
 
+    if (readline.keyInYN('Do you want to set name variables for test data ?')) {
+        console.log('Please write all the names you can think of, separated by commas');
+        var names = readline.question('Name: ');
+        env += 'USER_NAME=' + names + '\n';      
+    }
+
     console.log('\n' + env);
     if (readline.keyInYN('Save as .env ?')) {
         fs.writeFileSync(path, env);
