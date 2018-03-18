@@ -7,4 +7,4 @@ var roleTest = require('./backend/components/role/roleTest');
 var userTest = require('./backend/components/user/userTest');
 
 // Setup Test
-var setupTest = require('./setup/setupTest');
+var setupTest = require('./build/buildTest');

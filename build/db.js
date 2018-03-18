@@ -2,6 +2,7 @@ var fs = require('fs');
 require('dotenv').config();
 var readline = require('readline-sync');
 var db = require('../backend/config/db');
+var helper = require('./helper');
 const sqlCreatePath = './backend/config/sql/create.sql';
 const tablesList = ['address', 'currency', 'house', 'role', 'house_type', 'user'];
 
@@ -37,7 +38,7 @@ function checkTables(database) {
             return close(error);
         }
         result = transformShowTableResultToList(result, database);
-        if (doesContainerHasArray(result, tablesList)) {
+        if (helper.doesContainerHasArray(result, tablesList)) {
             console.log('Tables already exist.');
             if (readline.keyInYN('Do you want to clean all entries in these tables ?')) {
                 return createTables();
@@ -71,25 +72,6 @@ function close(error) {
 
 function finish() {
     close('Setup finished.');
-}
-
-exports.doesContainerHasArray = doesContainerHasArray;
-function doesContainerHasArray(container, array) {
-    if (container.length < array.length) {
-        return false;
-    }
-    for (let x = 0; x < array.length; x++) {
-        var found = false;
-        for (let y = 0; y < container.length; y++) {
-            if (container[y] == array[x]) {
-                found = true;
-            }
-        }
-        if (!found) {
-            return false;
-        }
-    }
-    return true;
 }
 
 function transformShowTableResultToList(result, database) {
