@@ -16,7 +16,7 @@ describe('Houses Models Test', function () {
         bedrooms: 2,
         size: 40
     };
-    var model = require('./houseModels');
+    var model = require('./houseModel');
     it('should create a house', function (done) {
         model.createHouse(house, function (error, result) {
             if (error) {
@@ -34,6 +34,16 @@ describe('Houses Models Test', function () {
                 return done(error);
             }
             expect(result).to.be.an('array');
+            done();
+        });
+    });
+    it('should list 5 houses with the lastest update', function (done) {
+        model.getLastestHouses(5, function (error, result) {
+            if (error) {
+                return done(error);
+            }
+            expect(result).to.be.an('array');
+            expect(result).to.have.lengthOf(5);
             done();
         });
     });

@@ -10,10 +10,11 @@ function houseService(http) {
     }
     return service;
 
-    function getHouses() {
+    function getHouses(params) {
         return http({
             method: 'GET',
-            url: '/api/houses'
+            url: '/api/houses',
+            params: params
         }).then(getHousesSuccess, getHousesError);
 
         function getHousesSuccess(response) {

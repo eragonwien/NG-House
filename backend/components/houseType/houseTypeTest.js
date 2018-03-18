@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 describe('House Type Model Test', function () {
     var houseType = {
         id: null,
-        name: 'test type'
+        name: new Date().getTime().toString()
     }
     var model = require('./houseTypeModel');
     it('should create a house type', function (done) {
@@ -66,7 +66,7 @@ describe('House Type Model Test', function () {
 describe('House Type Request Test', function () {
     var houseType = {
         id: null,
-        name: 'test type'
+        name: new Date().getTime().toString()
     }
     it('should create a house type per POST on /api/houseTypes', function (done) {
         chai.request(app)

@@ -6,10 +6,12 @@ var expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Currency Model Test', function () {
+    var short = new Date().getTime().toString();
+    short = short.substring(16);
     var currency = {
         id: null,
-        name: 'Vietnam Dong',
-        short: 'VND'
+        name: 'VN_' + new Date().getTime(),
+        short: short
     };
     var model = require('./currencyModel');
     it('should create a new currency', function (done) {
@@ -78,10 +80,12 @@ describe('Currency Model Test', function () {
 });
 
 describe('Currency Request Test', function () {
+    var short = new Date().getTime().toString();
+    short = short.substring(16);
     var currency = {
         id: null,
-        name: 'Vietnam Dong',
-        short: 'VND'
+        name: 'VN_' + new Date().getTime().toString(),
+        short: short
     };
     it('should create a new currency per POST on /api/currencies', function (done) {
         chai.request(app)

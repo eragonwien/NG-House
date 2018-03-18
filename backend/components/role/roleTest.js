@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 describe('Role Model Test', function () {
     var role = {
         id: null,
-        name: 'Secret Agent'
+        name: new Date().getTime().toString()
     }
     var model = require('./roleModel');
     it('should create a new role', function (done) {
@@ -80,7 +80,7 @@ describe('Role Model Test', function () {
 describe('Role Request Test', function () {
     var role = {
         id: null,
-        name: 'Secret Agent'
+        name: new Date().getTime().toString()
     }
     it('should create a new role per POST on /api/roles', function (done) {
         chai.request(app)

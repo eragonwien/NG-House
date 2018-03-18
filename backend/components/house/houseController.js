@@ -1,4 +1,4 @@
-var model = require('./houseModels');
+var model = require('./houseModel');
 
 exports.createHouse = function (req, res, next) {
 	model.createHouse(req.body, function (error, result) {
@@ -10,12 +10,22 @@ exports.createHouse = function (req, res, next) {
 };
 
 exports.getAllHouses = function (req, res, next) {
-	model.getAllHouses(function (error, results) {
-		if (error) {
-			return next(error);
-		}
-		res.status(200).json(results);
-	});
+	if (req.query.limit) {
+		model.getLastestHouses(req.query.limit, function (error, results) {
+			if (error) {
+				return next(error);
+			}
+			res.status(200).json(results);
+		});
+	} else {
+		model.getAllHouses(function (error, results) {
+			if (error) {
+				return next(error);
+			}
+			res.status(200).json(results);
+		});
+	}
+	
 };
 
 exports.getHouseById = function (req, res, next) {

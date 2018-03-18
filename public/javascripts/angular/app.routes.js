@@ -16,11 +16,11 @@ function routing(stateProvider, urlRouterProvider) {
             content: {
                 templateUrl: 'javascripts/angular/house/index/index.view.html',
                 controller: 'indexController',
-                controllerAs: 'index',
-                resolve: {
-                    houses: getHouses
-                }
+                controllerAs: 'index'
             }
+        },
+        resolve: {
+            houses: getHouses
         }
     }
 
@@ -88,6 +88,9 @@ function routing(stateProvider, urlRouterProvider) {
                 controller: 'profileController',
                 controllerAs: 'profile'
             }
+        },
+        resolve: {
+            checkSession: checkSession
         }
     }
 
@@ -105,6 +108,30 @@ function routing(stateProvider, urlRouterProvider) {
                 controller: 'createHouseController',
                 controllerAs: 'createHouse'
             }
+        },
+        resolve: {
+            currencies: getCurrencies,
+            houseTypes: getHouseTypes
+        }
+    }
+
+    var search = {
+        name: 'search',
+        url: '/houses/search',
+        views: {
+            navbar: {
+                templateUrl: 'javascripts/angular/navbar/navbar.view.html',
+                controller: 'navbarController',
+                controllerAs: 'navbar'
+            },
+            content: {
+                templateUrl: 'javascripts/angular/house/search/search.house.view.html',
+                controller: 'searchHouseController',
+                controllerAs: 'searchHouse'
+            }
+        },
+        resolve: {
+            houseTypes: getHouseTypes
         }
     }
 
@@ -114,23 +141,48 @@ function routing(stateProvider, urlRouterProvider) {
     stateProvider.state(logout);
     stateProvider.state(profile);
     stateProvider.state(createHouse);
+    stateProvider.state(search);
 
     urlRouterProvider.otherwise('/login');
 };
 
-checkUser.$inject = ['$q', '$location', '$userService']
-function checkUser(q, location, userService) {
+checkSession.$inject = ['$q', 'appService', 'userService']
+function checkSession(q, appService, userService) {
     if (!userService.getLocalUser()) {
-        location.path('/');
+        appService.moveTo();
         return;
     }
 }
 
+// resolve houses
 getHouses.$inject = ['houseService']
 function getHouses(houseService) {
-    return houseService.getHouses().then(getHousesHandler);
+    var params = {
+        limit: 9
+    };
+    return houseService.getHouses(params).then(getHousesHandler);
 
     function getHousesHandler(response) {
+        return response.data;
+    }
+}
+
+// resolve currencies
+getCurrencies.$inject = ['currencyService']
+function getCurrencies(currencyService) {
+    return currencyService.getCurrencies().then(getCurrenciesHandler);
+
+    function getCurrenciesHandler(response) {
+        return response.data;
+    }
+}
+
+// resolve house types
+getHouseTypes.$inject = ['houseTypeService']
+function getHouseTypes(houseTypeService) {
+    return houseTypeService.getHouseTypes().then(getHouseTypesHandler);
+
+    function getHouseTypesHandler(response) {
         return response.data;
     }
 }

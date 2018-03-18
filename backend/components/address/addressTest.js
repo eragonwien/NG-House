@@ -8,8 +8,8 @@ chai.use(chaiHttp);
 describe('Address Model Test', function () {
     var address = {
         id: null,
-        address: 'Neubaugasse 73',
-        postal_code: '1070',
+        address: 'Neubaugasse ' + new Date().getTime(),
+        postal_code: new Date().getTime().toString(),
         city: 'Vienna',
         land: 'Austria'
     }
@@ -97,8 +97,8 @@ describe('Address Model Test', function () {
 describe('Address request Test', function () {
     var address = {
         id: null,
-        address: 'Neubaugasse 73',
-        postal_code: '1070',
+        address: 'Neubaugasse ' + new Date().getTime(),
+        postal_code: new Date().getTime().toString(),
         city: 'Vienna',
         land: 'Austria'
     };
