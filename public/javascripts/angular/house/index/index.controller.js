@@ -7,8 +7,8 @@ function indexController(houses, houseService, userService, currencyService, app
     vm.user = userService.getLocalUser();
     vm.showHouse = showHouse;
     vm.createHouse = createHouse;
-    //getHouses();
-    alert(houses, 10000);
+    vm.houses = houses;
+    
 
     /* House */
     function getHouses() {

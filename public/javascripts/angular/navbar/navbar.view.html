@@ -1,13 +1,15 @@
 <nav>
 	<div class="nav-wrapper blue darken-4 white-text text-lighten-4">
-		<a href="#" class="brand-logo left" ui-sref="index" ui-sref-active="active">Nghouse</a>
-		<ul class="right">
-			<li><a href="" ng-click="navbar.reload()"><i class="material-icons">refresh</i></a></li>
-			<li ng-if="navbar.user"><a href="" class="dropdown-button" data-activates="dropdown-user">
-				<i class="material-icons">person</i>
-			</a></li>
-			<li><a href="" ui-sref="login" ui-sref-active="active" ng-if="!navbar.user">Login</a></li>
-		</ul>
+		<div class="container">
+			<a href="#" class="brand-logo left" ui-sref="index" ui-sref-active="active">Nghouse</a>
+			<ul class="right">
+				<li><a href="" ng-click="navbar.reload()"><i class="material-icons">refresh</i></a></li>
+				<li ng-if="navbar.user"><a href="" class="dropdown-button" data-activates="dropdown-user">
+					<i class="material-icons">person</i>
+				</a></li>
+				<li><a href="" ui-sref="login" ui-sref-active="active" ng-if="!navbar.user">Login</a></li>
+			</ul>
+		</div>
 	</div>
 </nav>
 <ul id="dropdown-user" class="dropdown-content" ng-if="navbar.user">

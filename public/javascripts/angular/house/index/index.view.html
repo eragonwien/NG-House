@@ -1,22 +1,17 @@
-<!-- Search bar -->
-<div class="row">
+<div class="row center-align">
     <div class="col s12">
-        <form>
-            <div class="input-field">
-                <i class="material-icons prefix">search</i>
-                <input type="text" name="seach_house" id="search_house" ng-model="index.searchInput">
-                <label for="search_house">Search</label>
-            </div>
-        </form>
+        <button class="btn btn-large waves-effect waves-light blue darken-4" ui-sref="search" ui-sref-active="active">
+            <i class="material-icons left">search</i>Start search here!
+        </button>
     </div>
 </div>
-
 <div class="row">
+    <div class="col s12"><h2>Lastest</h2></div>
     <!-- House listing -->
-    <div class="col s12 m6" ng-repeat="house in index.houses">
-        <div class="card hoverable sticky-action">
-            <div class="card-image wave-effect waves-block waves-light">
-                <img src="stylesheets/images/{{house.house_type}}.jpg" alt="house_image">
+    <div class="col s12 m4 " ng-repeat="house in index.houses">
+        <div class="card medium hoverable">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src="stylesheets/images/{{house.house_type}}.jpg" alt="house_image">
             </div>
             <div class="card-content">
                 <span class="card-title activator">
@@ -24,14 +19,14 @@
                 </span>
             </div>
             <div class="card-reveal">
-                <span class="card-title">{{ house.address }}</span>
+                <span class="card-title">{{ house.address }}<i class="material-icons right">close</i></span>
                 <p><strong>Owner:</strong> {{house.first_name}} {{house.last_name}}</p>
                 <p><strong>Price:</strong> {{house.currency_short}} {{house.price}} </p>
                 <p><strong>Address:</strong> {{house.address}}, {{house.postal_code}} {{house.city}}, {{house.land}}</p>
                 <p><strong>Details:</strong> {{house.house_type}}, {{house.bathrooms}} bathrooms, {{house.bedrooms}} bedrooms, {{house.size}} m&sup2;</p>
-            </div>
-            <div class="card-action blue darken-4">
-                <a href="" class="" ng-click="index.showHouse(house)">Buy</a>
+                <div class="card-action blue darken-4">
+                    <a href="" class="" ng-click="index.showHouse(house)">Buy</a>
+                </div>
             </div>
         </div>      
     </div>
