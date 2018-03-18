@@ -1,0 +1,84 @@
+<h2 class="center-align">searchHouse</h2>
+<form name="searchHouseForm">
+    <div class="row">
+        <div class="input-field col s12">
+            <input class="autocomplete" type="text" name="searchHouse.house.address" id="searchHouse.house.address" ng-model="searchHouse.house.address">
+            <label class="active" for="searchHouse.house.address">Address, postal code, city or region</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input class="validate" type="number" min="0" name="searchHouse.house.price.max" id="searchHouse.house.maxPrice" ng-model="searchHouse.house.maxPrice">
+            <label class="active" for="searchHouse.house.maxPrice">max. price</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input class="validate" type="number" min="0" name="searchHouse.house.size" id="searchHouse.house.size" ng-model="searchHouse.house.size">
+            <label class="active" for="searchHouse.house.size">min. space</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input class="validate" type="number" min="0" name="searchHouse.house.minRooms" id="searchHouse.house.minRooms" ng-model="searchHouse.house.minRooms">
+            <label class="active" for="searchHouse.house.minRooms">min. rooms</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <select name="searchHouse.house.house_type_id" id="searchHouse.house.house_type_id" ng-model="searchHouse.house.house_type_id">
+                <option ng-repeat="houseType in searchHouse.houseTypes" ng-value="houseType.id">{{houseType.name}}</option>
+            </select>
+            <label for="searchHouse.house.house_type_id">Type</label>
+        </div>
+        <div class="col">
+            <input class="left" type="checkbox" id="searchHouse.house.bathrooms" name="searchHouse.house.bathrooms" ng-model="searchHouse.house.bathrooms">
+            <label for="searchHouse.house.bathrooms">bathrooms</label>
+        </div>
+        <div class="col">
+            <input class="left" type="checkbox" id="searchHouse.house.bedrooms" name="searchHouse.house.bedrooms" ng-model="searchHouse.house.bedrooms">
+            <label for="searchHouse.house.bedrooms">bedrooms</label>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn waves-effect waves-light blue darken-4" ng-click="searchHouse.submit(searchHouseForm, searchHouse.house)">Submit</button>
+        </div>
+        <div class="col s12">
+            <div class="card-panel white">
+                <pre>{{searchHouse.house | json}}</pre>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // select
+            $('select').material_select();
+
+            // ajax auto complete
+            $(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/addresses',
+                    success: ajaxAutoComplete
+                });
+            });
+            
+            function ajaxAutoComplete(response) {
+                var addresses = getAddresses();
+                initAutocomplete();
+                
+                function getAddresses() {
+                    var results = {};
+                    for (let i = 0; i < response.length && i < 10; i++) {
+                        var address = response[i];
+                        var key = address.address + ', ' + address.postal_code + ' ' + address.city + ', ' + address.land + ' (' + address.id + ')';
+                        results[key] = null;
+                    }
+                    return results;
+                }
+
+                function initAutocomplete() {
+                    $('input.autocomplete').autocomplete({
+                        data: addresses,
+                        limit: 5,
+                        minLength: 1,
+                        onAutocomplete: function (value) {
+                            //console.log(value);
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</form>
