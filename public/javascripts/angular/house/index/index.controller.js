@@ -9,6 +9,10 @@ function indexController(houses, houseService, userService, currencyService, app
     vm.createHouse = createHouse;
     vm.houses = houses;
     
+    var appMessage = appService.getMessage();
+    if (appMessage) {
+        alert(appMessage);
+    }
 
     /* House */
     function getHouses() {
