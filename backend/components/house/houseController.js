@@ -17,6 +17,14 @@ exports.getAllHouses = function (req, res, next) {
 			}
 			res.status(200).json(results);
 		});
+	} 
+	else if (req.query.search){
+		model.searchHouses(req.query.search, function (error, results) {
+			if (error) {
+				return next(error);
+			}
+			res.status(200).json(results);			
+		});
 	} else {
 		model.getAllHouses(function (error, results) {
 			if (error) {
