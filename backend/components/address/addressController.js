@@ -10,6 +10,14 @@ exports.createAddress = function (req, res, next) {
 };
 
 exports.getAllAddresses = function (req, res, next) {
+    if (req.query.distinct == 'true') {
+        return model.getDistinctCities(function (error, results) {
+            if (error) {
+                return next(error);
+            }
+            res.status(200).json(results);
+        });
+    }
     model.getAllAddresses(function (error, results) {
         if (error) {
             return next(error);

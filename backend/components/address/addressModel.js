@@ -22,6 +22,16 @@ exports.getAllAddresses = function (done) {
     })
 };
 
+exports.getDistinctCities = function (done) {
+    var cmd = 'SELECT DISTINCT city, land FROM address;'
+    pool.query(cmd, null, function (error, results) {
+        if (error) {
+            return done(error);
+        }
+        done(null, results);
+    })
+};
+
 exports.getAddressById = function (id, done) {
     var cmd = 'SELECT * FROM address WHERE id=? LIMIT 1;';
     var params = [id];
