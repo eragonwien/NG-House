@@ -16,9 +16,10 @@
 <title>Nghouse</title>
 </head>
     <body ng-app="house">
+            
         <div ui-view name="navbar"></div>
         <div class="container">
-            <div ui-view name="content" style="padding: 1rem 0rem;"></div>        
+            <div ui-view name="content" style="padding: 1rem 0rem;" ng-if="!loading"></div>       
         </div>
 
         <!-- JQuery -->
@@ -41,7 +42,7 @@
         <script src="javascripts/angular/house/currency.service.js"></script>
         <script src="javascripts/angular/user/login/login.controller.js"></script>
         <script src="javascripts/angular/user/signup/signup.controller.js"></script>
-        <script src="javascripts/angular/user/logout/logout.controller.js"></script>
+        <script src="javascripts/angular/user/redirect/redirect.controller.js"></script>
         <script src="javascripts/angular/user/profile/profile.controller.js"></script>
         <script src="javascripts/angular/user/user.service.js"></script>
     </body>
