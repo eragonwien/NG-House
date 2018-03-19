@@ -181,7 +181,7 @@ function spawnAddresses(count, names, postalCodeLength, successCount) {
     // generate an address object
     var address = {
         address: names[helper.getRandomInt(names.length)] + 'Street ' + helper.getRandomInt(100),
-        postal_code: helper.getRandomInt(Math.pow(10, postalCodeLength - 1), Math.pow(10, postalCodeLength) - 1),
+        postal_code: helper.getRandomInt(Math.pow(10, postalCodeLength - 1), Math.pow(10, postalCodeLength)),
         city: names[helper.getRandomInt(names.length)] + ' City',
         land: names[helper.getRandomInt(names.length)] + ' Land'
     }
@@ -258,10 +258,10 @@ function spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCo
         address_id: addressIds[helper.getRandomInt(addressIds.length)],
         house_type_id: typeIds[helper.getRandomInt(typeIds.length)],
         currency_id: currencyIds[helper.getRandomInt(currencyIds.length)],
-        bathrooms: helper.getRandomInt(1, 2),
-        bedrooms: helper.getRandomInt(1, 2),
+        bathrooms: helper.getRandomInt(1, 5),
+        bedrooms: helper.getRandomInt(1, 5),
         size: size,
-        price: helper.getRandomInt(2000, 5000) * size
+        price: helper.getRandomInt(200, 1000) * size
     };
     houseModel.createHouse(house, function (error, result) {
         successCount = (error) ? successCount : successCount + 1;
