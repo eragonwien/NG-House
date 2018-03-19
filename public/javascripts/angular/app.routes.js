@@ -57,9 +57,9 @@ function routing(stateProvider, urlRouterProvider) {
             }
         }
     }
-    var logout = {
-        name: 'logout',
-        url: '/logout',
+    var redirect = {
+        name: 'redirect',
+        url: '/redirect',
         views: {
             navbar: {
                 templateUrl: 'javascripts/angular/navbar/navbar.view.html',
@@ -67,9 +67,9 @@ function routing(stateProvider, urlRouterProvider) {
                 controllerAs: 'navbar'
             },
             content: {
-                templateUrl: 'javascripts/angular/user/logout/logout.view.html',
-                controller: 'logoutController',
-                controllerAs: 'logout'
+                templateUrl: 'javascripts/angular/user/redirect/redirect.view.html',
+                controller: 'redirectController',
+                controllerAs: 'redirect'
             }
         }
     }
@@ -131,14 +131,15 @@ function routing(stateProvider, urlRouterProvider) {
             }
         },
         resolve: {
-            houseTypes: getHouseTypes
+            houseTypes: getHouseTypes,
+            currencies: getCurrencies
         }
     }
 
     stateProvider.state(index);
     stateProvider.state(signup);
     stateProvider.state(login);
-    stateProvider.state(logout);
+    stateProvider.state(redirect);
     stateProvider.state(profile);
     stateProvider.state(createHouse);
     stateProvider.state(search);

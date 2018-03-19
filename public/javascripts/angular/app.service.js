@@ -2,11 +2,15 @@ angular
     .module('house')
     .factory('appService', appService);
 
-appService.$inject = ['$state']
-function appService(state) {
+appService.$inject = ['$state', '$window']
+function appService(state, window) {
     var service = {
         alert: alert,
-        moveTo: moveTo
+        moveTo: moveTo,
+        reload: reload,
+        getMessage: getMessage,
+        setMessage: setMessage,
+        deleteMessage: deleteMessage
     }
     return service;
 
@@ -23,5 +27,21 @@ function appService(state) {
             path = 'index';
         }
         state.go(path);
+    }
+
+    function reload() {
+        window.location.reload();
+    }
+
+    function getMessage() {
+        return window.localStorage.getItem('message');
+    }
+
+    function setMessage(message) {
+        window.localStorage.setItem('message', message);
+    }
+
+    function deleteMessage() {
+        window.localStorage.removeItem('message');
     }
 }
