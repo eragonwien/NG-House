@@ -1,83 +1,148 @@
-<h2 class="center-align">searchHouse</h2>
-<form name="searchHouseForm">
-    <div class="row">
-        <div class="input-field col s12">
-            <input class="autocomplete" type="text" name="searchHouse.house.address" id="searchHouse.house.address" ng-model="searchHouse.house.address">
-            <label class="active" for="searchHouse.house.address">Address, postal code, city or region</label>
+<div class="preloader-wrapper big active absolute-loader" ng-if="searchHouse.loading">
+    <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+            <div class="circle"></div>
         </div>
-        <div class="input-field col s12 m6">
-            <input class="validate" type="number" min="0" name="searchHouse.house.price.max" id="searchHouse.house.maxPrice" ng-model="searchHouse.house.maxPrice">
-            <label class="active" for="searchHouse.house.maxPrice">max. price</label>
+        <div class="gap-patch">
+            <div class="circle"></div>
         </div>
-        <div class="input-field col s12 m6">
-            <input class="validate" type="number" min="0" name="searchHouse.house.size" id="searchHouse.house.size" ng-model="searchHouse.house.size">
-            <label class="active" for="searchHouse.house.size">min. space</label>
+        <div class="circle-clipper right">
+            <div class="circle"></div>
         </div>
-        <div class="input-field col s12 m6">
-            <input class="validate" type="number" min="0" name="searchHouse.house.minRooms" id="searchHouse.house.minRooms" ng-model="searchHouse.house.minRooms">
-            <label class="active" for="searchHouse.house.minRooms">min. rooms</label>
+    </div>
+</div>
+<ul class="collapsible" data-collapsible="accordion">
+    <li>
+        <div class="collapsible-header"><i class="material-icons left">search</i>Search</div>
+        <div class="collapsible-body">
+            <form name="searchHouseForm">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input class="autocomplete" type="text" name="searchHouse.house.address" id="searchHouse.house.address" ng-model="searchHouse.house.address">
+                        <label class="active" for="searchHouse.house.address">Address, postal code, city or region</label>
+                    </div>
+                    <div class="input-field col s8 m4">
+                        <input class="validate" type="number" min="0" name="searchHouse.house.maxPrice" id="searchHouse.house.maxPrice" ng-model="searchHouse.house.maxPrice">
+                        <label class="active" for="searchHouse.house.maxPrice">max. price</label>
+                    </div>
+                    <div class="input-field col s4 m2">
+                        <select name="searchHouse.house.currency" id="searchHouse.house.currency" ng-model="searchHouse.house.currency">
+                            <option value="" selected>Any</option>
+                            <option ng-repeat="currency in searchHouse.currencies" ng-value="currency.id">{{currency.name}}</option>
+                        </select>
+                        <label for="searchHouse.house.currency">Currency</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <select name="searchHouse.house.house_type_id" id="searchHouse.house.house_type_id" ng-model="searchHouse.house.house_type_id">
+                            <option value="" selected>Any</option>
+                            <option ng-repeat="houseType in searchHouse.houseTypes" ng-value="houseType.id">{{houseType.name}}</option>
+                        </select>
+                        <label for="searchHouse.house.house_type_id">Type</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <input class="validate" type="number" min="0" name="searchHouse.house.minSize" id="searchHouse.house.minSize" 
+                            ng-model="searchHouse.house.minSize" ng-init="searchHouse.house.minSize = 0">
+                        <label class="active" for="searchHouse.house.minSize">min. space in m&sup2; </label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <input class="validate" type="number" min="0" name="searchHouse.house.minRooms" id="searchHouse.house.minRooms" 
+                            ng-model="searchHouse.house.minRooms" ng-init="searchHouse.house.minRooms = 0">
+                        <label class="active" for="searchHouse.house.minRooms">min. rooms</label>
+                    </div>
+                    <div class="col s6 m3">
+                        <input class="validate" type="number" min="0" id="searchHouse.house.bathrooms" name="searchHouse.house.bathrooms" 
+                            ng-model="searchHouse.house.bathrooms" ng-init="searchHouse.house.bathrooms = 0">
+                        <label for="searchHouse.house.bathrooms">min. bathrooms</label>
+                    </div>
+                    <div class="col s6 m3">
+                        <input class="validate" type="number" min="0" id="searchHouse.house.bedrooms" name="searchHouse.house.bedrooms" 
+                            ng-model="searchHouse.house.bedrooms" ng-init="searchHouse.house.bedrooms = 0">
+                        <label for="searchHouse.house.bedrooms">min. bedrooms</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn waves-effect waves-light blue darken-4" 
+                            ng-click="searchHouse.submit(searchHouse.house)">
+                            Search<i class="material-icons left">search</i>
+                        </button>
+                        <button type="submit" class="btn waves-effect waves-light grey" 
+                            ng-click="searchHouse.resetFilter()">
+                            Reset Filter
+                        </button>
+                    </div>
+                </div>  
+            </form>
         </div>
-        <div class="input-field col s12 m6">
-            <select name="searchHouse.house.house_type_id" id="searchHouse.house.house_type_id" ng-model="searchHouse.house.house_type_id">
-                <option ng-repeat="houseType in searchHouse.houseTypes" ng-value="houseType.id">{{houseType.name}}</option>
-            </select>
-            <label for="searchHouse.house.house_type_id">Type</label>
-        </div>
-        <div class="col">
-            <input class="left" type="checkbox" id="searchHouse.house.bathrooms" name="searchHouse.house.bathrooms" ng-model="searchHouse.house.bathrooms">
-            <label for="searchHouse.house.bathrooms">bathrooms</label>
-        </div>
-        <div class="col">
-            <input class="left" type="checkbox" id="searchHouse.house.bedrooms" name="searchHouse.house.bedrooms" ng-model="searchHouse.house.bedrooms">
-            <label for="searchHouse.house.bedrooms">bedrooms</label>
-        </div>
-        <div class="col">
-            <button type="submit" class="btn waves-effect waves-light blue darken-4" ng-click="searchHouse.submit(searchHouseForm, searchHouse.house)">Submit</button>
-        </div>
-        <div class="col s12">
-            <div class="card-panel white">
-                <pre>{{searchHouse.house | json}}</pre>
+    </li>
+</ul>
+
+<!-- Result -->
+<div class="row" ng-if="searchHouse.results">
+    <div class="col s12 m4" ng-repeat="result in searchHouse.results">
+        <div class="card medium hoverable">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src="stylesheets/images/{{result.house_type}}.jpg" alt="house_image">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator">
+                    {{result.house_type}} in {{ result.address }}
+                </span>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title">{{ result.address }}<i class="material-icons right">close</i></span>
+                <p><strong>Owner:</strong> {{result.first_name}} {{result.last_name}}</p>
+                <p><strong>Price:</strong>  {{result.price | currency : result.currency + " " : 2}} </p>
+                <p><strong>Address:</strong> {{result.address}}, {{result.postal_code}} {{result.city}}, {{result.land}}</p>
+                <p><strong>Details:</strong> {{result.house_type}}, {{result.bathrooms}} bathrooms, {{result.bedrooms}} bedrooms, {{result.size}} m&sup2;</p>
+                <div class="card-action blue darken-4"></div>
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            // select
-            $('select').material_select();
+</div>
+<!-- Jquery -->
+<script>
+    $(document).ready(function () {
 
-            // ajax auto complete
-            $(function () {
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/addresses',
-                    success: ajaxAutoComplete
-                });
+        // collapsible
+        $('.collapsible').collapsible();
+        $('.collapsible').collapsible('open', 0);
+
+        // select
+        $('select').material_select();
+
+        // ajax auto complete
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/api/addresses?distinct=true',
+                success: ajaxAutoComplete
             });
-            
-            function ajaxAutoComplete(response) {
-                var addresses = getAddresses();
-                initAutocomplete();
-                
-                function getAddresses() {
-                    var results = {};
-                    for (let i = 0; i < response.length && i < 10; i++) {
-                        var address = response[i];
-                        var key = address.address + ', ' + address.postal_code + ' ' + address.city + ', ' + address.land + ' (' + address.id + ')';
-                        results[key] = null;
-                    }
-                    return results;
-                }
-
-                function initAutocomplete() {
-                    $('input.autocomplete').autocomplete({
-                        data: addresses,
-                        minLength: 1,
-                        onAutocomplete: function (value) {
-                            //console.log(value);
-                        }
-                    });
-                }
-            }
         });
-    </script>
-</form>
+        
+        function ajaxAutoComplete(response) {
+            var addresses = getAddresses();
+            initAutocomplete();
+            
+            function getAddresses() {
+                var results = {};
+                for (let i = 0; i < response.length && i < 10; i++) {
+                    var address = response[i];
+                    var key =  address.city + ',' + address.land;
+                    results[key] = null;
+                }
+                return results;
+            }
+
+            function initAutocomplete() {
+                $('input.autocomplete').autocomplete({
+                    data: addresses,
+                    minLength: 1,
+                    onAutocomplete: function (value) {
+                        //console.log(value);
+                    }
+                });
+            }
+        }
+    });
+</script>
