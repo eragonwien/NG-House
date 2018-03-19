@@ -10,7 +10,7 @@ function searchHouseController(houseTypes, appService) {
 
     /**
      * submits a form
-     * @param {object} form submitted form
+     * @param {object} form search form
      * @param {object} house search house
      */
     function submit(form, house) {
