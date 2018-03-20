@@ -6,12 +6,10 @@ var expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Currency Model Test', function () {
-    var short = new Date().getTime().toString();
-    short = short.substring(16);
     var currency = {
         id: null,
-        name: 'VN_' + new Date().getTime(),
-        short: short
+        name: 'FAKER',
+        short: 'FK'
     };
     var model = require('./currencyModel');
     it('should create a new currency', function (done) {
@@ -80,12 +78,10 @@ describe('Currency Model Test', function () {
 });
 
 describe('Currency Request Test', function () {
-    var short = new Date().getTime().toString();
-    short = short.substring(16);
     var currency = {
         id: null,
-        name: 'VN_' + new Date().getTime().toString(),
-        short: short
+        name: 'FAKERR',
+        short: 'FKR'
     };
     it('should create a new currency per POST on /api/currencies', function (done) {
         chai.request(app)
@@ -143,13 +139,12 @@ describe('Currency Request Test', function () {
     });
     it('delete the created currency per DELETE on /api/currencies/:cid', function (done) {
         chai.request(app)
-            .get('/api/currencies/' + currency.id)
+            .delete('/api/currencies/' + currency.id)
             .end(function (error, result) {
                 expect(error).to.be.null;
                 expect(result).to.have.status(200);
                 expect(result.body).to.be.an('object');
-                expect(result.body).to.have.property('name').which.is.equal(currency.name);
-                expect(result.body).to.have.property('short').which.is.equal(currency.short);
+                expect(result.body).to.have.property('affectedRows').which.is.greaterThan(0);
                 done();
             })
     }); 
