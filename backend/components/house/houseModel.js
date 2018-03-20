@@ -84,20 +84,19 @@ function searchHouses(params, done) {
 	var cmd = 'SELECT * FROM get_houses ';
 
 	// create where clauses
-	var jsonParams = JSON.parse(params);
 	var whereClause = getWhereClause(params);
 	if (whereClause.params.length > 0) {
 		cmd += whereClause.clause;		
 	}
-	cmd += ' ORDER BY house.last_update DESC ';
+	cmd += ' ORDER BY last_update DESC, id ASC ';
 
 	// set limit
-	if (jsonParams.limit) {
-		cmd += 'LIMIT ' + jsonParams.limit;
+	if (params.limit) {
+		cmd += 'LIMIT ' + params.limit;
 	}
 	// close up
 	cmd += ';';
-	
+	console.log(cmd);
 	pool.query(cmd, whereClause.params, function(error, results){
 		if (error) {
 			return done(error);
@@ -110,46 +109,46 @@ function searchHouses(params, done) {
 	 * @param {string} params parameters as json string
 	 * @returns {object} object contains string and params
 	 */
-	function getWhereClause(jsonParams) {
-		var params = [];
+	function getWhereClause(params) {
 		var clauses = [];
+		var clausesParams = [];
 		var str = "WHERE ";
 		
-		if (jsonParams.city) {
+		if (params.city) {
 			clauses.push('address.city=?');
-			params.push(jsonParams.city);
+			clausesParams.push(params.city);
 		}
-		if (jsonParams.land) {
+		if (params.land) {
 			clauses.push('address.land=?');
-			params.push(jsonParams.land);			
+			clausesParams.push(params.land);			
 		}
-		if (jsonParams.minSize) {
+		if (params.minSize) {
 			clauses.push('house.size>=?');
-			params.push(jsonParams.minSize);			
+			clausesParams.push(params.minSize);			
 		}
-		if (jsonParams.maxPrice) {
+		if (params.maxPrice) {
 			clauses.push('house.price<=?');
-			params.push(jsonParams.maxPrice);		
+			clausesParams.push(params.maxPrice);		
 		}
-		if (jsonParams.currency_id) {
+		if (params.currency_id) {
 			clauses.push('house.currency_id=?');
-			params.push(jsonParams.currency_id);			
+			clausesParams.push(params.currency_id);			
 		}
-		if (jsonParams.house_type_id) {
+		if (params.house_type_id) {
 			clauses.push('house.house_type_id=?');
-			params.push(jsonParams.house_type_id);			
+			clausesParams.push(params.house_type_id);			
 		}
-		if (jsonParams.rooms) {
+		if (params.rooms) {
 			clauses.push('house.rooms >= ?');
-			params.push(jsonParams.bathrooms);						
+			clausesParams.push(params.bathrooms);						
 		}
-		if (jsonParams.bathrooms) {
+		if (params.bathrooms) {
 			clauses.push('house.bathrooms >= ?');
-			params.push(jsonParams.bathrooms);						
+			clausesParams.push(params.bathrooms);						
 		}
-		if (jsonParams.bedrooms) {
+		if (params.bedrooms) {
 			clauses.push('house.bedrooms >= ?');
-			params.push(jsonParams.bedrooms);			
+			clausesParams.push(params.bedrooms);			
 		}
 		for (let i = 0; i < clauses.length; i++) {
 			if (i > 0) {

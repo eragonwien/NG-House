@@ -45,7 +45,7 @@ router.delete('/api/roles/:rid', role.deleteRoleById);
 
 // House
 router.post('/api/houses', house.createHouse);
-router.get('/api/houses', house.getAllHouses);
+router.get('/api/houses', house.getHouses);
 router.get('/api/houses/:hid', house.getHouseById);
 router.put('/api/houses/:hid', house.updateHouseById);
 router.delete('/api/houses/:hid', house.deleteHouseById);
