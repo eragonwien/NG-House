@@ -52,7 +52,7 @@ function setEnv(path) {
         // User 
         console.log('Please write all the names you can think of, separated by commas');
         var names = readline.question('Name: ');
-        env += 'USER_NAME=' + names + '\n';     
+        env += 'NAME=' + names + '\n';     
 
         // Postal Code 
         console.log('Please write the length of the postal code');

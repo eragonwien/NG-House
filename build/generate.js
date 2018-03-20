@@ -11,7 +11,7 @@
  * Following test data can be generated:
  * address is generated from ADDRESS, POSTAL_CODE, CITY and LAND
  * 
- * user is generated from USER_NAME. email is firstname_lastname_time@lastname.com
+ * user is generated from NAME. email is firstname_lastname_time@lastname.com
  * for address, all address ids are queried and is randomly chosen.
  * role is always standard which has id of 1
  * 
@@ -91,16 +91,16 @@ function generateData(type, count) {
 
 /**
  * generates user
- * first checks if the .env file has variable USER_NAME, cancel process if not
+ * first checks if the .env file has variable NAME, cancel process if not
  * query all address ids 
  * create queries to add user to the database
  * @param {number} count number of user being generated
  */
 function generateUser(count) {
-    if (!process.env.USER_NAME) {
-        return finish(null, 'no USER_NAME variables found.');
+    if (!process.env.NAME) {
+        return finish(null, 'no NAME variables found.');
     }
-    var names = helper.getListFromString(process.env.USER_NAME);
+    var names = helper.getListFromString(process.env.NAME);
     var addressModel = require('../backend/components/address/addressModel');
     addressModel.getAllAddresses(function (error, results) {
         if (error) {
@@ -154,12 +154,12 @@ function spawnUsers(count, names, addressList, successCount) {
  * @param {number} count number of addresses
  */
 function generateAddress(count) {
-    if (!process.env.USER_NAME) {
-        return finish(null, 'no USER_NAME variables found.');
+    if (!process.env.NAME) {
+        return finish(null, 'no NAME variables found.');
     }
     // set postal code length as 4 if no value in .env found
     var postalCodeLength = (process.env.POSTAL_CODE) ? process.env.POSTAL_CODE : 4;
-    var names = helper.getListFromString(process.env.USER_NAME);
+    var names = helper.getListFromString(process.env.NAME);
     // spawn addresses
     spawnAddresses(count, names, postalCodeLength)
 }
