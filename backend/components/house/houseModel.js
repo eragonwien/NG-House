@@ -53,7 +53,7 @@ function getHouses(params, done) {
 	if (!params) {
 		return getAllHouses(done);
 	}
-	searchHouses(params);
+	searchHouses(params, done);
 }
 exports.getHouses = getHouses;
 
@@ -84,6 +84,7 @@ function searchHouses(params, done) {
 	var cmd = 'SELECT * FROM get_houses ';
 
 	// create where clauses
+	var jsonParams = JSON.parse(params);
 	var whereClause = getWhereClause(params);
 	if (whereClause.params.length > 0) {
 		cmd += whereClause.clause;		
@@ -91,8 +92,8 @@ function searchHouses(params, done) {
 	cmd += ' ORDER BY house.last_update DESC ';
 
 	// set limit
-	if (params.limit) {
-		cmd += 'LIMIT ' + params.limit;
+	if (jsonParams.limit) {
+		cmd += 'LIMIT ' + jsonParams.limit;
 	}
 	// close up
 	cmd += ';';
@@ -109,9 +110,8 @@ function searchHouses(params, done) {
 	 * @param {string} params parameters as json string
 	 * @returns {object} object contains string and params
 	 */
-	function getWhereClause(params) {
-		var jsonParams = JSON.parse(params);
-		params = [];
+	function getWhereClause(jsonParams) {
+		var params = [];
 		var clauses = [];
 		var str = "WHERE ";
 		

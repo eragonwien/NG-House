@@ -38,16 +38,6 @@ describe('Houses Models Test', function () {
             done();
         });
     });
-    it('should list 5 houses with the lastest update', function (done) {
-        model.getLastestHouses(5, function (error, result) {
-            if (error) {
-                return done(error);
-            }
-            expect(result).to.be.an('array');
-            expect(result).to.have.lengthOf(5);
-            done();
-        });
-    });
     it('should get the created house', function (done) {
         model.getHouseById(house.id, function (error, result) {
             if (error) {
@@ -117,6 +107,18 @@ describe('House Request Test', function () {
             .end(function (error, result) {
                 expect(result).to.have.status(200);
                 expect(result.body).to.be.an('array');
+                done();
+            });
+    });
+    it('should get 5 houses per GET on /api/houses', function (done) {
+        var limit = 5;
+        chai.request(app)
+            .get('/api/houses?limit=' + limit)
+            .end(function (error, result) {
+                expect(result).to.have.status(200);
+                expect(result.body).to.be.an('array');
+                console.log(result.body.length);
+                expect(result.body.length <= limit).to.be.true;
                 done();
             });
     });
