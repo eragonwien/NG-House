@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS house (
     house_type_id INT NOT NULL,
     currency_id INT NOT NULL,
     price INT NOT NULL,
+    rooms INT NOT NULL,
     bathrooms INT NOT NULL,
     bedrooms INT NOT NULL,
     size INT NOT NULL,
@@ -61,7 +62,7 @@ CREATE TABLE IF NOT EXISTS house (
     FOREIGN KEY (address_id) REFERENCES address(id),
     FOREIGN KEY (house_type_id) REFERENCES house_type(id),
     FOREIGN KEY (currency_id) REFERENCES currency(id),
-    CONSTRAINT CHK_rooms CHECK(bathrooms >= 0 AND bedrooms >= 0 AND size > 0)
+    CONSTRAINT CHK_rooms CHECK(bathrooms >= 0 AND bedrooms >= 0 AND size > 0 AND rooms > (bathrooms + bedrooms))
 );
 
 INSERT INTO role(name) VALUES ('agent');
@@ -72,5 +73,5 @@ INSERT INTO house_type(name) VALUES ('House');
 INSERT INTO house_type(name) VALUES ('Apartment');
 INSERT INTO house_type(name) VALUES ('Villa');
 INSERT INTO address(address, postal_code, city, land) VALUES ('Neustiftgasse 66', '1070', 'Vienna', 'Austria');
-INSERT INTO user(role_id, first_name, last_name, username, password, email, address_id) VALUES(1, 'SQL', 'Man', 'Sqlman', 'test', 'sqlman@mail', 1);
-INSERT INTO house(user_id, address_id, house_type_id, price, currency_id, bathrooms, bedrooms, size) VALUES (1, 1, 1, 2000, 1, 1, 1, 60);
+INSERT INTO user(role_id, first_name, last_name, username, password, email, address_id) VALUES(1, 'SQL', 'Man', 'sqlman', 'test', 'sqlman@mail', 1);
+INSERT INTO house(user_id, address_id, house_type_id, price, currency_id, rooms, bathrooms, bedrooms, size) VALUES (1, 1, 1, 2000, 1, 5, 1, 1, 60);

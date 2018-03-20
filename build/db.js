@@ -4,6 +4,7 @@ var readline = require('readline-sync');
 var db = require('../backend/config/db');
 var helper = require('./helper');
 const sqlCreatePath = './backend/config/sql/create.sql';
+const sqlViewsPath = './backend/config/sql/views.sql';
 const tablesList = ['address', 'currency', 'house', 'role', 'house_type', 'user'];
 
 var pool = db.pool;
@@ -43,7 +44,7 @@ function checkTables(database) {
             if (readline.keyInYN('Do you want to clean all entries in these tables ?')) {
                 return createTables();
             }
-            return finish();
+            return createViews();
         }
         console.log('Tables are missing. Process on creating tables on existing database.')
         createTables();
@@ -59,8 +60,23 @@ function createTables() {
             return close(error);
         }
         console.log('Tables successfully created.');
-        finish();
+        createViews();
     })
+}
+
+function createViews() {
+    if (!readline.keyInYN('Do you want to re-create all the views ?')) {
+        return finish();
+    }
+    console.log('Creating views.');
+    var sql = fs.readFileSync(sqlViewsPath).toString();
+    pool.query(sql, null, function (error, result) {
+        if (error) {
+            return close(error);
+        }
+        console.log('View created.');
+        finish();      
+    });
 }
 
 function close(error) {

@@ -28,7 +28,7 @@ var dotenv = require('dotenv');
 var fs = require('fs');
 var helper = require('./helper');
 var pool = require('../backend/config/db').pool;
-var supportedTypes = ['house', 'user', 'address'];
+var supportedTypes = ['address', 'user', 'house'];
 
 var userModel = require('../backend/components/user/userModel');
 var addressModel = require('../backend/components/address/addressModel');
@@ -252,16 +252,21 @@ function spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCo
         return finish(null, 'Success: ' + successCount);
     }
     // create house
-    var size = helper.getRandomInt(20, 1000);
+    var bathrooms = helper.getRandomInt(1, 5);
+    var bedrooms = helper.getRandomInt(1, 5);
+    var rooms = bathrooms + bedrooms + helper.getRandomInt(1, 3);
+    var size = helper.getRandomInt(rooms * 10, rooms * 100);
+    var price = helper.getRandomInt(200, 1000) * size;
     var house = {
         user_id: userIds[helper.getRandomInt(userIds.length)],
         address_id: addressIds[helper.getRandomInt(addressIds.length)],
         house_type_id: typeIds[helper.getRandomInt(typeIds.length)],
         currency_id: currencyIds[helper.getRandomInt(currencyIds.length)],
-        bathrooms: helper.getRandomInt(1, 5),
-        bedrooms: helper.getRandomInt(1, 5),
+        rooms : rooms,
+        bathrooms: bathrooms,
+        bedrooms: bedrooms,
         size: size,
-        price: helper.getRandomInt(200, 1000) * size
+        price: price
     };
     houseModel.createHouse(house, function (error, result) {
         successCount = (error) ? successCount : successCount + 1;
