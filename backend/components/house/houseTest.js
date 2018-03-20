@@ -12,6 +12,7 @@ describe('Houses Models Test', function () {
         house_type_id: 1,
         price: 1000,
         currency_id: 1,
+        rooms: 5,
         bathrooms: 1,
         bedrooms: 2,
         size: 40
@@ -94,6 +95,7 @@ describe('House Request Test', function () {
         house_type_id: 1,
         price: 1000,
         currency_id: 1,        
+        rooms: 5,
         bathrooms: 1,
         bedrooms: 2,
         size: 40
