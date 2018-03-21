@@ -8,6 +8,7 @@ function indexController(houses, houseService, userService, currencyService, app
     vm.showHouse = showHouse;
     vm.createHouse = createHouse;
     vm.houses = houses;
+    vm.contact = contact;
     
     var appMessage = appService.getMessage();
     if (appMessage) {
@@ -48,5 +49,11 @@ function indexController(houses, houseService, userService, currencyService, app
 
     function moveTo(path) {
         appService.moveTo(path);
+    }
+
+    function contact(house) {
+        vm.agent = {
+            username: house.username
+        }
     }
 }

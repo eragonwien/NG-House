@@ -9,8 +9,8 @@ exports.createHouse = function (req, res, next) {
 	});
 };
 
-exports.getAllHouses = function (req, res, next) {
-	model.getHouses(req.query.params, function (error, results) {
+exports.getHouses = function (req, res, next) {
+	model.getHouses(req.query, function (error, results) {
 		if (error) {
 			return next(error);
 		}
