@@ -17,7 +17,7 @@ function searchHouseController(houseTypes, currencies, appService, houseService)
         closeCollapsible();
         vm.loading = true;
         splitAddress(house);
-        houseService.getHouses({search: house}).then(getHousesHandler);
+        houseService.getHouses(house).then(getHousesHandler);
 
         function getHousesHandler(response) {
             vm.results = response.data;

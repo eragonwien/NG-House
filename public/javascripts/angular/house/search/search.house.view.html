@@ -45,8 +45,8 @@
                         <label class="active" for="searchHouse.house.minSize">min. space in m&sup2; </label>
                     </div>
                     <div class="input-field col s12 m6">
-                        <input class="validate" type="number" min="0" name="searchHouse.house.minRooms" id="searchHouse.house.minRooms" 
-                            ng-model="searchHouse.house.minRooms" ng-init="searchHouse.house.minRooms = 0">
+                        <input class="validate" type="number" min="0" name="searchHouse.house.rooms" id="searchHouse.house.rooms" 
+                            ng-model="searchHouse.house.rooms" ng-init="searchHouse.house.rooms = 0">
                         <label class="active" for="searchHouse.house.minRooms">min. rooms</label>
                     </div>
                     <div class="col s6 m3">
@@ -78,6 +78,7 @@
 </ul>
 
 <!-- Result -->
+<p class="center-align" ng-if="searchHouse.results && searchHouse.results.length <= 0">No result found</p>
 <div class="row" ng-if="searchHouse.results">
     <div class="col s12 m4" ng-repeat="result in searchHouse.results">
         <div class="card medium hoverable">
@@ -88,13 +89,20 @@
                 <span class="card-title activator">
                     {{result.house_type}} in {{ result.address }}
                 </span>
+                <div class="chip green white-text waves-effect waves-light" ng-if="result.house_status == 'Active'">For Sale</div>
+                <div class="chip red white-text waves-effect waves-light" ng-if="result.house_status == 'Inactive'">{{result.house_status}}</div>
+                <div class="chip blue darken-4 white-text waves-effect waves-light">{{result.house_type}}</div>
+                <div class="chip blue darken-4 white-text waves-effect waves-light">rooms: {{result.rooms}}</div>
+                <div class="chip blue darken-4 white-text waves-effect waves-light">baths: {{result.bathrooms}}</div>
+                <div class="chip blue darken-4 white-text waves-effect waves-light">beds: {{result.bedrooms}}</div>
+                <div class="chip blue darken-4 white-text waves-effect waves-light">{{result.size}}m&sup2;</div>
             </div>
             <div class="card-reveal">
                 <span class="card-title">{{ result.address }}<i class="material-icons right">close</i></span>
                 <p><strong>Owner:</strong> {{result.first_name}} {{result.last_name}}</p>
                 <p><strong>Price:</strong>  {{result.price | currency : result.currency + " " : 2}} </p>
                 <p><strong>Address:</strong> {{result.address}}, {{result.postal_code}} {{result.city}}, {{result.land}}</p>
-                <p><strong>Details:</strong> {{result.house_type}}, {{result.bathrooms}} bathrooms, {{result.bedrooms}} bedrooms, {{result.size}} m&sup2;</p>
+                <p><strong>Details:</strong> {{result.house_type}},{{result.rooms}} rooms of {{result.bathrooms}} bathrooms, {{result.bedrooms}} bedrooms, {{result.size}} m&sup2;</p>
                 <div class="card-action blue darken-4"></div>
             </div>
         </div>

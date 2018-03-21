@@ -96,7 +96,6 @@ function searchHouses(params, done) {
 	}
 	// close up
 	cmd += ';';
-	console.log(cmd);
 	pool.query(cmd, whereClause.params, function(error, results){
 		if (error) {
 			return done(error);
@@ -113,41 +112,40 @@ function searchHouses(params, done) {
 		var clauses = [];
 		var clausesParams = [];
 		var str = "WHERE ";
-		
 		if (params.city) {
-			clauses.push('address.city=?');
+			clauses.push('city=?');
 			clausesParams.push(params.city);
 		}
 		if (params.land) {
-			clauses.push('address.land=?');
+			clauses.push('land=?');
 			clausesParams.push(params.land);			
 		}
 		if (params.minSize) {
-			clauses.push('house.size>=?');
+			clauses.push('size>=?');
 			clausesParams.push(params.minSize);			
 		}
 		if (params.maxPrice) {
-			clauses.push('house.price<=?');
+			clauses.push('price<=?');
 			clausesParams.push(params.maxPrice);		
 		}
 		if (params.currency_id) {
-			clauses.push('house.currency_id=?');
+			clauses.push('currency_id=?');
 			clausesParams.push(params.currency_id);			
 		}
 		if (params.house_type_id) {
-			clauses.push('house.house_type_id=?');
+			clauses.push('house_type_id=?');
 			clausesParams.push(params.house_type_id);			
 		}
 		if (params.rooms) {
-			clauses.push('house.rooms >= ?');
-			clausesParams.push(params.bathrooms);						
+			clauses.push('rooms >= ?');
+			clausesParams.push(params.rooms);						
 		}
 		if (params.bathrooms) {
-			clauses.push('house.bathrooms >= ?');
+			clauses.push('bathrooms >= ?');
 			clausesParams.push(params.bathrooms);						
 		}
 		if (params.bedrooms) {
-			clauses.push('house.bedrooms >= ?');
+			clauses.push('bedrooms >= ?');
 			clausesParams.push(params.bedrooms);			
 		}
 		for (let i = 0; i < clauses.length; i++) {
@@ -158,7 +156,7 @@ function searchHouses(params, done) {
 		}
 		var result = {
 			clause: str,
-			params: params
+			params: clausesParams
 		}
 		return result;
 	}

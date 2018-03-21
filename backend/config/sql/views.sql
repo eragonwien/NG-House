@@ -4,7 +4,8 @@ SELECT
     house.user_id as user_id, house.address_id as address_id, house.house_type_id as house_type_id, house.house_status_id as house_status_id, house.currency_id as currency_id,
     user.first_name as first_name, user.last_name as last_name, user.email as email, user.username as username,
     address.address as address, address.postal_code as postal_code, address.city as city, address.land as land,
-    house_type.name as house_type, house_status.name as house_status, currency.name as currency, currency.short as currency_short
+    house_type.name as house_type, house_status.name as house_status, currency.name as currency, currency.short as currency_short,
+    house.last_update as last_update
 FROM
 	house
     INNER JOIN user ON house.user_id = user.id

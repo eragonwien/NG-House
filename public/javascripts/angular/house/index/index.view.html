@@ -18,6 +18,8 @@
                     <p>{{ house.address }}</p>
                     <p>{{house.postal_code}} {{house.city}}, {{house.land}}</p>     
                 </span>
+                <div class="chip green white-text waves-effect waves-light" ng-if="house.house_status == 'Active'">For Sale</div>
+                <div class="chip red white-text waves-effect waves-light" ng-if="house.house_status == 'Inactive'">{{house.house_status}}</div>
                 <div class="chip blue darken-4 white-text waves-effect waves-light">{{house.house_type}}</div>
                 <div class="chip blue darken-4 white-text waves-effect waves-light">rooms: {{house.rooms}}</div>
                 <div class="chip blue darken-4 white-text waves-effect waves-light">baths: {{house.bathrooms}}</div>
