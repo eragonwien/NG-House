@@ -163,6 +163,7 @@ describe('User CRUD Test', function () {
                 expect(result).to.have.status(200);
                 expect(result).to.be.json;
                 expect(result.body).to.be.an('object');
+                expect(result.body).has.property('affectedRows').which.is.greaterThan(0);                
                 done();
             });
     });
@@ -173,6 +174,7 @@ describe('User CRUD Test', function () {
                 expect(result).to.have.status(200);
                 expect(result).to.be.json;
                 expect(result.body).to.be.an('object');
+                expect(result.body).has.property('affectedRows').which.is.greaterThan(0);
                 done();
             });
     });

@@ -7,15 +7,16 @@ var expect = chai.expect;
 describe('Houses Models Test', function () {
     var house = {
         id: null,
-        user_id: 1,
-        address_id: 1,
-        house_type_id: 1,
         price: 1000,
-        currency_id: 1,
         rooms: 5,
         bathrooms: 1,
         bedrooms: 2,
-        size: 40
+        size: 40,
+        user_id: 1,
+        address_id: 1,
+        currency_id: 1,        
+        house_type_id: 1,
+        house_status_id: 1
     };
     var model = require('./houseModel');
     it('should create a house', function (done) {
@@ -47,6 +48,7 @@ describe('Houses Models Test', function () {
             expect(result).to.have.property('user_id').which.is.equal(house.user_id);
             expect(result).to.have.property('address_id').which.is.equal(house.address_id);
             expect(result).to.have.property('house_type_id').which.is.equal(house.house_type_id);
+            expect(result).to.have.property('house_status_id').which.is.equal(house.house_status_id);
             expect(result).to.have.property('price').which.is.equal(house.price);
             expect(result).to.have.property('bathrooms').which.is.equal(house.bathrooms);
             expect(result).to.have.property('bedrooms').which.is.equal(house.bedrooms);
@@ -80,16 +82,18 @@ describe('Houses Models Test', function () {
 describe('House Request Test', function () {
     var house = {
         id: null,
-        user_id: 1,
-        address_id: 1,
-        house_type_id: 1,
         price: 1000,
-        currency_id: 1,        
         rooms: 5,
         bathrooms: 1,
         bedrooms: 2,
-        size: 40
+        size: 40,
+        user_id: 1,
+        address_id: 1,
+        currency_id: 1,        
+        house_type_id: 1,
+        house_status_id: 1
     };
+
     it('should create a house per POST on /api/houses', function (done) {
         chai.request(app)
             .post('/api/houses')
@@ -117,7 +121,6 @@ describe('House Request Test', function () {
             .end(function (error, result) {
                 expect(result).to.have.status(200);
                 expect(result.body).to.be.an('array');
-                console.log(result.body.length);
                 expect(result.body.length <= limit).to.be.true;
                 done();
             });
@@ -131,6 +134,7 @@ describe('House Request Test', function () {
                 expect(result.body).to.have.property('user_id').which.is.equal(house.user_id);
                 expect(result.body).to.have.property('address_id').which.is.equal(house.address_id);
                 expect(result.body).to.have.property('house_type_id').which.is.equal(house.house_type_id);
+                expect(result.body).to.have.property('house_status_id').which.is.equal(house.house_status_id);
                 expect(result.body).to.have.property('price').which.is.equal(house.price);
                 expect(result.body).to.have.property('bathrooms').which.is.equal(house.bathrooms);
                 expect(result.body).to.have.property('bedrooms').which.is.equal(house.bedrooms);
