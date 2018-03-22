@@ -112,6 +112,10 @@ function searchHouses(params, done) {
 		var clauses = [];
 		var clausesParams = [];
 		var str = "WHERE ";
+		if (params.user_id) {
+			clauses.push('user_id=?');
+			clausesParams.push(params.user_id);
+		}
 		if (params.city) {
 			clauses.push('city=?');
 			clausesParams.push(params.city);

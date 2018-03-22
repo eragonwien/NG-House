@@ -90,7 +90,8 @@ function routing(stateProvider, urlRouterProvider) {
             }
         },
         resolve: {
-            checkSession: checkSession
+            checkSession: checkSession,
+            houses: getHouses
         }
     }
 
