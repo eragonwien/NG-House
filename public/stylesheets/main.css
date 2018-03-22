@@ -6917,4 +6917,5 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   left: 0;
   right: 0;
   bottom: 0;
-  margin: auto; }
+  margin: auto;
+  z-index: 999; }
