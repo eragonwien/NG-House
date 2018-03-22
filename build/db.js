@@ -4,6 +4,7 @@ var readline = require('readline-sync');
 var db = require('../backend/config/db');
 var helper = require('./helper');
 const sqlCreatePath = './backend/config/sql/create.sql';
+const sqlInsertPath = './backend/config/sql/insert.sql';
 const sqlViewsPath = './backend/config/sql/views.sql';
 const tablesList = ['address', 'currency', 'house', 'role', 'house_type', 'user'];
 
@@ -60,8 +61,21 @@ function createTables() {
             return close(error);
         }
         console.log('Tables successfully created.');
+        insertTables();
+    });
+}
+
+function insertTables() {
+    console.log('Inserting default values');
+    var sql = fs.readFileSync(sqlInsertPath);
+    sql = sql.toString();
+    pool.query(sql, null, function (error, result) {
+        if (error) {
+            return close(error);
+        }
+        console.log('Tables successfully inserted.');
         createViews();
-    })
+    });
 }
 
 function createViews() {

@@ -23,6 +23,7 @@
  * others: min 20 - max. 1000, 1-2 bathrooms, 1-2 bedrooms
  * price = (2000 - 5000) * size
  */
+
 var readline = require('readline-sync');
 var dotenv = require('dotenv');
 var fs = require('fs');
@@ -30,23 +31,71 @@ var helper = require('./helper');
 var pool = require('../backend/config/db').pool;
 var supportedTypes = ['address', 'user', 'house'];
 
-var userModel = require('../backend/components/user/userModel');
 var addressModel = require('../backend/components/address/addressModel');
-var houseTypeModel = require('../backend/components/houseType/houseTypeModel');
-var currencyModel = require('../backend/components/currency/currencyModel');
+var userModel = require('../backend/components/user/userModel');
 var houseModel = require('../backend/components/house/houseModel');
+
+
 start();
 
-/*  start the data generation
-    the user is asked to choose the type of the generated data
-*/
+// start the data generation
 function start() {
-    console.log('Supported Data: house, user, address');
-    var type = readline.question('Which data is going to be generated ? ');
-    if (!supportedTypes.includes(type)) {
-        return console.log('Type is not supported.')
+    setupGeneration();
+}
+
+// gets user commands and checking requirements
+function setupGeneration() {
+    var type = getDataType();
+    if (!type) {
+        return finish('This data type is not supported.');
     }
-    prepareGenerating(type);
+    var count = getDataCount();
+
+    checkRequirements(function (error) {
+        if (error) {
+            return finish(error);
+        }
+        startGeneration(type, count);
+    });
+}
+
+/**
+ * get data type from user input
+ * @returns {string} name of the type
+ */
+function getDataType() {
+    console.log('Supported types: ' + supportedTypes.toString());
+    var type = readline.question('Which type is going to be generated ? ');
+    type = (supportedTypes.includes(type)) ? type : null;
+    return type;
+}
+
+/**
+ * get data count from user input
+ * @returns {number} number of data to be generated
+ */
+function getDataCount() {
+    var count = readline.questionInt('How many data should be generated: ');
+    if (count < 0) {
+        console.log('The number cannot be smaller than zero. Please try again.');
+        return getDataCount();
+    }
+    return count;
+}
+
+/**
+ * checks if requirements are met,
+ * if not, includes error in callback function
+ * @param {function} done callback function
+ */
+function checkRequirements(done) {
+    var path = '.env';
+    fs.exists(path, function (fileIsExist) {
+        if (!fileIsExist) {
+            return done('File .env not found. Please run this first: npm run build');
+        }
+        done();
+    });
 }
 
 /**
@@ -73,7 +122,7 @@ function prepareGenerating(type) {
  * @param {string} type type of the generated data
  * @param {number} count number of the data
  */
-function generateData(type, count) {
+function startGeneration(type, count) {
     switch (type) {
         case 'house':
             generateHouse(count);
@@ -133,12 +182,12 @@ function spawnUsers(count, names, addressList, successCount) {
     var randomValue = helper.getRandomInt(1000);
     var username = first_name + last_name + randomValue;
     var user = {
-        role_id: 1,
         first_name: first_name,
         last_name: last_name,
-        email: username + '@' + last_name + '.com',
         username: username,
         password: 'test',
+        email: username + '@' + last_name + '.com',
+        role_id: 1,
         address_id: addressList[helper.getRandomInt(addressList.length)]
     }
     // insert query
@@ -198,44 +247,24 @@ function spawnAddresses(count, names, postalCodeLength, successCount) {
  * @param {number} count number of houses 
  */
 function generateHouse(count) {
-    var userIds = [], typeIds = [], addressIds = [], currencyIds = [];
-    // get user ids
-    userModel.getAllUsers(function (error, users) {
-        if (error) {
-            return finish(error);
-        }
-        userIds = helper.filterValuesOfList(users, 'id');
-        // get house type ids
-        houseTypeModel.getAllHouseType(function (error, types) {
-            if (error) {
-                return finish(error);
-            }
-            typeIds = helper.filterValuesOfList(types, 'id');
-            // get address ids
-            addressModel.getAllAddresses(function (error, addresses) {
-                if (error) {
-                    return finish(error);
-                }
-                addressIds = helper.filterValuesOfList(addresses, 'id');
-                // get currency ids
-                currencyModel.getAllCurrencies(function (error, currencies) {
-                    if (error) {
-                        return finish(error);
-                    }
-                    currencyIds = helper.filterValuesOfList(currencies, 'id');
-                    // spawn houses
-                    spawnHouses(count, userIds, typeIds, addressIds, currencyIds);
-                });
-            });
-        });
-    });
+    
+    Promise.all([helper.getAllUsers(), helper.getAllHouseTypes(), helper.getAllAddresses(), helper.getAllCurrencies()]).then(promiseSuccess).catch(promiseError)
+
+    function promiseSuccess(values) {
+        var userIds = values[0], houseTypeIds = values[1], addressIds = values[2], currencyIds = values[3];
+        spawnHouses(count, userIds, houseTypeIds, addressIds, currencyIds);
+    }
+
+    function promiseError(error) {
+        finish(error);
+    }
 }
 
 /**
  * generates houses recursively
  * @param {number} count number of houses to be generated
  * @param {number[]} userIds list of all user ids
- * @param {number[]} typeIds list of all type ids
+ * @param {number[]} houseTypeIds list of all type ids
  * @param {number[]} addressIds list of all address ids
  * @param {number[]} currencyIds list of all currency ids 
  * @param {number} successCount number of successful inserts
@@ -258,15 +287,16 @@ function spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCo
     var size = helper.getRandomInt(rooms * 10, rooms * 100);
     var price = helper.getRandomInt(200, 1000) * size;
     var house = {
-        user_id: userIds[helper.getRandomInt(userIds.length)],
-        address_id: addressIds[helper.getRandomInt(addressIds.length)],
-        house_type_id: typeIds[helper.getRandomInt(typeIds.length)],
-        currency_id: currencyIds[helper.getRandomInt(currencyIds.length)],
+        price: price,
         rooms : rooms,
         bathrooms: bathrooms,
         bedrooms: bedrooms,
         size: size,
-        price: price
+        user_id: userIds[helper.getRandomInt(userIds.length)],
+        address_id: addressIds[helper.getRandomInt(addressIds.length)],
+        house_type_id: typeIds[helper.getRandomInt(typeIds.length)],
+        house_status_id: 1, 
+        currency_id: currencyIds[helper.getRandomInt(currencyIds.length)],
     };
     houseModel.createHouse(house, function (error, result) {
         successCount = (error) ? successCount : successCount + 1;
@@ -275,6 +305,7 @@ function spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCo
     });
 }
 
+
 /**
  * closes the process
  * @param {string} error error message
@@ -282,7 +313,7 @@ function spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCo
  */
 function finish(error, message) {
     if (error) {
-        console.log(error);
+        console.error(error);
     }
     if (message) {
         console.log(message);

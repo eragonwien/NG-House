@@ -79,3 +79,80 @@ function doesContainerHasArray(container, array) {
     return true;
 }
 exports.doesContainerHasArray = doesContainerHasArray;
+
+/**
+ * get all users
+ */
+function getAllUsers() {
+    
+    return new Promise(resolveUsers);
+
+    function resolveUsers(resolve, reject) {
+        var userModel = require('../backend/components/user/userModel');
+        userModel.getAllUsers(function (error, users) {
+            if (error) {
+                return reject(error);
+            }
+            var results = filterValuesOfList(users, 'id');
+            return resolve(results);
+        });
+    }
+}
+exports.getAllUsers = getAllUsers;
+
+/**
+ * get all addresses
+ */
+function getAllAddresses() {
+    return new Promise(resolveAddresses);
+
+    function resolveAddresses(resolve, reject) {
+        var addressModel = require('../backend/components/address/addressModel');
+        addressModel.getAllAddresses(function (error, addresses) {
+            if (error) {
+                return reject(error);
+            }
+            var results = filterValuesOfList(addresses, 'id');
+            return resolve(results);
+        });
+    }
+}
+exports.getAllAddresses = getAllAddresses;
+
+/**
+ * get all house types
+ */
+function getAllHouseTypes() {
+    return new Promise(resolveHouseTypes);
+
+    function resolveHouseTypes(resolve, reject) {
+        var houseTypeModel = require('../backend/components/houseType/houseTypeModel');      
+        houseTypeModel.getAllHouseType(function (error, houseTypes) {
+            if (error) {
+                return reject(error);
+            }
+            var results = filterValuesOfList(houseTypes, 'id');
+            return resolve(results);
+        });
+    }
+}
+exports.getAllHouseTypes = getAllHouseTypes;
+
+/**
+ * get all currencies
+ */
+function getAllCurrencies() {
+    return new Promise(resolveCurrencies);
+
+    function resolveCurrencies(resolve, reject) {
+        var currencyModel = require('../backend/components/currency/currencyModel');
+        currencyModel.getAllCurrencies(function (error, currencies) {
+            if (error) {
+                return reject(error);
+            }
+            var results = filterValuesOfList(currencies, 'id');
+            return resolve(results);
+        });
+    }
+}
+exports.getAllCurrencies = getAllCurrencies;
