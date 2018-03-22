@@ -1,5 +1,5 @@
 <div class="preloader-wrapper big active absolute-loader" ng-if="searchHouse.loading">
-    <div class="spinner-layer spinner-blue-only">
+    <div class="spinner-layer spinner-red">
         <div class="circle-clipper left">
             <div class="circle"></div>
         </div>
@@ -80,7 +80,7 @@
 <!-- Result -->
 <p class="center-align" ng-if="searchHouse.results && searchHouse.results.length <= 0">No result found</p>
 <div class="row" ng-if="searchHouse.results">
-    <div class="col s12 m4" ng-repeat="result in searchHouse.results">
+    <div class="col s12 m4" ng-repeat="result in searchHouse.results  | houseFilter: searchHouse.user">
         <div class="card medium hoverable">
             <div class="card-image waves-effect waves-block waves-light">
                 <img class="activator" src="stylesheets/images/{{result.house_type}}.jpg" alt="house_image">
@@ -102,7 +102,7 @@
                 <p><strong>Owner:</strong> {{result.first_name}} {{result.last_name}}</p>
                 <p><strong>Price:</strong>  {{result.price | currency : result.currency + " " : 2}} </p>
                 <p><strong>Address:</strong> {{result.address}}, {{result.postal_code}} {{result.city}}, {{result.land}}</p>
-                <p><strong>Details:</strong> {{result.house_type}},{{result.rooms}} rooms of {{result.bathrooms}} bathrooms, {{result.bedrooms}} bedrooms, {{result.size}} m&sup2;</p>
+                <p><strong>Details:</strong> {{result.house_type}}, {{result.rooms}}, {{result.bathrooms}} bathrooms, {{result.bedrooms}} bedrooms, {{result.size}} m&sup2;</p>
                 <div class="card-action blue darken-4"></div>
             </div>
         </div>
@@ -134,7 +134,7 @@
             
             function getAddresses() {
                 var results = {};
-                for (let i = 0; i < response.length && i < 10; i++) {
+                for (let i = 0; i < response.length; i++) {
                     var address = response[i];
                     var key =  address.city + ',' + address.land;
                     results[key] = null;

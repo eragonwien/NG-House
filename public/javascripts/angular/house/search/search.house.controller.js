@@ -2,9 +2,10 @@ angular
     .module('house')
     .controller('searchHouseController', searchHouseController);
 
-searchHouseController.$inject = ['houseTypes', 'currencies', 'appService', 'houseService']
-function searchHouseController(houseTypes, currencies, appService, houseService) {
+searchHouseController.$inject = ['houseTypes', 'currencies', 'appService', 'houseService', 'userService']
+function searchHouseController(houseTypes, currencies, appService, houseService, userService) {
     var vm = this;
+    vm.user = userService.getLocalUser();
     vm.houseTypes = houseTypes;
     vm.currencies = currencies;
     vm.submit = submit;

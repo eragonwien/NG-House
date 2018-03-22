@@ -2,12 +2,14 @@ angular
     .module('house')
     .controller('profileController', profileController);
 
-profileController.$inject = ['userService', 'appService'];
-function profileController(userService, appService) {
+profileController.$inject = ['userService', 'appService', 'houseService'];
+function profileController(userService, appService, houseService) {
     var vm = this;
     vm.user = userService.getLocalUser();
     vm.editing = false;
     vm.save = save;
+    vm.loading = false;
+    vm.offers = getOffers();
 
     function save(form) {
         if (!form.$valid) {
@@ -25,6 +27,18 @@ function profileController(userService, appService) {
                 return; 
             }
             alert('Error: ' + response);
+        }
+    }
+
+    function getOffers() {
+        return houseService.getHouses({user_id: vm.user.id}).then(getHousesHandler);
+
+        function getHousesHandler(response) {
+            if (response.status == 200) {
+                vm.offers = response.data;
+                return;
+            }
+            alert('Error: ' + response.data);
         }
     }
 
