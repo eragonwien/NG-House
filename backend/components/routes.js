@@ -9,6 +9,7 @@ var address = require('./address/addressController');
 var currency = require('./currency/currencyController');
 var role = require('./role/roleController');
 var houseType = require('./houseType/houseTypeController');
+var houseStatus = require('./houseStatus/houseStatusController');
 
 // Authentication & Redirection
 router.get('/', page.getIndex);
@@ -56,5 +57,12 @@ router.get('/api/houseTypes', houseType.getAllHouseType);
 router.get('/api/houseTypes/:htid', houseType.getHouseTypeById);
 router.put('/api/houseTypes/:htid', houseType.updateHouseTypeById);
 router.delete('/api/houseTypes/:htid', houseType.deleteHouseTypeById);
+
+// House Status
+router.post('/api/houseStatuses', houseStatus.createHouseStatus);
+router.get('/api/houseStatuses', houseStatus.getAllHouseStatuses);
+router.get('/api/houseStatuses/:hsid', houseStatus.getHouseStatusById);
+router.put('/api/houseStatuses/:hsid', houseStatus.updateHouseStatusById);
+router.delete('/api/houseStatuses/:hsid', houseStatus.deleteHouseStatusById);
 
 module.exports = router;
