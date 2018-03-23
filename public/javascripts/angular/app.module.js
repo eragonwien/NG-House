@@ -1,1 +1,1 @@
-var app = angular.module('house', ['ui.router', 'ngStorage']);
+var app = angular.module('house', ['ui.router']);
