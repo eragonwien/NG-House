@@ -24,7 +24,7 @@ function loginController(userService, appService) {
         function loginHandler(response) {
             var status = response.status;
             if (status == 200) {
-                userService.setLocalUser(response.data);
+                userService.setLocalUser(response.data, vm.user.remember);
                 home();
                 return;
             }

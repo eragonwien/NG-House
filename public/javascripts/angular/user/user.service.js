@@ -15,15 +15,23 @@ function userService(window, http) {
     return service;
 
     function getLocalUser() {
-        return JSON.parse(window.localStorage.getItem('user'));
+        var local = window.localStorage.getItem('user');
+        var session = window.sessionStorage.getItem('user');
+        var result = (session) ? session : local;
+        return JSON.parse(result);
     }
 
-    function setLocalUser(user) {
-        window.localStorage.setItem('user', JSON.stringify(user));
+    function setLocalUser(user, remember) {
+        if (remember) {
+            window.localStorage.setItem('user', JSON.stringify(user));
+            return;
+        }
+        window.sessionStorage.setItem('user', JSON.stringify(user));
     }
 
     function deleteLocalUser() {
         window.localStorage.removeItem('user');
+        window.sessionStorage.removeItem('user');
     }
 
     function login(username, password) {
