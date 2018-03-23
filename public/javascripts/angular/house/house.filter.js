@@ -12,7 +12,7 @@ function houseFilter() {
     function filter(houses, user) {
         var result = [];
         houses.forEach(function (house) {
-            if (user && user.id != house.user_id) {
+            if (!user || user.id != house.user_id) {
                 result.push(house);
             }
         });
