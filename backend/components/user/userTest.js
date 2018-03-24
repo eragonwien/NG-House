@@ -66,7 +66,6 @@ describe('User Models Test', function () {
             done();
         })
     });
-    
     it('should list all users', function (done) {
         model.getAllUsers(function (error, results) {
             if (error) {
@@ -152,6 +151,18 @@ describe('User CRUD Test', function () {
                 expect(result).to.have.status(200);
                 expect(result).to.be.json;
                 expect(result.body).to.be.an('object');
+                done();
+            });
+    });
+    it('should authenticate user per POST on /login', function (done) {
+        chai.request(app)
+            .post('/login')
+            .send(user)
+            .end(function (error, result) {
+                expect(result).to.have.status(200);
+                expect(result).to.be.json;
+                expect(result.body).to.be.an('object');
+                
                 done();
             });
     });
