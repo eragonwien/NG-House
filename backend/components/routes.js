@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 // Controllers
-var page = require('./general/pageController');
 var house = require('./house/houseController');
 var user = require('./user/userController');
 var address = require('./address/addressController');
@@ -10,10 +9,13 @@ var currency = require('./currency/currencyController');
 var role = require('./role/roleController');
 var houseType = require('./houseType/houseTypeController');
 var houseStatus = require('./houseStatus/houseStatusController');
-
+var session = require('../config/session');
 // Authentication & Redirection
-router.get('/', page.getIndex);
-router.post('/login', page.authenticate);
+router.get('/', function (req, res, next) {
+    res.render('index');
+});
+router.post('/login', user.authenticate);
+router.post('/logout', user.logout);
 
 // User
 router.post('/api/users', user.createUser);
