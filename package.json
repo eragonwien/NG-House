@@ -8,6 +8,7 @@
     "set-env": "node build/env.js",
     "build-database": "node build/db.js",
     "build": "npm run set-env && npm run build-database",
+    "rebuild": "rm -rf node_modules && npm install && npm run build",
     "generate": "node build/generate.js",
     "test": "mocha test.js"
   },
