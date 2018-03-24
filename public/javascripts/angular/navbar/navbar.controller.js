@@ -14,7 +14,14 @@ function navbarController(userService, appService) {
     }
 
     function logout() {
-        userService.deleteLocalUser();
-        appService.moveTo('redirect');
+        userService.logout().then(logoutHandler);
+
+        function logoutHandler(response) {
+            appService.alert('AA');
+            appService.alert(response.status);
+            userService.deleteLocalUser();
+            appService.moveTo('redirect');
+        }
+        
     }
 }

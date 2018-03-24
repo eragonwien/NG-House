@@ -10,7 +10,8 @@ function userService(window, http) {
         deleteLocalUser: deleteLocalUser,
         login: login,
         signup: signup,
-        update: update
+        update: update,
+        logout: logout
     }
     return service;
 
@@ -81,6 +82,26 @@ function userService(window, http) {
         }
 
         function updateError(response) {
+            return response;
+        }
+    }
+
+    function logout() {
+        console.log('response');
+        
+        return http({
+            method: 'POST',
+            url: '/logout'
+        }).then(logoutSuccess, logoutError);
+
+        function logoutSuccess(response) {
+            console.log(response);
+            return response;
+        }
+
+        function logoutError(response) {
+            console.log(response);
+            
             return response;
         }
     }
