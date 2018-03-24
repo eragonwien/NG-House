@@ -46,11 +46,12 @@ app.use(
 
 // session
 var sessionConfig = require('./backend/config/session').config;
+var sessionRefresh = require('./backend/config/session').refresh;
 app.use(session(sessionConfig));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+app.use('/', sessionRefresh, index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
