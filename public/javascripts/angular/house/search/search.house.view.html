@@ -91,11 +91,6 @@
                 </span>
                 <div class="chip green white-text waves-effect waves-light" ng-if="result.house_status == 'Active'">For Sale</div>
                 <div class="chip red white-text waves-effect waves-light" ng-if="result.house_status == 'Inactive'">{{result.house_status}}</div>
-                <div class="chip blue darken-4 white-text waves-effect waves-light">{{result.house_type}}</div>
-                <div class="chip blue darken-4 white-text waves-effect waves-light">rooms: {{result.rooms}}</div>
-                <div class="chip blue darken-4 white-text waves-effect waves-light">baths: {{result.bathrooms}}</div>
-                <div class="chip blue darken-4 white-text waves-effect waves-light">beds: {{result.bedrooms}}</div>
-                <div class="chip blue darken-4 white-text waves-effect waves-light">{{result.size}}m&sup2;</div>
             </div>
             <div class="card-reveal">
                 <span class="card-title">{{ result.address }}<i class="material-icons right">close</i></span>

@@ -10,6 +10,8 @@ function profileController(user, userService, appService, houseService) {
     vm.save = save;
     vm.loading = false;
     vm.offers = getOffers();
+    vm.edit = edit;
+    vm.deleteHouse = deleteHouse;
 
     function save(form) {
         if (!form.$valid) {
@@ -39,6 +41,25 @@ function profileController(user, userService, appService, houseService) {
                 return;
             }
             alert('Error: ' + response.data);
+        }
+    }
+
+    function edit(house) {
+        alert('ID: ' + house.id);
+    }
+
+    function deleteHouse(house) {
+        houseService.deleteHouse(house).then(deleteHouseHandler);
+
+        function deleteHouseHandler(response) {
+            if (response.status == 200) {
+                // remove house from current list
+                var index = vm.offers.indexOf(house);
+                vm.offers.splice(index, 1);
+                alert('Nr.' + house.id + ' is successfully deleted.');
+                return;                
+            }
+            alert(response.data);
         }
     }
 
