@@ -1,8 +1,8 @@
 angular
     .module('house')
     .controller('indexController', indexController);
-indexController.$inject = ['user', 'houses', 'houseService', 'userService', 'currencyService', 'appService'];
-function indexController(user, houses, houseService, userService, currencyService, appService) {
+indexController.$inject = ['user', 'houses', 'message', 'houseService', 'userService', 'currencyService', 'appService'];
+function indexController(user, houses, message, houseService, userService, currencyService, appService) {
     var vm = this;
     vm.user = user;
     vm.showHouse = showHouse;
@@ -10,9 +10,9 @@ function indexController(user, houses, houseService, userService, currencyServic
     vm.houses = houses;
     vm.contact = contact;
     
-    var appMessage = appService.getMessage();
-    if (appMessage) {
-        alert(appMessage);
+    if (message) {
+        alert(message);
+        appService.deleteMessage(); // delete message after consuming    
     }
 
     /* House */

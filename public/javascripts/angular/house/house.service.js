@@ -6,6 +6,7 @@ houseService.$inject = ['$http']
 function houseService(http) {
     var service = {
         getHouses: getHouses,
+        getHouseById: getHouseById,
         addHouse: addHouse,
         updateHouse: updateHouse,
         deleteHouse: deleteHouse        
@@ -24,6 +25,21 @@ function houseService(http) {
         }
 
         function getHousesError(response) {
+            return response;
+        }
+    }
+
+    function getHouseById(id) {
+        return http({
+            method: 'GET',
+            url: '/api/houses/' + id
+        }).then(success, error);
+
+        function success(response) {
+            return response;
+        }
+
+        function error(response) {
             return response;
         }
     }

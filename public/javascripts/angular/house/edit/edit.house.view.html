@@ -1,2 +1,73 @@
-<h1>Edit House</h1>
-<pre>{{editHouse.editHouse | json}}</pre>
+<!-- House adding -->
+<h1>Edit house</h1>
+<form name="houseEditingForm">
+    <div class="row">
+        <div class="input-field col s12 m6">
+            <input type="text" name="house.user.full_name" id="house.user.full_name" value="{{editHouse.house.first_name}} {{editHouse.house.last_name}} " disabled>
+            <label class="active" for="house.user.full_name">Agent</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input type="text" name="house.user.email" id="house.user.email" ng-value="editHouse.house.email" disabled>
+            <label class="active" for="house.user.email">Contact Email</label>
+        </div>
+        <input type="hidden" ng-model="editHouse.editHouse.user_id" ng-init="editHouse.editHouse.user_id = editHouse.user.id">
+        <input type="hidden" ng-model="editHouse.editHouse.house_status_id" ng-init="editHouse.editHouse.house_status_id = 1">
+        <div class="input-field col s8 m4">
+            <input class="validate" type="text" name="house.price" id="house.price" ng-model="editHouse.editHouse.price" required>
+            <label class="active" for="house.price">Price</label>
+        </div>
+        <div class="input-field col s4 m2">
+            <select class="house-currency-select" id="house.currency" name="house.currency" ng-model="editHouse.editHouse.currency_id" required>
+                <option ng-repeat="currency in editHouse.currencies" ng-value="currency.id">{{currency.name}}</option>
+            </select>
+            <label for="house.currency">Currency</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <select class="house-type-select" name="house.type" id="house.type" ng-model="editHouse.editHouse.house_type_id" required>
+                <option ng-repeat="houseType in editHouse.houseTypes" ng-value="houseType.id">{{houseType.name}}</option>
+            </select>
+            <label for="house.type">Type</label>
+        </div>
+        <div class="input-field col s6 m3">
+            <input class="validate" type="number" min="0" name="house.rooms" id="house.rooms" ng-model="editHouse.editHouse.rooms" required>
+            <label class="active" for="house.rooms">Rooms</label>
+        </div>
+        <div class="input-field col s6 m3">
+            <input class="validate" type="number" name="house.size" id="house.size" ng-model="editHouse.editHouse.size" required>
+            <label class="active" for="house.size">Size</label>
+        </div>
+        <div class="input-field col s6 m3">
+            <input class="validate" type="number" min="0" name="house.bathrooms" id="house.bathrooms" ng-model="editHouse.editHouse.bathrooms" required>
+            <label class="active" for="house.bathrooms">Bathrooms</label>
+        </div>
+        <div class="input-field col s6 m3">
+            <input class="validate" type="number" min="0" name="house.bedrooms" id="house.bedrooms" ng-model="editHouse.editHouse.bedrooms" required>
+            <label class="active" for="house.bedrooms">Bedrooms</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input class="validate" type="text" name="house.address" id="house.address" ng-model="editHouse.editHouse.address" required>
+            <label class="active" for="house.address">Address</label>
+        </div>
+        <div class="input-field col s4 m2">
+            <input class="validate" type="text" name="house.postal_code" id="house.postal_code" ng-model="editHouse.editHouse.postal_code" required>
+            <label class="active" for="house.postal_code">Postal Code</label>
+        </div>
+        <div class="input-field col s4 m2">
+            <input class="validate" type="text" name="house.city" id="house.city" ng-model="editHouse.editHouse.city" required>
+            <label class="active" for="house.city">City</label>
+        </div>
+        <div class="input-field col s4 m2">
+            <input class="validate" type="text" name="house.land" id="house.land" ng-model="editHouse.editHouse.land" required>
+            <label class="active" for="house.land">Land</label>
+        </div>
+        <div class="col s12">
+            <button class="btn waves-effect waves-light blue darken-4" ng-click="editHouse.submit(houseEditingForm)">save changes<i class="material-icons left">save</i></button>
+            <button class="btn-flat waves-effect waves-light" ng-click="editHouse.cancelEditing()">cancel</button>
+        </div>
+    </div>
+</form>
+<script>
+    $(document).ready(function() {
+        $('select').material_select();
+    });
+</script>

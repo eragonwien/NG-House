@@ -21,7 +21,8 @@ function routing(stateProvider, urlRouterProvider) {
         },
         resolve: {
             houses: getHouses,
-            user: getUser
+            user: getUser,
+            message: getMessage
         }
     }
 
@@ -141,7 +142,9 @@ function routing(stateProvider, urlRouterProvider) {
         },
         resolve: {
             user: getUser,
-            message: getMessage
+            message: getMessage,
+            currencies: getCurrencies,
+            houseTypes: getHouseTypes
         }
     }
 
@@ -184,7 +187,8 @@ function routing(stateProvider, urlRouterProvider) {
  * @param {*} appService app service
  */
 function getMessage(appService) {
-    return appService.getMessage();
+    var message = appService.getMessage();
+    return message;
 }
 getMessage.$inject = ['appService'];
 
