@@ -29,7 +29,7 @@ var dotenv = require('dotenv');
 var fs = require('fs');
 var helper = require('./helper');
 var pool = require('../backend/config/db').pool;
-var supportedTypes = ['address', 'user', 'house'];
+var supportedTypes = ['address', 'user', 'house', 'admin'];
 
 var addressModel = require('../backend/components/address/addressModel');
 var userModel = require('../backend/components/user/userModel');
@@ -128,7 +128,10 @@ function startGeneration(type, count) {
             generateHouse(count);
             break;
         case 'user':
-            generateUser(count);
+            generateUser(count, false);
+            break;
+        case 'admin':
+            generateUser(count, true);
             break;
         case 'address':
             generateAddress(count);
@@ -144,8 +147,9 @@ function startGeneration(type, count) {
  * query all address ids 
  * create queries to add user to the database
  * @param {number} count number of user being generated
+ * @param {boolean} isAdmin true if admins are to be generated
  */
-function generateUser(count) {
+function generateUser(count, isAdmin) {
     if (!process.env.NAME) {
         return finish(null, 'no NAME variables found.');
     }
@@ -157,6 +161,9 @@ function generateUser(count) {
         } 
         // extract only the address id from the results
         var address_ids = helper.filterValuesOfList(results, 'id');
+        if (isAdmin) {
+            return spawnAdmins(count, names, address_ids);
+        }
         spawnUsers(count, names, address_ids); 
     });
     
@@ -195,6 +202,42 @@ function spawnUsers(count, names, addressList, successCount) {
         successCount = (error) ? successCount : successCount + 1;
         count--;
         spawnUsers(count, names, addressList, successCount);
+    });
+}
+
+/**
+ * generate admins
+ * @param {number} count number of admins to be generated
+ * @param {string[]} names list of names
+ * @param {string[]} addressList list of addresses
+ * @param {string[]} successCount number of successful query
+ */
+function spawnAdmins(count, names, addressList, successCount) {
+    if (!successCount) {
+        successCount = 0;
+    }
+    if (count <= 0) {
+        return finish(null, 'Success: ' + successCount);
+    }
+    // generates an user object
+    var first_name = names[helper.getRandomInt(names.length)];
+    var last_name = names[helper.getRandomInt(names.length)];
+    var randomValue = helper.getRandomInt(1000);
+    var username = first_name + last_name + randomValue;
+    var user = {
+        first_name: first_name,
+        last_name: last_name,
+        username: username,
+        password: 'test',
+        email: username + '@' + last_name + '.com',
+        role_id: 2,
+        address_id: addressList[helper.getRandomInt(addressList.length)]
+    }
+    // insert query
+    userModel.createUser(user, function (error, result) {
+        successCount = (error) ? successCount : successCount + 1;
+        count--;
+        spawnAdmins(count, names, addressList, successCount);
     });
 }
 
