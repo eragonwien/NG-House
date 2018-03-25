@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
     res.render('index');
 });
 router.post('/login', user.authenticate);
-router.post('/logout', user.logout);
+router.get('/logout', user.logout);
 
 // User
 router.post('/api/users', user.createUser);

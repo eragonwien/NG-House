@@ -23,6 +23,7 @@ exports.getAllUsers = function (req, res, next) {
  * @param {function} next callback function
  */
 exports.getUserById = function (req, res, next) {
+    debug('EBUGGG');
     model.getUserById(req.params.uid, function (error, result) {
         if (error) {
             return next(error);
@@ -124,18 +125,14 @@ exports.getSignup = function (req, res, next) {
 };
 
 function checkSession(req, res, next) {
-    if (!req.session.user) {
-        return res.status(401).json({message: 'Log in first !'});
-    }
+    debug(req.session);
     next();
 }
 exports.checkSession = checkSession;
 
 function logout(req, res, next) {
-    req.session.destroy(function () {
-      
-    });
-    return res.status(200); 
+    req.session.destroy();
+    res.status(200).send('LOGGED OUT');
 }
 exports.logout = logout;
 

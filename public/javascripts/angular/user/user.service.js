@@ -86,22 +86,17 @@ function userService(window, http) {
         }
     }
 
-    function logout() {
-        console.log('response');
-        
+    function logout() {        
         return http({
-            method: 'POST',
+            method: 'GET',
             url: '/logout'
         }).then(logoutSuccess, logoutError);
 
         function logoutSuccess(response) {
-            console.log(response);
             return response;
         }
 
-        function logoutError(response) {
-            console.log(response);
-            
+        function logoutError(response) {            
             return response;
         }
     }

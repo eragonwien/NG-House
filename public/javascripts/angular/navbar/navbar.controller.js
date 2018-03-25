@@ -17,11 +17,13 @@ function navbarController(userService, appService) {
         userService.logout().then(logoutHandler);
 
         function logoutHandler(response) {
-            appService.alert('AA');
-            appService.alert(response.status);
-            userService.deleteLocalUser();
+            if (response.status == 200) {
+                userService.deleteLocalUser();
+                appService.alert('Successfully logged out');
+            } else {
+                appService.alert('Error on logging out');
+            }
             appService.moveTo('redirect');
         }
-        
     }
 }

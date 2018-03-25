@@ -1,17 +1,7 @@
 var debug = require('debug')('session');
 
-var config = {
-    secret: (process.env.SESSION_SECRET) ? process.env.SESSION_SECRET : 'millenium_balkon',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        maxAge: (process.env.COOKIE_MAX_AGE) ? process.env.COOKIE_MAX_AGE : 60000
-    }
-};
-exports.config = config;
-
 function refresh(req, res, next) {
-    debug(req.session);
+    console.log('SESSION: ' + JSON.stringify(req.session));
     next();
 }
 exports.refresh = refresh;
