@@ -10,7 +10,6 @@ function profileController(user, userService, appService, houseService) {
     vm.save = save;
     vm.loading = false;
     vm.offers = getOffers();
-    vm.edit = edit;
     vm.deleteHouse = deleteHouse;
 
     function save(form) {
@@ -42,11 +41,6 @@ function profileController(user, userService, appService, houseService) {
             }
             alert('Error: ' + response.data);
         }
-    }
-
-    function edit(house) {
-        appService.setMessage(house.id);
-        appService.moveTo('editHouse');
     }
 
     function deleteHouse(house) {

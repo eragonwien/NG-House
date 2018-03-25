@@ -191,14 +191,30 @@ exports.getHouseById = getHouseById;
  * @param {function} done call back function
  */
 function updateHouseById(id, house, done) {
-	var cmd = 'UPDATE house SET price=?, bathrooms=?, bedrooms=?, size=?, user_id=?, address_id=?, house_type_id=?, house_status_id=?, currency_id=? WHERE id=?;';
-	var params = [house.price, house.bathrooms, house.bedrooms, house.size, house.user_id, house.address_id, house.house_type_id, house.house_status_id, house.currency_id, id];
-	pool.query(cmd, params, function(error, result) {
+	// get address id
+	var address = {
+		address: house.address,
+		postal_code: house.postal_code,
+		city: house.city,
+		land: house.land
+	}
+	addressModel.createNewAddress(address, function (error, result) {
 		if (error) {
 			return done(error);
 		}
-		done(null, result);
+		house.address_id = result.insertId;
+		var cmd = 'UPDATE house SET price=?, rooms=?, bathrooms=?, bedrooms=?, size=?, user_id=?, address_id=?, house_type_id=?, house_status_id=?, currency_id=? WHERE id=?;';
+		var params = [house.price, house.rooms, house.bathrooms, house.bedrooms, house.size, house.user_id, house.address_id, house.house_type_id, house.house_status_id, house.currency_id, id];
+		pool.query(cmd, params, function(error, result) {
+			if (error) {
+				return done(error);
+			}
+			done(null, result);
+		});
 	});
+
+
+	
 };
 exports.updateHouseById = updateHouseById;
 

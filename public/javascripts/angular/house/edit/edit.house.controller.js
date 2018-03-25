@@ -2,18 +2,16 @@ angular
     .module('house')
     .controller('editHouseController', editHouseController);
 
-editHouseController.$inject = ['message', 'user', 'currencies', 'houseTypes', 'houseService', 'appService']
-function editHouseController(message, user, currencies, houseTypes, houseService, appService) {
+editHouseController.$inject = ['user', 'house', 'currencies', 'houseTypes', 'houseService', 'appService']
+function editHouseController(user, house, currencies, houseTypes, houseService, appService) {
     var vm = this;
     vm.user = user;
+    vm.editHouse = house;
     vm.currencies = currencies;
     vm.houseTypes = houseTypes;
     vm.submit = submit;
     vm.cancelEditing = cancelEditing;
 
-    // house
-    var houseId = message;
-    getHouseById(houseId);
 
     function getHouseById(id) {
         houseService.getHouseById(id).then(getHouseByIdHandler);
@@ -33,7 +31,17 @@ function editHouseController(message, user, currencies, houseTypes, houseService
             appService.alert('INVALID FORM');
             return;
         }
-        appService.alert(vm.editHouse);
+        houseService.updateHouse(vm.editHouse).then(updateHouseHandler);
+
+        function updateHouseHandler(response) {
+            if (response.status == 200) {
+                
+                appService.alert('updated successfully.');
+                appService.moveTo('profile');
+                return;
+            }
+            appService.alert('Error: ' + response.data);      
+        }
     }
 
     function cancelEditing() {

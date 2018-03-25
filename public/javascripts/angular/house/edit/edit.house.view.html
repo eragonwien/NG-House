@@ -18,13 +18,13 @@
         </div>
         <div class="input-field col s4 m2">
             <select class="house-currency-select" id="house.currency" name="house.currency" ng-model="editHouse.editHouse.currency_id" required>
-                <option ng-repeat="currency in editHouse.currencies" ng-value="currency.id">{{currency.name}}</option>
+                <option ng-repeat="currency in editHouse.currencies" ng-value="currency.id" ng-selected="currency.id == editHouse.editHouse.currency_id">{{currency.name}}</option>
             </select>
             <label for="house.currency">Currency</label>
         </div>
         <div class="input-field col s12 m6">
             <select class="house-type-select" name="house.type" id="house.type" ng-model="editHouse.editHouse.house_type_id" required>
-                <option ng-repeat="houseType in editHouse.houseTypes" ng-value="houseType.id">{{houseType.name}}</option>
+                <option ng-repeat="houseType in editHouse.houseTypes" ng-value="houseType.id" ng-selected="houseType.id == editHouse.editHouse.houseType_id">{{houseType.name}}</option>
             </select>
             <label for="house.type">Type</label>
         </div>

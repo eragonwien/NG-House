@@ -79,6 +79,9 @@ function routing(stateProvider, urlRouterProvider) {
                 controller: 'redirectController',
                 controllerAs: 'redirect'
             }
+        },
+        resolve: {
+            user: getUser
         }
     }
 
@@ -127,7 +130,7 @@ function routing(stateProvider, urlRouterProvider) {
 
     var editHouse = {
         name: 'editHouse',
-        url: '/houses/edit',
+        url: '/houses/:house_id/edit',
         views: {
             navbar: {
                 templateUrl: 'javascripts/angular/navbar/navbar.view.html',
@@ -142,7 +145,7 @@ function routing(stateProvider, urlRouterProvider) {
         },
         resolve: {
             user: getUser,
-            message: getMessage,
+            house: getHouseById,
             currencies: getCurrencies,
             houseTypes: getHouseTypes
         }
@@ -233,6 +236,20 @@ function getHouseTypes(houseTypeService) {
     }
 }
 getHouseTypes.$inject = ['houseTypeService'];
+
+/**
+ * get house id from state params
+ * @param {*} stateParams state params
+ */
+function getHouseById(houseService, stateParams) {
+    return houseService.getHouseById(stateParams.house_id).then(getHouseByIdHandler);
+
+    function getHouseByIdHandler(response) {
+        return response.data;
+    }
+}
+getHouseById.$inject = ['houseService', '$stateParams'];
+
 
 /**
  * resolve user
