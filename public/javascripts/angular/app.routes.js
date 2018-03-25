@@ -20,7 +20,8 @@ function routing(stateProvider, urlRouterProvider) {
             }
         },
         resolve: {
-            houses: getHouses
+            houses: getHouses,
+            user: getUser
         }
     }
 
@@ -38,6 +39,9 @@ function routing(stateProvider, urlRouterProvider) {
                 controller: 'signupController',
                 controllerAs: 'signup'
             }
+        },
+        resolve: {
+            user: getUser
         }
     }
 
@@ -55,6 +59,9 @@ function routing(stateProvider, urlRouterProvider) {
                 controller: 'loginController',
                 controllerAs: 'login'
             }
+        },
+        resolve: {
+            user: getUser
         }
     }
     var redirect = {
@@ -90,8 +97,8 @@ function routing(stateProvider, urlRouterProvider) {
             }
         },
         resolve: {
-            checkSession: checkSession,
-            houses: getHouses
+            houses: getHouses,
+            user: getUser
         }
     }
 
@@ -112,7 +119,8 @@ function routing(stateProvider, urlRouterProvider) {
         },
         resolve: {
             currencies: getCurrencies,
-            houseTypes: getHouseTypes
+            houseTypes: getHouseTypes,
+            user: getUser
         }
     }
 
@@ -133,7 +141,8 @@ function routing(stateProvider, urlRouterProvider) {
         },
         resolve: {
             houseTypes: getHouseTypes,
-            currencies: getCurrencies
+            currencies: getCurrencies,
+            user: getUser
         }
     }
 
@@ -148,16 +157,10 @@ function routing(stateProvider, urlRouterProvider) {
     urlRouterProvider.otherwise('/login');
 };
 
-checkSession.$inject = ['$q', 'appService', 'userService']
-function checkSession(q, appService, userService) {
-    if (!userService.getLocalUser()) {
-        appService.moveTo();
-        return;
-    }
-}
-
-// resolve houses
-getHouses.$inject = ['houseService']
+/**
+ * get houses
+ * @param {*} houseService house service
+ */
 function getHouses(houseService) {
     var params = {
         limit: 9
@@ -168,9 +171,12 @@ function getHouses(houseService) {
         return response.data;
     }
 }
+getHouses.$inject = ['houseService'];
 
-// resolve currencies
-getCurrencies.$inject = ['currencyService']
+/**
+ * get currencies
+ * @param {*} currencyService currency service
+ */
 function getCurrencies(currencyService) {
     return currencyService.getCurrencies().then(getCurrenciesHandler);
 
@@ -178,9 +184,12 @@ function getCurrencies(currencyService) {
         return response.data;
     }
 }
+getCurrencies.$inject = ['currencyService'];
 
-// resolve house types
-getHouseTypes.$inject = ['houseTypeService']
+/**
+ * get house types
+ * @param {*} houseTypeService house type service
+ */
 function getHouseTypes(houseTypeService) {
     return houseTypeService.getHouseTypes().then(getHouseTypesHandler);
 
@@ -188,3 +197,24 @@ function getHouseTypes(houseTypeService) {
         return response.data;
     }
 }
+getHouseTypes.$inject = ['houseTypeService'];
+
+/**
+ * resolve user
+ * @param {*} userService user service
+ */
+function getUser(userService) {
+    var user = userService.getLocalUser();
+    if (!user) {
+        return null;
+    }
+    return userService.getUser(user.id).then(getUserHandler);
+
+    function getUserHandler(response) {
+        if (!response) {
+            return null;
+        }
+        return response.data;
+    }
+}
+getUser.$inject = ['userService'];
