@@ -1,5 +1,4 @@
 var model = require('./userModel');
-var session = require('../../config/session');
 var debug = require('debug')('user_controller');
 /**
  * get all users
@@ -23,13 +22,21 @@ exports.getAllUsers = function (req, res, next) {
  * @param {function} next callback function
  */
 exports.getUserById = function (req, res, next) {
-    debug('EBUGGG');
+    // user cannot access user profile other than itself
+    // exception are admin and test mode
+    
+    if (process.env.NODE_ENV != 'test') {
+        var user = req.session.user;
+        if (user.role != 'Admin' && user.id != req.params.uid) {
+            res.status(401).json({message: 'Access denied'});
+        }
+    }
     model.getUserById(req.params.uid, function (error, result) {
         if (error) {
             return next(error);
         }
-        res.status(200).json(result);
-    })
+        return res.status(200).json(result);
+    });
 }
 
 /**
@@ -108,7 +115,9 @@ exports.authenticate = function (req, res, next) {
             if (!result) {
                 return res.status(401).send({message: 'Password mismatch'});
             }
-            session.add(user, req);
+            if (process.env.NODE_ENV != 'test') {
+                req.session.user = user; // add user to session
+            }
             res.status(200).json(user);
         });
     });
@@ -124,15 +133,53 @@ exports.getSignup = function (req, res, next) {
     res.render('signup');
 };
 
-function checkSession(req, res, next) {
-    debug(req.session);
-    next();
-}
-exports.checkSession = checkSession;
-
+/**
+ * middleware for logout
+ * @param {*} req request
+ * @param {*} res response
+ * @param {*} next callback
+ */
 function logout(req, res, next) {
     req.session.destroy();
     res.status(200).send('LOGGED OUT');
 }
 exports.logout = logout;
+
+/**
+ * middleware checking if user is logged in
+ * @param {*} req request
+ * @param {*} res response
+ * @param {*} next callback
+ */
+function checkUser(req, res, next) {
+    if (process.env.NODE_ENV == 'test') {
+        return next();
+    }
+    if (req.session.user) {
+        return next();
+    }
+    res.status(401).json({message: 'Access denied'});
+}
+exports.checkUser = checkUser;
+
+/**
+ * middleware checking if user is an admin
+ * @param {*} req request
+ * @param {*} res response
+ * @param {*} next callback
+ */
+function checkAdmin(req, res, next) {
+    if (process.env.NODE_ENV == 'test') {
+        return next();
+    }
+    checkUser(req, res, function () {
+        var user = req.session.user;
+        if (!user.role || user.role != 'Admin') {
+            return res.status(401).json({message: 'Access denied'});
+        }
+        next();
+    });
+}
+exports.checkAdmin = checkAdmin;
+
 
