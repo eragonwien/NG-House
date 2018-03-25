@@ -7,6 +7,7 @@ function houseService(http) {
     var service = {
         getHouses: getHouses,
         addHouse: addHouse,
+        updateHouse: updateHouse,
         deleteHouse: deleteHouse        
     }
     return service;
@@ -47,6 +48,22 @@ function houseService(http) {
         return http({
             method: 'DELETE',
             url: '/api/houses/' + house.id
+        }).then(success, error);
+
+        function success(response) {
+            return response;
+        }
+
+        function error(response) {
+            return response;
+        }
+    }
+
+    function updateHouse(house) {
+        return http({
+            method: 'PUT',
+            url: '/api/houses/' + house.id,
+            data: house
         }).then(success, error);
 
         function success(response) {

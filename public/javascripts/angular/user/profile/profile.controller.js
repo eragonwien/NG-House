@@ -45,7 +45,8 @@ function profileController(user, userService, appService, houseService) {
     }
 
     function edit(house) {
-        alert('ID: ' + house.id);
+        appService.setMessage(house.id);
+        appService.moveTo('editHouse');
     }
 
     function deleteHouse(house) {

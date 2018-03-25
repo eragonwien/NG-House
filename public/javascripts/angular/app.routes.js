@@ -124,6 +124,27 @@ function routing(stateProvider, urlRouterProvider) {
         }
     }
 
+    var editHouse = {
+        name: 'editHouse',
+        url: '/houses/edit',
+        views: {
+            navbar: {
+                templateUrl: 'javascripts/angular/navbar/navbar.view.html',
+                controller: 'navbarController',
+                controllerAs: 'navbar'
+            },
+            content: {
+                templateUrl: 'javascripts/angular/house/edit/edit.house.view.html',
+                controller: 'editHouseController',
+                controllerAs: 'editHouse'
+            }
+        },
+        resolve: {
+            user: getUser,
+            message: getMessage
+        }
+    }
+
     var search = {
         name: 'search',
         url: '/houses/search',
@@ -152,10 +173,20 @@ function routing(stateProvider, urlRouterProvider) {
     stateProvider.state(redirect);
     stateProvider.state(profile);
     stateProvider.state(createHouse);
+    stateProvider.state(editHouse);
     stateProvider.state(search);
 
     urlRouterProvider.otherwise('/login');
 };
+
+/**
+ * get message
+ * @param {*} appService app service
+ */
+function getMessage(appService) {
+    return appService.getMessage();
+}
+getMessage.$inject = ['appService'];
 
 /**
  * get houses
