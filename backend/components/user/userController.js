@@ -31,11 +31,13 @@ exports.getUserById = function (req, res, next) {
             res.status(401).json({message: 'Access denied'});
         }
     }
-    model.getUserById(req.params.uid, function (error, result) {
+    model.getUserById(req.params.uid, function (error, user) {
         if (error) {
             return next(error);
         }
-        return res.status(200).json(result);
+        // remove password
+        delete user.password;
+        return res.status(200).json(user);
     });
 }
 
@@ -115,6 +117,7 @@ exports.authenticate = function (req, res, next) {
             if (!result) {
                 return res.status(401).send({message: 'Password mismatch'});
             }
+            delete user.password;
             if (process.env.NODE_ENV != 'test') {
                 req.session.user = user; // add user to session
             }
