@@ -1,5 +1,6 @@
 var express = require('express');
-var dotenv = require('dotenv');
+require('dotenv').config();
+var debug = require('debug')('app');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -9,11 +10,7 @@ var sass = require('node-sass-middleware');
 var ejs = require('ejs');
 var session = require('express-session');
 var mySQLStore = require('express-mysql-session');
-var debug = require('debug')('app');
 var app = express();
-
-// read .env
-dotenv.config();
 
 // routes
 var index = require('./backend/components/routes');
@@ -30,7 +27,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // logger
 
 if (app.get('env') != 'test' && app.get('env') != 'production') {
-    app.use(logger('dev'));
+    //app.use(logger('dev'));
 }
 
 app.use(bodyParser.json());
@@ -52,7 +49,6 @@ var pool = require('./backend/config/db').pool;
 var sessionStore = new mySQLStore({}, pool);
 
 // session
-var sessionRefresh = require('./backend/config/session').refresh;
 app.use(session({
     key: (process.env.SESSION_KEY) ? process.env.SESSION_KEY : 'hans_solo',
     secret: (process.env.SESSION_SECRET) ? process.env.SESSION_SECRET : 'millenium_balkon',
@@ -63,7 +59,7 @@ app.use(session({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', sessionRefresh, index);
+app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -80,6 +76,7 @@ app.use(function(error, req, res, next) {
     //res.locals.error = req.app.get('env') === 'development' ? err : {};
 
     // render the error page
+    debug(error);    
     res.status(error.status || 500).json(error);
     //res.render('error');
 });
