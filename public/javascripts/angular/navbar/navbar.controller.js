@@ -2,10 +2,10 @@ angular
     .module('house')
     .controller('navbarController', navbarController);
 
-navbarController.$inject = ['userService', 'appService']
-function navbarController(userService, appService) {
+navbarController.$inject = ['user', 'userService', 'appService']
+function navbarController(user, userService, appService) {
     var vm = this;
-    vm.user = userService.getLocalUser();
+    vm.user = user;
     vm.reload = reload;
     vm.logout = logout;
 

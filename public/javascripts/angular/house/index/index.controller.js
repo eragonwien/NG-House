@@ -1,10 +1,10 @@
 angular
     .module('house')
     .controller('indexController', indexController);
-indexController.$inject = ['houses', 'houseService', 'userService', 'currencyService', 'appService'];
-function indexController(houses, houseService, userService, currencyService, appService) {
+indexController.$inject = ['user', 'houses', 'houseService', 'userService', 'currencyService', 'appService'];
+function indexController(user, houses, houseService, userService, currencyService, appService) {
     var vm = this;
-    vm.user = userService.getLocalUser();
+    vm.user = user;
     vm.showHouse = showHouse;
     vm.createHouse = createHouse;
     vm.houses = houses;

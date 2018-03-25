@@ -11,7 +11,8 @@ function userService(window, http) {
         login: login,
         signup: signup,
         update: update,
-        logout: logout
+        logout: logout,
+        getUser: getUser
     }
     return service;
 
@@ -97,6 +98,22 @@ function userService(window, http) {
         }
 
         function logoutError(response) {            
+            return response;
+        }
+    }
+
+    function getUser(user_id) {
+        // check if the session is still valid
+        return http({
+            method: 'GET',
+            url: 'api/users/' + user_id
+        }).then(getUserSuccess, getUserError);
+
+        function getUserSuccess(response) {
+            return response;
+        }
+
+        function getUserError(response) {
             return response;
         }
     }

@@ -2,10 +2,10 @@ angular
     .module('house')
     .controller('createHouseController', createHouseController);
 
-createHouseController.$inject = ['currencies', 'houseTypes', 'houseService', 'currencyService', 'userService', 'houseTypeService', 'appService']
-function createHouseController(currencies, houseTypes, houseService, currencyService, userService, houseTypeService, appService) {
+createHouseController.$inject = ['user', 'currencies', 'houseTypes', 'houseService', 'currencyService', 'userService', 'houseTypeService', 'appService']
+function createHouseController(user, currencies, houseTypes, houseService, currencyService, userService, houseTypeService, appService) {
     var vm = this;
-    vm.user = userService.getLocalUser();
+    vm.user = user;
     vm.getCurrencies = getCurrencies;
     vm.submit = submit;
     vm.currencies = currencies;

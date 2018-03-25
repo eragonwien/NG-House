@@ -2,10 +2,10 @@ angular
     .module('house')
     .controller('profileController', profileController);
 
-profileController.$inject = ['userService', 'appService', 'houseService'];
-function profileController(userService, appService, houseService) {
+profileController.$inject = ['user', 'userService', 'appService', 'houseService'];
+function profileController(user, userService, appService, houseService) {
     var vm = this;
-    vm.user = userService.getLocalUser();
+    vm.user = user;
     vm.editing = false;
     vm.save = save;
     vm.loading = false;

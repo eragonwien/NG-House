@@ -2,16 +2,15 @@ angular
     .module('house')
     .controller('loginController', loginController);
 
-loginController.$inject = ['userService', 'appService'];
-function loginController(userService, appService) {
+loginController.$inject = ['user', 'userService', 'appService'];
+function loginController(user, userService, appService) {
     var vm = this;
     vm.loginMode = true;
     vm.login = login;
     vm.signup = signup;
     
-    if (userService.getLocalUser()) {
-        home();
-        return;
+    if (user) {
+        return home();
     }
 
     function login(form) {
