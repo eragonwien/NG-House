@@ -162,7 +162,6 @@ describe('User CRUD Test', function () {
                 expect(result).to.have.status(200);
                 expect(result).to.be.json;
                 expect(result.body).to.be.an('object');
-                
                 done();
             });
     });
@@ -186,6 +185,14 @@ describe('User CRUD Test', function () {
                 expect(result).to.be.json;
                 expect(result.body).to.be.an('object');
                 expect(result.body).has.property('affectedRows').which.is.greaterThan(0);
+                done();
+            });
+    });
+    it('should logout user per GET on /logout', function (done) {
+        chai.request(app)
+            .get('/logout')
+            .end(function (error, result) {
+                expect(result).to.have.status(200);
                 done();
             });
     });
