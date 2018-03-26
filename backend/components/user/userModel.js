@@ -125,14 +125,23 @@ exports.createUser = createUser;
  * @param {function({error}, {result})} done callback
  */
 function updateUserById (id, user, done) {
-    var cmd = 'UPDATE user SET first_name=?, last_name=?, address_id=? WHERE id=?;';
-    var params = [user.first_name, user.last_name, user.address_id, id];
-    pool.query(cmd, params, function (error, result) {
+    var cmd = 'UPDATE user SET first_name=?, last_name=?, address_id=?, role_id=?, password=? WHERE id=?;';
+
+    // hashes user password
+    var salt = (process.env.SALT) ? process.env.SALT : 10; // set salt default is 10
+    bcrypt.hash(user.password, salt, function (error, hashedPassword) {
         if (error) {
             return done(error);
         }
-        done(null, result);
-    })
+        user.password = hashedPassword;
+        var params = [user.first_name, user.last_name, user.address_id, user.role_id, user.password, id];
+        pool.query(cmd, params, function (error, result) {
+            if (error) {
+                return done(error);
+            }
+            done(null, result);
+        });
+    });
 }
 exports.updateUserById = updateUserById;
 

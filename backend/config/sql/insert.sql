@@ -1,4 +1,4 @@
-INSERT INTO role(name) VALUES ('Agent');
+INSERT INTO role(name) VALUES ('User');
 INSERT INTO role(name) VALUES ('Admin');
 
 INSERT INTO currency(name, short) VALUES ('EUR', '€');
@@ -20,3 +20,5 @@ INSERT INTO user(first_name, last_name, username, password, email, role_id, addr
 INSERT INTO house(price, rooms, bathrooms, bedrooms, size, user_id, address_id, house_type_id, house_status_id, currency_id) VALUES (10000, 5, 1, 2, 50, 1, 1, 2, 1, 1);
 
 INSERT INTO house_tag(house_id, tag_id) VALUES (1, 2);
+
+INSERT INTO bookmark(house_id, user_id) VALUES(1, 1);

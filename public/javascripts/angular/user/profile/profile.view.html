@@ -87,7 +87,7 @@
 <div ng-if="profile.user && !profile.editing">
     <ul class="collapsible" data-collapsible="accordion">
         <li>
-            <div class="collapsible-header"><i class="material-icons left">home</i>Your offers</div>
+            <div class="collapsible-header"><i class="material-icons left">local_offer</i>Your offers</div>
             <div class="collapsible-body">
                 <div class="row">
                     <div class="col s12 m6" ng-repeat="house in profile.offers">
@@ -111,7 +111,7 @@
                                 <p><strong>Details:</strong> {{house.house_type}}, {{house.rooms}} rooms, {{house.bathrooms}} bathrooms, {{house.bedrooms}} bedrooms, {{house.size}} m&sup2;</p>
                                 <div class="card-action blue darken-4">
                                     <a class="left" href="" ui-sref="editHouse({house_id: house.id})">edit</a>
-                                    <a class="right" href="" ng-click="profile.deleteHouse(house)">delete</a>                                        
+                                    <a class="right" href="" ng-click="profile.deleteHouse(house)">delete</a>  
                                 </div>
                             </div>
                         </div>
@@ -126,4 +126,44 @@
         });
     </script>
 </div>
-            
+<div ng-if="profile.user && !profile.editing">
+    <ul class="collapsible" data-collapsible="accordion">
+        <li>
+            <div class="collapsible-header"><i class="material-icons left">bookmark</i>Your bookmarks</div>
+            <div class="collapsible-body">
+                <div class="row">
+                    <div class="col s12 m6" ng-repeat="bookmark in profile.bookmarks">
+                        <div class="card large hoverable">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                <img class="activator" src="stylesheets/images/{{bookmark.house_type}}.jpg" alt="offer_image">
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title activator">
+                                    <p>{{ bookmark.address }}</p>
+                                    <p>{{bookmark.postal_code}} {{bookmark.city}}, {{bookmark.land}}</p>     
+                                </span>
+                                <div class="chip green white-text waves-effect waves-light" ng-if="bookmark.house_status == 'Active'">For Sale</div>
+                                <div class="chip red white-text waves-effect waves-light" ng-if="bookmark.house_status == 'Inactive'">{{bookmark.house_status}}</div>
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title">{{ bookmark.address }}<i class="material-icons right">close</i></span>
+                                <p><strong>Owner:</strong> {{bookmark.owner_first_name}} {{bookmark.owner_last_name}}</p>
+                                <p><strong>Price:</strong> {{bookmark.currency_short}} {{bookmark.price}} </p>
+                                <p><strong>Address:</strong> {{bookmark.address}}, {{bookmark.postal_code}} {{bookmark.city}}, {{bookmark.land}}</p>
+                                <p><strong>Details:</strong> {{bookmark.house_type}}, {{bookmark.rooms}} rooms, {{bookmark.bathrooms}} bathrooms, {{bookmark.bedrooms}} bedrooms, {{bookmark.size}} m&sup2;</p>
+                                <div class="card-action blue darken-4">
+                                    <a class="right" href="" ng-click="profile.removeBookmark(bookmark)">remove</a>                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <script>
+        $(document).ready(function () {
+            $('.collapsible').collapsible(); 
+        });
+    </script>
+</div>  

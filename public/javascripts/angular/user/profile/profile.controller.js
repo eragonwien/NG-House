@@ -2,15 +2,18 @@ angular
     .module('house')
     .controller('profileController', profileController);
 
-profileController.$inject = ['user', 'userService', 'appService', 'houseService'];
-function profileController(user, userService, appService, houseService) {
+profileController.$inject = ['user', 'userService', 'appService', 'houseService', 'bookmarkService'];
+function profileController(user, userService, appService, houseService, bookmarkService) {
     var vm = this;
     vm.user = user;
     vm.editing = false;
     vm.save = save;
     vm.loading = false;
-    vm.offers = getOffers();
     vm.deleteHouse = deleteHouse;
+    vm.removeBookmark = removeBookmark;
+
+    getOffers();
+    getBookmarksOfUser(user);
 
     function save(form) {
         if (!form.$valid) {
@@ -56,6 +59,32 @@ function profileController(user, userService, appService, houseService) {
             }
             alert(response.data);
         }
+    }
+
+    function getBookmarksOfUser(user) {
+        bookmarkService.getBookmarksByUser(user.id).then(getBookmarksOfUserHandler);
+
+        function getBookmarksOfUserHandler(response) {
+            if (response.status == 200) {
+                vm.bookmarks = response.data;
+                return;
+            }
+            alert(response.data);
+        }
+    }
+
+    function removeBookmark(bookmark) {
+        bookmarkService.deleteBookmarkById(bookmark.id).then(deleteBookmarkHandler);
+
+        function deleteBookmarkHandler(response) {
+            if (response.status == 200) {
+                var index = vm.bookmarks.indexOf(bookmark);
+                vm.bookmarks.splice(index, 1);
+                return alert('Bookmark removed');
+            }
+            alert(response.data);
+        }
+        
     }
 
     function alert(message) {

@@ -29,11 +29,12 @@ var dotenv = require('dotenv');
 var fs = require('fs');
 var helper = require('./helper');
 var pool = require('../backend/config/db').pool;
-var supportedTypes = ['address', 'user', 'house', 'admin'];
+var supportedTypes = ['address', 'user', 'house', 'admin', 'bookmark'];
 
 var addressModel = require('../backend/components/address/addressModel');
 var userModel = require('../backend/components/user/userModel');
 var houseModel = require('../backend/components/house/houseModel');
+var bookmarkModel = require('../backend/components/bookmark/bookmarkModel');
 
 
 start();
@@ -136,6 +137,10 @@ function startGeneration(type, count) {
         case 'address':
             generateAddress(count);
             break;
+        case 'bookmark':
+            generateBookmark(count);
+            break;
+        
         default: console.log('Unsupported Type.');
             break;
     }
@@ -348,6 +353,58 @@ function spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCo
     });
 }
 
+
+/**
+ * generates bookmarks
+ * first checks if the .env file has variable NAME, cancel process if not
+ * query all user and house ids 
+ * @param {number} count number of user being generated
+ * @param {boolean} isAdmin true if admins are to be generated
+ */
+function generateBookmark(count) {
+    if (!process.env.NAME) {
+        return finish(null, 'no NAME variables found.');
+    }
+    var names = helper.getListFromString(process.env.NAME);
+    Promise.all([helper.getAllUsers(), helper.getAllHouses()]).then(promiseSuccess).catch(promiseError);
+
+    function promiseSuccess(results) {
+        var userIds = results[0];
+        var houseIds = results[1];
+        spawnBookmarks(count, userIds, houseIds);
+    }
+    
+    function promiseError(error) {
+        finish(error);
+    }
+}
+
+/**
+ * generate bookmarks
+ * @param {number} count number of users to be generated
+ * @param {string[]} userIds list of user ids
+ * @param {string[]} houseIds list of house ids
+ * @param {string[]} successCount number of successful query
+ */
+function spawnBookmarks(count, userIds, houseIds, successCount) {
+    if (!successCount) {
+        successCount = 0;
+    }
+    if (count <= 0) {
+        return finish(null, 'Success: ' + successCount);
+    }
+
+    var bookmark = {
+        user_id: userIds[helper.getRandomInt(userIds.length)],
+        house_id: houseIds[helper.getRandomInt(houseIds.length)]
+    }
+
+    bookmarkModel.createBookmark(bookmark, function (error, result) {
+        successCount = (error) ? successCount : successCount + 1;
+        count--;
+        spawnBookmarks(count, userIds, houseIds, successCount);
+    });
+}
 
 /**
  * closes the process

@@ -9,6 +9,7 @@ var currency = require('./currency/currencyController');
 var role = require('./role/roleController');
 var houseType = require('./houseType/houseTypeController');
 var houseStatus = require('./houseStatus/houseStatusController');
+var bookmark = require('./bookmark/bookmarkController');
 var mailer = require('./mailer/mailerController');
 
 var checkUser = user.checkUser;
@@ -26,6 +27,9 @@ router.get('/api/users',checkAdmin, user.getAllUsers);
 router.get('/api/users/:uid',checkUser, user.getUserById);
 router.put('/api/users/:uid',checkUser, user.updateUserbyId);
 router.delete('/api/users/:uid',checkUser, user.deleteUserById);
+
+router.get('/api/users/:uid/bookmarks',checkUser, bookmark.getBookmarksByUser);
+
 
 // Address
 router.post('/api/addresses',checkUser, address.createAddress);
@@ -69,6 +73,13 @@ router.get('/api/houseStatuses',checkUser, houseStatus.getAllHouseStatuses);
 router.get('/api/houseStatuses/:hsid',checkUser, houseStatus.getHouseStatusById);
 router.put('/api/houseStatuses/:hsid',checkUser, houseStatus.updateHouseStatusById);
 router.delete('/api/houseStatuses/:hsid',checkUser, houseStatus.deleteHouseStatusById);
+
+// Bookmark
+router.post('/api/bookmarks',checkUser, bookmark.createBookmark);
+router.get('/api/bookmarks',checkUser, bookmark.getAllBookmarks);
+router.get('/api/bookmarks/:bmid',checkUser, bookmark.getBookmarkById);
+router.put('/api/bookmarks/:bmid',checkUser, bookmark.updateBookmarkById);
+router.delete('/api/bookmarks/:bmid',checkUser, bookmark.deleteBookmarkById);
 
 // Mailer
 router.post('/mailer',checkUser, mailer.sendMail);

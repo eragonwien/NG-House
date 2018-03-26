@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS house_image, house_tag, house, user, image, tag, house_type, house_status, currency, role, address;
+DROP TABLE IF EXISTS house_image, house_tag, bookmark, house, user, image, tag, house_type, house_status, currency, role, address;
 
 CREATE TABLE IF NOT EXISTS address (
     id INT NOT NULL AUTO_INCREMENT,
@@ -100,5 +100,15 @@ CREATE TABLE IF NOT EXISTS house_image (
     house_id INT NOT NULL,
     FOREIGN KEY (image_id) REFERENCES image(id),
     FOREIGN KEY (house_id) REFERENCES house(id),
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS bookmark (
+    id INT NOT NULL AUTO_INCREMENT,
+    house_id INT NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (house_id) REFERENCES house(id),
+    CONSTRAINT uq_book_house UNIQUE(user_id, house_id),
     PRIMARY KEY(id)
 );

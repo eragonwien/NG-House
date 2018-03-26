@@ -191,6 +191,7 @@ function routing(stateProvider, urlRouterProvider) {
  */
 function getMessage(appService) {
     var message = appService.getMessage();
+    appService.deleteMessage();
     return message;
 }
 getMessage.$inject = ['appService'];

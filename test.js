@@ -5,10 +5,11 @@ var currencyTest = require('./backend/components/currency/currencyTest');
 var roleTest = require('./backend/components/role/roleTest');
 var userTest = require('./backend/components/user/userTest');
 var houseTest = require('./backend/components/house/houseTest');
-var houseTest = require('./backend/components/houseStatus/houseStatusTest');
+var houseStatusTest = require('./backend/components/houseStatus/houseStatusTest');
+var bookmarkTest = require('./backend/components/bookmark/bookmarkTest');
 
 // Setup Test
 var buildTest = require('./build/buildTest');
 
 // Mailer Test
-var mailerTest = require('./backend/components/mailer/mailerTest');
+//var mailerTest = require('./backend/components/mailer/mailerTest');

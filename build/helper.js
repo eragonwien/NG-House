@@ -156,3 +156,22 @@ function getAllCurrencies() {
     }
 }
 exports.getAllCurrencies = getAllCurrencies;
+
+/**
+ * get all currencies
+ */
+function getAllHouses() {
+    return new Promise(resolveHouses);
+
+    function resolveHouses(resolve, reject) {
+        var houseModel = require('../backend/components/house/houseModel');
+        houseModel.getAllHouses(function (error, houses) {
+            if (error) {
+                return reject(error);
+            }
+            var results = filterValuesOfList(houses, 'id');
+            return resolve(results);
+        });
+    }
+}
+exports.getAllHouses = getAllHouses;

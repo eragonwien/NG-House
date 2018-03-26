@@ -10,10 +10,10 @@ function indexController(user, houses, message, houseService, userService, curre
     vm.houses = houses;
     vm.contact = contact;
     vm.sendMail = sendMail;
+    vm.bookmark = bookmark;
     
     if (message) {
         alert(message);
-        appService.deleteMessage(); // delete message after consuming    
     }
 
     /* House */
@@ -87,5 +87,9 @@ function indexController(user, houses, message, houseService, userService, curre
         result += '**********************\n';
         result += text + '\n';
         return result;
+    }
+
+    function bookmark(house) {
+        house.bookmark = house.bookmark ? false : true;
     }
 }

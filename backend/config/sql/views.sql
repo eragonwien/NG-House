@@ -36,3 +36,26 @@ FROM
     INNER JOIN tag ON house_tag.tag_id = tag.id;
     
 select * from get_tags;
+
+CREATE OR REPLACE VIEW get_bookmarks AS
+select 
+	bookmark.id as id,
+	bookmark.user_id as bookmarker_id,
+	house.price as price, house.rooms as rooms, house.bathrooms as bathrooms, house.bedrooms as bedrooms, house.size as size, house.id as house_id,
+    currency.name as currency, currency.id as currency_id,
+	address.address as address, address.city as city, address.land as land, address.id as address_id,
+	house_type.name as house_type, house_type.id as house_type_id, 
+    house_status.name as house_status, house_status.id as house_status_id,
+    user.first_name as owner_first_name, user.last_name as owner_last_name,
+	user.username as owner_username, user.email as owner_email, user.id as owner_id 
+
+from 
+	bookmark
+	inner join house on house.id = bookmark.house_id
+	inner join user on house.user_id = user.id
+	inner join currency on house.currency_id = currency.id
+	inner join address on house.address_id = address.id
+	inner join house_type on house.house_type_id = house_type.id
+	inner join house_status on house.house_status_id = house_status.id;
+
+select * from get_bookmarks;

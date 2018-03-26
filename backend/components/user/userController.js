@@ -36,7 +36,9 @@ exports.getUserById = function (req, res, next) {
             return next(error);
         }
         // remove password
-        delete user.password;
+        if (user) {
+            delete user.password;
+        }
         return res.status(200).json(user);
     });
 }
