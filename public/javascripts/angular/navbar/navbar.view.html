@@ -1,7 +1,7 @@
 <nav>
 	<div class="nav-wrapper blue darken-4 white-text text-lighten-4">
 		<div class="container">
-			<a href="#" class="brand-logo left" ui-sref="index" ui-sref-active="active">Nghouse</a>
+			<a href="#" data-activates="sidenav" class="sidebar-button left"><i class="material-icons">menu</i></a>
 			<ul class="right">
 				<li><a href="" ng-click="navbar.reload()"><i class="material-icons">refresh</i></a></li>
 				<li ng-if="navbar.user"><a href="" class="dropdown-button" data-activates="dropdown-user">
@@ -9,6 +9,7 @@
 				</a></li>
 				<li><a href="" ui-sref="login" ui-sref-active="active" ng-if="!navbar.user">Login</a></li>
 			</ul>
+			
 		</div>
 	</div>
 </nav>
@@ -19,5 +20,41 @@
 <script>
 	$(document).ready(function () {
 		$('.dropdown-button').dropdown();
+		$(".sidebar-button").sideNav({
+			closeOnClick: true,
+			draggable: true
+		});
 	})
 </script>
+<ul class="side-nav" id="sidenav">
+	<li>
+		<div class="user-view">
+			<div class="background">
+				<img src="stylesheets/images/sidebar_bg.jpg" alt="sidebar_background_image">
+			</div>
+			<div ng-if="navbar.user">
+				<a href=""><span class="white-text name">{{navbar.user.first_name}} {{navbar.user.last_name}}</span></a>
+				<a href=""><span class="white-text name">{{navbar.user.username}}</span></a>
+				<a href=""><span class="white-text email">{{navbar.user.email}}</span></a>
+			</div>
+			<div ng-if="!navbar.user">
+				<a href="" ui-sref="login" ng-if="!navbar.user">
+					<span class="white-text">Login required</span>
+				</a>
+			</div>
+		</div>
+	</li>
+	<li><a class="waves-effect waves-light" href="" ui-sref="index">Home</a></li>
+	<li><div class="divider"></div></li>	
+    <li><a class="waves-effect waves-light" href="" ui-sref="signup">Create a new user</a></li>
+    <li><a class="waves-effect waves-light" href="" ui-sref="createAdmin">Create a new admin</a></li>
+    <li><a class="waves-effect waves-light" href="" ui-sref="login" ng-if="!navbar.user">Login</a></li>
+	<li><a class="waves-effect waves-light" href="" ui-sref="loginTest" ng-if="!navbar.user">Login as test user</a></li>
+	<li><div class="divider"></div></li>
+    <li><a class="waves-effect waves-light" href="" ui-sref="profile" ng-if="navbar.user">View my profile</a></li>
+    <li><a class="waves-effect waves-light" href="" ui-sref="createHouse">Create new house offer</a></li>
+    <li><a class="waves-effect waves-light" href="" ui-sref="test">Test generator</a></li>
+	<li><div class="divider"></div></li>
+	<li><a class="waves-effect waves-light" href="" ui-sref="about">About</a></li>	
+    <li><a class="waves-effect waves-light" href="" ng-click="navbar.logout()" ng-if="navbar.user">Logout</a></li>		
+</ul>
