@@ -9,6 +9,7 @@ var currency = require('./currency/currencyController');
 var role = require('./role/roleController');
 var houseType = require('./houseType/houseTypeController');
 var houseStatus = require('./houseStatus/houseStatusController');
+var mailer = require('./mailer/mailerController');
 
 var checkUser = user.checkUser;
 var checkAdmin = user.checkAdmin;
@@ -68,5 +69,8 @@ router.get('/api/houseStatuses',checkUser, houseStatus.getAllHouseStatuses);
 router.get('/api/houseStatuses/:hsid',checkUser, houseStatus.getHouseStatusById);
 router.put('/api/houseStatuses/:hsid',checkUser, houseStatus.updateHouseStatusById);
 router.delete('/api/houseStatuses/:hsid',checkUser, houseStatus.deleteHouseStatusById);
+
+// Mailer
+router.post('/mailer',checkUser, mailer.sendMail);
 
 module.exports = router;

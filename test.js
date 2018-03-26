@@ -9,3 +9,6 @@ var houseTest = require('./backend/components/houseStatus/houseStatusTest');
 
 // Setup Test
 var buildTest = require('./build/buildTest');
+
+// Mailer Test
+var mailerTest = require('./backend/components/mailer/mailerTest');

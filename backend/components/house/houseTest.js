@@ -13,7 +13,10 @@ describe('Houses Models Test', function () {
         bedrooms: 2,
         size: 40,
         user_id: 1,
-        address_id: 1,
+        address: 'Model House 1',
+        postal_code: '1234',
+        city: 'Modelist',
+        land: 'Mode Land',
         currency_id: 1,        
         house_type_id: 1,
         house_status_id: 1
@@ -88,7 +91,10 @@ describe('House Request Test', function () {
         bedrooms: 2,
         size: 40,
         user_id: 1,
-        address_id: 1,
+        address: 'Model House 1',
+        postal_code: '1234',
+        city: 'Modelist',
+        land: 'Mode Land',
         currency_id: 1,        
         house_type_id: 1,
         house_status_id: 1
@@ -132,7 +138,6 @@ describe('House Request Test', function () {
                 expect(result).to.have.status(200);
                 expect(result).to.be.json;
                 expect(result.body).to.have.property('user_id').which.is.equal(house.user_id);
-                expect(result.body).to.have.property('address_id').which.is.equal(house.address_id);
                 expect(result.body).to.have.property('house_type_id').which.is.equal(house.house_type_id);
                 expect(result.body).to.have.property('house_status_id').which.is.equal(house.house_status_id);
                 expect(result.body).to.have.property('price').which.is.equal(house.price);

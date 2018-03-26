@@ -2,15 +2,16 @@ angular
     .module('house')
     .factory('appService', appService);
 
-appService.$inject = ['$state', '$window']
-function appService(state, window) {
+appService.$inject = ['$state', '$window', '$http']
+function appService(state, window, http) {
     var service = {
         alert: alert,
         moveTo: moveTo,
         reload: reload,
         getMessage: getMessage,
         setMessage: setMessage,
-        deleteMessage: deleteMessage
+        deleteMessage: deleteMessage,
+        sendMail: sendMail
     }
     return service;
 
@@ -43,5 +44,21 @@ function appService(state, window) {
 
     function deleteMessage() {
         window.localStorage.removeItem('message');
+    }
+
+    function sendMail(params) {
+        return http({
+            method: 'POST',
+            url: '/mailer',
+            data: params
+        }).then(success, error);
+
+        function success(response) {
+            return response;
+        }
+
+        function error(response) {
+            return response;
+        }
     }
 }
