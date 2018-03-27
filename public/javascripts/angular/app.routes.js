@@ -46,6 +46,26 @@ function routing(stateProvider, urlRouterProvider) {
         }
     }
 
+    var createAdmin = {
+        name: 'createAdmin',
+        url: '/admin/create',
+        views: {
+            navbar: {
+                templateUrl: 'javascripts/angular/navbar/navbar.view.html',
+                controller: 'navbarController',
+                controllerAs: 'navbar'
+            },
+            content: {
+                templateUrl: 'javascripts/angular/user/admin/create/create.admin.view.html',
+                controller: 'createAdminController',
+                controllerAs: 'createAdmin'
+            }
+        },
+        resolve: {
+            user: getUser
+        }
+    }
+
     var login = {
         name: 'login',
         url: '/login',
@@ -180,6 +200,7 @@ function routing(stateProvider, urlRouterProvider) {
     stateProvider.state(redirect);
     stateProvider.state(profile);
     stateProvider.state(createHouse);
+    stateProvider.state(createAdmin);
     stateProvider.state(editHouse);
     stateProvider.state(search);
 
