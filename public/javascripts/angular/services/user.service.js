@@ -55,6 +55,12 @@ function userService(window, http) {
         }
     }
     
+    /**
+     * create a new user per http request
+     * 
+     * @param {object} user object user
+     * @returns {object} response
+     */
     function signup(user) {
         return http({
             method: 'POST',
