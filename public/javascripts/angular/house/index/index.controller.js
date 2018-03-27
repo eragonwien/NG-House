@@ -60,6 +60,10 @@ function indexController(user, houses, message, houseService, userService, curre
     }
 
     function sendMail(receiver) {
+        if (!vm.agent.message) {
+            alert('Empty message cannot be sent.');
+            return;
+        }
         alert('Sending...');
         var sender = vm.user.email;
         var receiver = 'eragonwien@gmail.com'; // redirect email to dev instead

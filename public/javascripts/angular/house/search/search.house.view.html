@@ -11,15 +11,23 @@
         </div>
     </div>
 </div>
-<ul class="collapsible" data-collapsible="accordion">
-    <li>
-        <div class="collapsible-header"><i class="material-icons left">search</i>Search</div>
-        <div class="collapsible-body">
-            <form name="searchHouseForm">
+<div>
+    <p class="center-align">
+        <a class="btn-large waves-effect waves-light blue darken-4" href="" ng-click="searchHouse.searchMode = !searchHouse.searchMode">
+            <i class="material-icons left">search</i>Search
+        </a>  
+    </p>    
+</div>
+
+<div class="row" ng-show="searchHouse.searchMode" ng-init="searchHouse.searchMode = true">
+    <div class="col s12">
+        <div class="card-panel">
+            <form name="searchHouseForm" >
                 <div class="row">
                     <div class="input-field col s12">
+                        <i class="material-icons prefix">search</i>
                         <input class="autocomplete" type="text" name="searchHouse.house.address" id="searchHouse.house.address" ng-model="searchHouse.house.address">
-                        <label class="active" for="searchHouse.house.address">Address, postal code, city or region</label>
+                        <label for="searchHouse.house.address">city or region</label>
                     </div>
                     <div class="input-field col s8 m4">
                         <input class="validate" type="number" min="0" name="searchHouse.house.maxPrice" id="searchHouse.house.maxPrice" ng-model="searchHouse.house.maxPrice">
@@ -63,8 +71,8 @@
                 <div class="row">
                     <div class="col">
                         <button type="submit" class="btn waves-effect waves-light blue darken-4" 
-                            ng-click="searchHouse.submit(searchHouse.house)">
-                            Search<i class="material-icons left">search</i>
+                            ng-click="searchHouse.submit(searchHouse.house); searchHouse.searchMode = false;">
+                            Search
                         </button>
                         <button type="submit" class="btn waves-effect waves-light grey" 
                             ng-click="searchHouse.resetFilter()">
@@ -74,16 +82,15 @@
                 </div>  
             </form>
         </div>
-    </li>
-</ul>
-
+    </div>
+</div>
 <!-- Result -->
 <p class="center-align" ng-if="searchHouse.results && searchHouse.results.length <= 0">No result found</p>
 <div class="row" ng-if="searchHouse.results">
     <div class="col s12 m4" ng-repeat="result in searchHouse.results  | houseFilter: searchHouse.user">
         <div class="card medium hoverable">
             <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" src="stylesheets/images/{{result.house_type}}.jpg" alt="house_image">
+                <img class="activator" ng-src="stylesheets/images/{{result.house_type}}.jpg" alt="house_image">
             </div>
             <div class="card-content">
                 <span class="card-title activator">
@@ -98,54 +105,21 @@
                 <p><strong>Price:</strong>  {{result.price | currency : result.currency + " " : 2}} </p>
                 <p><strong>Address:</strong> {{result.address}}, {{result.postal_code}} {{result.city}}, {{result.land}}</p>
                 <p><strong>Details:</strong> {{result.house_type}}, {{result.rooms}}, {{result.bathrooms}} bathrooms, {{result.bedrooms}} bedrooms, {{result.size}} m&sup2;</p>
-                <div class="card-action blue darken-4"></div>
+                <div class="card-action blue darken-4">
+                    <a class="modal-trigger left" href="" data-target="contactAgentModal" ng-click="searchHouse.contact(house)">
+                        <i class="material-icons left">mail</i>
+                    </a>
+                    <a class="left" href="" ng-click="searchHouse.bookmark(house)">
+                        <i class="material-icons left" ng-if="!result.bookmark">bookmark_border</i>
+                        <i class="material-icons left" ng-if="result.bookmark">bookmark</i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Jquery -->
 <script>
-    $(document).ready(function () {
-
-        // collapsible
-        $('.collapsible').collapsible();
-        $('.collapsible').collapsible('open', 0);
-
-        // select
-        $('select').material_select();
-
-        // ajax auto complete
-        $(function () {
-            $.ajax({
-                type: 'GET',
-                url: '/api/addresses?distinct=true',
-                success: ajaxAutoComplete
-            });
-        });
-        
-        function ajaxAutoComplete(response) {
-            var addresses = getAddresses();
-            initAutocomplete();
-            
-            function getAddresses() {
-                var results = {};
-                for (let i = 0; i < response.length; i++) {
-                    var address = response[i];
-                    var key =  address.city + ',' + address.land;
-                    results[key] = null;
-                }
-                return results;
-            }
-
-            function initAutocomplete() {
-                $('input.autocomplete').autocomplete({
-                    data: addresses,
-                    minLength: 1,
-                    onAutocomplete: function (value) {
-                        //console.log(value);
-                    }
-                });
-            }
-        }
+    $(document).ready(function() {
+        $('select').formSelect();
     });
 </script>

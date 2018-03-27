@@ -20,7 +20,7 @@ function signupController(userService, appService) {
                 moveTo('login');
                 return;
             }
-            alert(response.data);
+            alert('Error: ' + response.data.code);
         }
     }
 

@@ -3,11 +3,11 @@
 <form name="houseEditingForm">
     <div class="row">
         <div class="input-field col s12 m6">
-            <input type="text" name="house.user.full_name" id="house.user.full_name" value="{{editHouse.house.first_name}} {{editHouse.house.last_name}} " disabled>
+            <input type="text" name="house.user.full_name" id="house.user.full_name" value="{{editHouse.editHouse.first_name}} {{editHouse.editHouse.last_name}} " disabled>
             <label class="active" for="house.user.full_name">Agent</label>
         </div>
         <div class="input-field col s12 m6">
-            <input type="text" name="house.user.email" id="house.user.email" ng-value="editHouse.house.email" disabled>
+            <input type="text" name="house.user.email" id="house.user.email" ng-value="editHouse.editHouse.email" disabled>
             <label class="active" for="house.user.email">Contact Email</label>
         </div>
         <input type="hidden" ng-model="editHouse.editHouse.user_id" ng-init="editHouse.editHouse.user_id = editHouse.user.id">
@@ -68,6 +68,6 @@
 </form>
 <script>
     $(document).ready(function() {
-        $('select').material_select();
+        $('select').formSelect();
     });
 </script>

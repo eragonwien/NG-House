@@ -20,7 +20,9 @@ function appService(state, window, http) {
         if (typeof message === 'object') {
             message = JSON.stringify(message);
         }
-        Materialize.toast(message, duration);
+        M.toast({
+            html: message
+        });
     }
 
     function moveTo(path) {

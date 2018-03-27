@@ -167,6 +167,7 @@ function routing(stateProvider, urlRouterProvider) {
             }
         },
         resolve: {
+            addresses: getAddresses,
             houseTypes: getHouseTypes,
             currencies: getCurrencies,
             user: getUser
@@ -195,6 +196,19 @@ function getMessage(appService) {
     return message;
 }
 getMessage.$inject = ['appService'];
+
+/**
+ * get addresses
+ * @param {*} addressService address service
+ */
+function getAddresses(addressService) {
+    return addressService.getAddresses().then(getAddressesHandler);
+
+    function getAddressesHandler(response) {
+        return response.data;
+    }
+}
+getAddresses.$inject = ['addressService'];
 
 /**
  * get houses
