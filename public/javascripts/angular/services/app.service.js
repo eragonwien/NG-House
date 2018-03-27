@@ -11,6 +11,7 @@ function appService(state, window, http) {
         getMessage: getMessage,
         setMessage: setMessage,
         deleteMessage: deleteMessage,
+        getErrorMessage: getErrorMessage,
         sendMail: sendMail
     }
     return service;
@@ -62,5 +63,9 @@ function appService(state, window, http) {
         function error(response) {
             return response;
         }
+    }
+
+    function getErrorMessage(error) {
+        return error;
     }
 }

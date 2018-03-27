@@ -28,10 +28,6 @@ function searchHouseController(user, houseTypes, currencies, addresses, appServi
         }
     }
 
-    function alert(message, duration) {
-        appService.alert(message, duration);
-    }
-
     function splitAddress(house) {
         if (!house.address) {
             return;

@@ -13,7 +13,7 @@ function indexController(user, houses, message, houseService, userService, curre
     vm.bookmark = bookmark;
     
     if (message) {
-        alert(message);
+        appService.alert(message);
     }
 
     /* House */
@@ -26,30 +26,20 @@ function indexController(user, houses, message, houseService, userService, curre
                 vm.houses = response.data;
                 return;
             }
-            alert(response.data);
+            appService.alert(response.data);
         }
     }
 
     function createHouse() {
         if (!vm.user) {
-            alert('Please login first!');
+            appService.alert('Please login first!');
             return;
         }
-        moveTo('createHouse');
+        appService.moveTo('createHouse');
     }
 
     function showHouse(house) {
-        alert(house);
-    }
-
-    /* General */
-
-    function alert(message) {
-        appService.alert(message);
-    }
-
-    function moveTo(path) {
-        appService.moveTo(path);
+        appService.alert(house);
     }
 
     function contact(house) {
@@ -61,10 +51,10 @@ function indexController(user, houses, message, houseService, userService, curre
 
     function sendMail(receiver) {
         if (!vm.agent.message) {
-            alert('Empty message cannot be sent.');
+            appService.alert('Empty message cannot be sent.');
             return;
         }
-        alert('Sending...');
+        appService.alert('Sending...');
         var sender = vm.user.email;
         var receiver = 'eragonwien@gmail.com'; // redirect email to dev instead
         var text = getText(sender, receiver, vm.agent.message.content);
@@ -78,9 +68,9 @@ function indexController(user, houses, message, houseService, userService, curre
 
         function sendMailHandler(response) {
             if (response.status == 200) {
-                return alert('Email is sent.');
+                return appService.alert('Email is sent.');
             }
-            alert('Error: ' + response.data);
+            appService.alert('Error: ' + response.data);
         }
     }
 

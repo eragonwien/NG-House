@@ -10,12 +10,12 @@ function loginController(user, userService, appService) {
     vm.signup = signup;
     
     if (user) {
-        return home();
+        return appService.moveTo();
     }
 
     function login(form) {
         if (!validateForm(form)) {
-            alert('Form invalid');
+            appService.alert('Form invalid');
             return;
         }
         userService.login(vm.user.username, vm.user.password).then(loginHandler);
@@ -24,16 +24,16 @@ function loginController(user, userService, appService) {
             var status = response.status;
             if (status == 200) {
                 userService.setLocalUser(response.data, vm.user.remember);
-                home();
+                appService.moveTo();
                 return;
             }
-            alert(response.data.message);
+            appService.alert(response.data.message);
         }
     }
 
     function signup(form) {
         if (!validateForm(form)) {
-            alert('Form invalid');
+            appService.alert('Form invalid');
             return;
         }
         userService.signup(vm.user).then(signupHandler);
@@ -44,7 +44,7 @@ function loginController(user, userService, appService) {
                 vm.loginMode = true;
                 return;
             }
-            alert(response)
+            appService.alert(response)
         }
     }
 
@@ -52,11 +52,4 @@ function loginController(user, userService, appService) {
         return form.$valid;
     }
 
-    function home() {
-        appService.moveTo();
-    }
-
-    function alert(message) {
-        appService.alert(message);
-    }
 }

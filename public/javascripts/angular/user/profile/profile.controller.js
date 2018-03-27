@@ -26,11 +26,11 @@ function profileController(user, userService, appService, houseService, bookmark
             var status = response.status;
             if (status == 200) {
                 userService.setLocalUser(vm.user);
-                alert('Changes saved.');
+                appService.alert('Changes saved.');
                 vm.editing = false;               
                 return; 
             }
-            alert('Error: ' + response);
+            appService.alert('Error: ' + response);
         }
     }
 
@@ -42,7 +42,7 @@ function profileController(user, userService, appService, houseService, bookmark
                 vm.offers = response.data;
                 return;
             }
-            alert('Error: ' + response.data);
+            appService.alert('Error: ' + response.data);
         }
     }
 
@@ -54,10 +54,10 @@ function profileController(user, userService, appService, houseService, bookmark
                 // remove house from current list
                 var index = vm.offers.indexOf(house);
                 vm.offers.splice(index, 1);
-                alert('Nr.' + house.id + ' is successfully deleted.');
+                appService.alert('Nr.' + house.id + ' is successfully deleted.');
                 return;                
             }
-            alert(response.data);
+            appService.alert(response.data);
         }
     }
 
@@ -69,7 +69,7 @@ function profileController(user, userService, appService, houseService, bookmark
                 vm.bookmarks = response.data;
                 return;
             }
-            alert(response.data);
+            appService.alert(response.data);
         }
     }
 
@@ -80,14 +80,10 @@ function profileController(user, userService, appService, houseService, bookmark
             if (response.status == 200) {
                 var index = vm.bookmarks.indexOf(bookmark);
                 vm.bookmarks.splice(index, 1);
-                return alert('Bookmark removed');
+                return appService.alert('Bookmark removed');
             }
-            alert(response.data);
+            appService.alert(response.data);
         }
         
-    }
-
-    function alert(message) {
-        appService.alert(message);
     }
 }

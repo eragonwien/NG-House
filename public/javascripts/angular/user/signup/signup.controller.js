@@ -9,7 +9,7 @@ function signupController(userService, appService) {
 
     function signup(form) {
         if (!validateForm(form)) {
-            alert('Form invalid');
+            appService.alert('Form invalid');
             return;
         }
         userService.signup(vm.user).then(signupHandler);
@@ -17,22 +17,14 @@ function signupController(userService, appService) {
         function signupHandler(response) {
             var status = response.status;
             if (status == 200) {
-                moveTo('login');
+                appService.moveTo('login');
                 return;
             }
-            alert('Error: ' + response.data.code);
+            appService.alert('Error: ' + response.data.code);
         }
     }
 
     function validateForm(form) {
         return form.$valid;
-    }
-
-    function alert(message) {
-        appService.alert(message);
-    }
-
-    function moveTo(path) {
-        appService.moveTo(path);
     }
 }

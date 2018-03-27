@@ -14,18 +14,18 @@ function createHouseController(user, currencies, houseTypes, houseService, curre
     /* Create House */
     function submit(form) {
         if (!form.$valid) {
-            alert('Invalid Form');
+            appService.alert('Invalid Form');
             return;
         }
         houseService.addHouse(vm.newHouse).then(addHouseHandler);
 
         function addHouseHandler(response) {
             if (response.status == 200) {
-                alert('Successfully added.');
-                moveTo();
+                appService.alert('Successfully added.');
+                appService.moveTo();
                 return;
             }
-            alert(response.data);
+            appService.alert(response.data);
         }
     }
 
@@ -38,7 +38,7 @@ function createHouseController(user, currencies, houseTypes, houseService, curre
                 vm.currencies = response.data;
                 return;
             }
-            alert(response.data, 10000);
+            appService.alert(response.data, 10000);
         }
     }
 
@@ -51,15 +51,7 @@ function createHouseController(user, currencies, houseTypes, houseService, curre
                 vm.houseTypes = response.data;
                 return;
             }
-            alert(response.data);
+            appService.alert(response.data);
         }
-    }
-
-    function alert(message, duration) {
-        appService.alert(message, duration);
-    }
-
-    function moveTo(path) {
-        appService.moveTo(path);
     }
 }
