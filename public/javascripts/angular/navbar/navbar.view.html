@@ -1,13 +1,15 @@
 <nav>
 	<div class="nav-wrapper blue darken-4 white-text text-lighten-4">
-		<a href="#" class="brand-logo" ui-sref="index" ui-sref-active="active">Nghouse</a>
-		<a href="" data-target="sidenav" class="sidenav-trigger left"><i class="material-icons">menu</i></a>			
-		<ul class="right hide-on-med-and-down">
-			<li ng-if="navbar.user"><a href="#" class="dropdown-trigger" data-target="dropdown-user">
-				<i class="material-icons left">person</i>
-			</a></li>
-			<li><a href="" ui-sref="login" ui-sref-active="active" ng-if="!navbar.user">Login</a></li>
-		</ul>
+		<div class="container">
+			<a href="#" class="brand-logo">Nghouse</a>
+			<a href="" data-target="sidenav" class="sidenav-trigger left"><i class="material-icons">menu</i></a>			
+			<ul class="right hide-on-med-and-down">
+				<li ng-if="navbar.user"><a href="#" class="dropdown-trigger" data-target="dropdown-user">
+					<i class="material-icons left">person</i>
+				</a></li>
+				<li><a href="" ui-sref="login" ui-sref-active="active" ng-if="!navbar.user">Login</a></li>
+			</ul>
+		</div>
 	</div>
 </nav>
 <!-- dropdown -->
@@ -31,15 +33,14 @@
 				<a href=""><span class="white-text email">{{navbar.user.email}}</span></a>
 			</div>
 			<div ng-if="!navbar.user">
-				<a href="" ui-sref="login" ng-if="!navbar.user">
+				<a class="sidenav-close" href="" ui-sref="login" ng-if="!navbar.user">
 					<span class="white-text">Login required</span>
 				</a>
 			</div>
 		</div>
 	</li>
-	<li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="index" ui-sref-active="active">Home</a></li>
-	<li><div class="divider"></div></li>	
-	<li><a class="waves-effect waves-light sidenav-close" href="" ng-click="navbar.reload()">Reload page</li>
+	<li><a class="waves-effect sidenav-close" href="" ui-sref="index" ui-sref-active="active">Home</a></li>
+	<li><a class="waves-effect waves-light sidenav-close" href="" ng-click="navbar.reload()">Reload page</a></li>	
     <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="signup">Create a new user</a></li>
     <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="createAdmin">Create a new admin</a></li>
     <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="login" ng-if="!navbar.user">Login</a></li>

@@ -11,9 +11,13 @@
                 ng-model="login.user.password" required>
             <label class="active" for="user.password">Password</label>
         </div>
-        <div class="col s12">
-            <input type="checkbox" id="user.remember" ng-model="login.user.remember" ng-init="login.user.remember = false">
-            <label for="user.remember">Remember me</label>
+        <div class="col s12 m6">
+            <p>
+                <label>
+                    <input type="checkbox" id="user.remember" ng-model="login.user.remember" ng-init="login.user.remember = false">
+                    <span>remember me</span>
+                </label>
+            </p>
         </div>
     </div>
     <div class="row">
