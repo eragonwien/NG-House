@@ -2,7 +2,9 @@
     <h1>Error</h1>
     <p>User's profile cannot be loaded. Click this <a href="" ui-sref="index">link</a> to return to the main page</p>
 </div>
-<h1 ng-if="profile.user">Profile of {{::profile.user.first_name}} {{::profile.user.last_name}}</h1>   
+<div class="row" ng-if="profile.user">
+    <div class="col s12"><h3>Profile of {{::profile.user.first_name}} {{::profile.user.last_name}}</h3></div>
+</div>
 <div ng-if="profile.user && !profile.editing">
     <div class="fixed-action-btn">
         <button class="btn-floating btn-large green" ng-click="profile.editing = true" ng-if="!profile.editing">
