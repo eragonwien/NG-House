@@ -33,7 +33,7 @@ router.get('/api/users/:uid/bookmarks',checkUser, bookmark.getBookmarksByUser);
 
 // Address
 router.post('/api/addresses',checkUser, address.createAddress);
-router.get('/api/addresses',checkUser, address.getAllAddresses);
+router.get('/api/addresses', address.getAllAddresses);
 router.get('/api/addresses/:aid',checkUser, address.getAddressById);
 router.post('/api/addresses/id',checkUser, address.getAddressIdByAddress);
 router.put('/api/addresses/:aid',checkUser, address.updateAddressById);
@@ -41,7 +41,7 @@ router.delete('/api/addresses/:aid',checkUser, address.deleteAddressById);
 
 // Currency
 router.post('/api/currencies',checkUser, currency.createCurrency);
-router.get('/api/currencies',checkUser, currency.getAllCurrencies);
+router.get('/api/currencies', currency.getAllCurrencies);
 router.get('/api/currencies/:cid',checkUser, currency.getCurrencyById);
 router.put('/api/currencies/:cid',checkUser, currency.updateCurrency);
 router.delete('/api/currencies/:cid',checkUser, currency.deleteCurrency);
@@ -62,21 +62,21 @@ router.delete('/api/houses/:hid',checkUser, house.deleteHouseById);
 
 // House Type
 router.post('/api/houseTypes',checkUser, houseType.createHouseType);
-router.get('/api/houseTypes',checkUser, houseType.getAllHouseType);
+router.get('/api/houseTypes', houseType.getAllHouseType);
 router.get('/api/houseTypes/:htid',checkUser, houseType.getHouseTypeById);
 router.put('/api/houseTypes/:htid',checkUser, houseType.updateHouseTypeById);
 router.delete('/api/houseTypes/:htid',checkUser, houseType.deleteHouseTypeById);
 
 // House Status
 router.post('/api/houseStatuses',checkUser, houseStatus.createHouseStatus);
-router.get('/api/houseStatuses',checkUser, houseStatus.getAllHouseStatuses);
+router.get('/api/houseStatuses', houseStatus.getAllHouseStatuses);
 router.get('/api/houseStatuses/:hsid',checkUser, houseStatus.getHouseStatusById);
 router.put('/api/houseStatuses/:hsid',checkUser, houseStatus.updateHouseStatusById);
 router.delete('/api/houseStatuses/:hsid',checkUser, houseStatus.deleteHouseStatusById);
 
 // Bookmark
 router.post('/api/bookmarks',checkUser, bookmark.createBookmark);
-router.get('/api/bookmarks',checkUser, bookmark.getAllBookmarks);
+router.get('/api/bookmarks', bookmark.getAllBookmarks);
 router.get('/api/bookmarks/:bmid',checkUser, bookmark.getBookmarkById);
 router.put('/api/bookmarks/:bmid',checkUser, bookmark.updateBookmarkById);
 router.delete('/api/bookmarks/:bmid',checkUser, bookmark.deleteBookmarkById);
