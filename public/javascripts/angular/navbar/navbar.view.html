@@ -1,6 +1,6 @@
 <nav>
 	<div class="nav-wrapper blue darken-4 white-text text-lighten-4">
-		<a href="#" class="brand-logo">Nghouse</a>
+		<a href="#" class="brand-logo" ui-sref="index" ui-sref-active="active">Nghouse</a>
 		<a href="" data-target="sidenav" class="sidenav-trigger left"><i class="material-icons">menu</i></a>			
 		<ul class="right hide-on-med-and-down">
 			<li ng-if="navbar.user"><a href="#" class="dropdown-trigger" data-target="dropdown-user">
@@ -37,24 +37,23 @@
 			</div>
 		</div>
 	</li>
-	<li><a class="waves-effect waves-light" href="" ui-sref="index">Home</a></li>
+	<li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="index" ui-sref-active="active">Home</a></li>
 	<li><div class="divider"></div></li>	
-	<li><a class="waves-effect waves-light" href="" ng-click="navbar.reload()">Reload page</li>
-    <li><a class="waves-effect waves-light" href="" ui-sref="signup">Create a new user</a></li>
-    <li><a class="waves-effect waves-light" href="" ui-sref="createAdmin">Create a new admin</a></li>
-    <li><a class="waves-effect waves-light" href="" ui-sref="login" ng-if="!navbar.user">Login</a></li>
-	<li><a class="waves-effect waves-light" href="" ui-sref="loginTest" ng-if="!navbar.user">Login as test user</a></li>
+	<li><a class="waves-effect waves-light sidenav-close" href="" ng-click="navbar.reload()">Reload page</li>
+    <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="signup">Create a new user</a></li>
+    <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="createAdmin">Create a new admin</a></li>
+    <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="login" ng-if="!navbar.user">Login</a></li>
+	<li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="loginTest" ng-if="!navbar.user">Login as test user</a></li>
 	<li><div class="divider"></div></li>
-    <li><a class="waves-effect waves-light" href="" ui-sref="profile" ng-if="navbar.user">View my profile</a></li>
-    <li><a class="waves-effect waves-light" href="" ui-sref="createHouse">Create new house offer</a></li>
-    <li><a class="waves-effect waves-light" href="" ui-sref="test">Test generator</a></li>
+    <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="profile" ng-if="navbar.user">View my profile</a></li>
+    <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="createHouse">Create new house offer</a></li>
+    <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="test">Test generator</a></li>
 	<li><div class="divider"></div></li>
-	<li><a class="waves-effect waves-light" href="" ui-sref="about">About</a></li>	
-    <li><a class="waves-effect waves-light" href="" ng-click="navbar.logout()" ng-if="navbar.user">Logout</a></li>		
+	<li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="about">About</a></li>	
+    <li><a class="waves-effect waves-light sidenav-close" href="" ng-click="navbar.logout()" ng-if="navbar.user">Logout</a></li>		
 </ul>
 <script>
 	$(document).ready(function () {
 		$('.dropdown-trigger').dropdown();
-		$(".sidenav").sidenav();
 	})
 </script>

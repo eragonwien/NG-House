@@ -8,6 +8,7 @@ function navbarController(user, userService, appService) {
     vm.user = user;
     vm.reload = reload;
     vm.logout = logout;
+    initSideNav();
 
     function reload() {
         appService.reload();
@@ -25,5 +26,11 @@ function navbarController(user, userService, appService) {
             }
             appService.moveTo('redirect');
         }
+    }
+
+    function initSideNav() {
+        var elem = document.querySelector('.sidenav');
+        var options = {};
+        var instance = M.Sidenav.init(elem, options);
     }
 }
