@@ -12,6 +12,10 @@ function profileController(user, userService, appService, houseService, bookmark
     vm.deleteHouse = deleteHouse;
     vm.removeBookmark = removeBookmark;
 
+    if (!user) {
+        return appService.moveTo();
+    }
+
     getOffers();
     getBookmarksOfUser(user);
 
