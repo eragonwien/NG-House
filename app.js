@@ -14,12 +14,13 @@ var cors = require('cors');
 var compression = require('compression');
 var app = express();
 
-// enable cors
+/* enable cors
 var originConfig = require('./backend/config/cors');
 app.use(cors({
     credentials: true,
     origin: originConfig.origin
-}));
+})); 
+*/
 
 // enable gzip compression
 app.use(compression());

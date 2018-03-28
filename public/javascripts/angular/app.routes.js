@@ -195,7 +195,7 @@ function routing(stateProvider, urlRouterProvider) {
     }
 
     var testGenerator = {
-        name: 'testGenerator',
+        name: 'test',
         url: '/test/generator',
         views: {
             navbar: {
@@ -205,8 +205,8 @@ function routing(stateProvider, urlRouterProvider) {
             },
             content: {
                 templateUrl: 'javascripts/angular/test/test.generator.view.html',
-                controller: 'testGeneratorController',
-                controllerAs: 'testGenerator'
+                controller: 'testController',
+                controllerAs: 'test'
             }
         },
         resolve: {
@@ -226,6 +226,7 @@ function routing(stateProvider, urlRouterProvider) {
     stateProvider.state(createAdmin);
     stateProvider.state(editHouse);
     stateProvider.state(search);
+    stateProvider.state(testGenerator);
 
     urlRouterProvider.otherwise('/login');
 };
