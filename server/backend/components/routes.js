@@ -60,7 +60,7 @@ router.put('/api/houses/:hid',checkUser, house.updateHouseById);
 router.delete('/api/houses/:hid',checkUser, house.deleteHouseById);
 
 // House Type
-router.post('/api/houseTypes',checkUser, houseType.createHouseType);
+router.post('/api/houseTypes', checkAdmin, houseType.createHouseType);
 router.get('/api/houseTypes', houseType.getAllHouseType);
 router.get('/api/houseTypes/:htid',checkUser, houseType.getHouseTypeById);
 router.put('/api/houseTypes/:htid',checkUser, houseType.updateHouseTypeById);

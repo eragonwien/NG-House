@@ -10,7 +10,19 @@ var sass = require('node-sass-middleware');
 var ejs = require('ejs');
 var session = require('express-session');
 var mySQLStore = require('express-mysql-session');
+var cors = require('cors');
+var compression = require('compression');
 var app = express();
+
+// enable cors
+var originConfig = require('./backend/config/cors');
+app.use(cors({
+    credentials: true,
+    origin: originConfig.origin
+}));
+
+// enable gzip compression
+app.use(compression());
 
 // routes
 var index = require('./backend/components/routes');

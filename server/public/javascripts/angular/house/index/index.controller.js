@@ -14,7 +14,9 @@ function indexController(user, houses, message, houseService, userService, curre
     if (message) {
         appService.alert(message);
     }
-    getBookmarksOfHouses();
+    if (user) {
+        getBookmarksOfHouses();   
+    }
 
     function createHouse() {
         if (!vm.user) {

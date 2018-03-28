@@ -335,7 +335,8 @@ function getUser(userService) {
     return userService.getUser(user.id).then(getUserHandler);
 
     function getUserHandler(response) {
-        if (!response) {
+        if (response.status == 401) {
+            userService.deleteLocalUser();
             return null;
         }
         return response.data;

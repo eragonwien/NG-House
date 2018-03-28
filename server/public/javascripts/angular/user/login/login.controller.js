@@ -27,7 +27,8 @@ function loginController(user, userService, appService) {
                 appService.moveTo();
                 return;
             }
-            appService.alert(response.data.message);
+            console.log(response);
+            appService.alert(response);
         }
     }
 
