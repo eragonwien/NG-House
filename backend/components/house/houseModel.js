@@ -212,9 +212,6 @@ function updateHouseById(id, house, done) {
 			done(null, result);
 		});
 	});
-
-
-	
 };
 exports.updateHouseById = updateHouseById;
 

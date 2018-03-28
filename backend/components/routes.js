@@ -30,7 +30,6 @@ router.delete('/api/users/:uid',checkUser, user.deleteUserById);
 
 router.get('/api/users/:uid/bookmarks',checkUser, bookmark.getBookmarksByUser);
 
-
 // Address
 router.post('/api/addresses',checkUser, address.createAddress);
 router.get('/api/addresses', address.getAllAddresses);

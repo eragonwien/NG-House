@@ -28,13 +28,13 @@
                 <p><strong>Address:</strong> {{house.address}}, {{house.postal_code}} {{house.city}}, {{house.land}}</p>
                 <p><strong>Details:</strong> {{house.house_type}}, {{house.rooms}} rooms, {{house.bathrooms}} bathrooms, {{house.bedrooms}} bedrooms, {{house.size}} m&sup2;</p>
                 <div class="card-action blue darken-4">
-                    <a class="modal-trigger left" href="" data-target="contactAgentModal" ng-click="index.contact(house)">
-                        <i class="material-icons left">mail</i>
-                    </a>
-                    <a class="left" href="" ng-click="index.bookmark(house)">
-                        <i class="material-icons left" ng-if="!house.bookmark">bookmark_border</i>
-                        <i class="material-icons left" ng-if="house.bookmark">bookmark</i>
-                    </a>
+                    <a class="modal-trigger left" href="" data-target="contactAgentModal" ng-click="index.contact(house)">contact</a>
+                    <form class="right">
+                        <label>
+                            <input type="checkbox" ng-click="index.bookmark(house)" ng-model="house.bookmark">
+                            <span>bookmark</span>                            
+                        </label>
+                    </form>
                 </div>
             </div>
         </div>      

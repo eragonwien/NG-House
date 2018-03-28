@@ -69,12 +69,11 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <button type="submit" class="btn waves-effect waves-light blue darken-4" 
-                            ng-click="searchHouse.submit(searchHouse.house); searchHouse.searchMode = false;">
+                        <button type="submit" class="btn waves-effect waves-light" 
+                            ng-click="searchHouse.submit(searchHouse.house)">
                             Search
                         </button>
-                        <button type="submit" class="btn waves-effect waves-light grey" 
-                            ng-click="searchHouse.resetFilter()">
+                        <button class="btn-flat waves-effect waves-light" onclick="resetSelect()" ng-click="searchHouse.resetFilter()">
                             Reset Filter
                         </button>
                     </div>
@@ -118,6 +117,10 @@
     </div>
 </div>
 <script>
+    function resetSelect() {
+        $('select').val("");
+        $('select').formSelect();
+    }
     $(document).ready(function() {
         $('select').formSelect();
     });

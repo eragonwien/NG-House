@@ -1,24 +1,35 @@
-<nav>
+<nav class="navbar-extended">
 	<div class="nav-wrapper blue darken-4 white-text text-lighten-4">
 		<div class="container">
 			<a href="#" class="brand-logo" ui-sref="index" ui-sref-active="active">Nghouse</a>
 			<a href="" data-target="sidenav" class="sidenav-trigger left"><i class="material-icons">menu</i></a>			
 			<ul class="right hide-on-med-and-down">
-				<li ng-if="navbar.user"><a href="#" class="dropdown-trigger" data-target="dropdown-user">
-					<i class="material-icons left" ng-if="navbar.user.role != 'Admin'">person</i>
-					<i class="material-icons left" ng-if="navbar.user.role == 'Admin'">adb</i>
-				</a></li>
+				<li><a class="tooltipped" href="" ui-sref="search" ui-sref-active="active" data-position="bottom" data-tooltip="Search"><i class="material-icons">search</i></a></li>
+				<li>
+					<a class="dropdown-trigger tooltipped" data-target="dropdown-module" data-position="bottom" data-tooltip="Modules" href="">
+						<i class="material-icons">view_module</i>
+					</a>
+				</li>
+				<li ng-if="navbar.user">
+					<a href="" class="dropdown-trigger" data-target="dropdown-user">
+						<i class="material-icons left" ng-if="navbar.user.role != 'Admin'">person</i>
+						<i class="material-icons left" ng-if="navbar.user.role == 'Admin'">adb</i>
+					</a>
+				</li>
 				<li><a href="" ui-sref="login" ui-sref-active="active" ng-if="!navbar.user">Login</a></li>
-			</ul>
+			</ul> 	
 		</div>
 	</div>
 </nav>
 <!-- dropdown -->
 <ul id="dropdown-user" class="dropdown-content" ng-if="navbar.user">
 	<li><a href="" ui-sref="profile" ui-sref-active="active" ng-if="navbar.user">Profile</a></li>
+	<li><a href="" ng-click="navbar.logout()" ng-if="navbar.user">Logout</a></li>
+</ul>
+<ul id="dropdown-module" class="dropdown-content">
 	<li><a href="" ui-sref="signup" ui-sref-active="active">New User</a></li>
 	<li><a href="" ui-sref="createAdmin" ui-sref-active="active">New Admin</a></li>
-	<li><a href="" ng-click="navbar.logout()" ng-if="navbar.user">Logout</a></li>
+	<li><a href="" ui-sref="testGenerator" ui-sref-active="active">Test generator</a></li>
 </ul>
 
 <!-- side nav -->
@@ -51,8 +62,8 @@
 	<li><div class="divider"></div></li>
     <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="profile" ng-if="navbar.user">View my profile</a></li>
     <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="createHouse">Create new house offer</a></li>
-    <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="searchHouse">Search for house offer</a></li>
-    <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="test">Test generator</a></li>
+    <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="search">Search for house offer</a></li>
+    <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="testGenerator">Test generator</a></li>
 	<li><div class="divider"></div></li>
 	<li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="about">About</a></li>	
     <li><a class="waves-effect waves-light sidenav-close" href="" ng-click="navbar.logout()" ng-if="navbar.user">Logout</a></li>		
@@ -60,5 +71,6 @@
 <script>
 	$(document).ready(function () {
 		$('.dropdown-trigger').dropdown();
+		$('.tooltipped').tooltip();
 	})
 </script>

@@ -1,8 +1,9 @@
 var pool = require('../../config/db').pool;
+var debug = require('debug')('bookmark_model');
 
 function createBookmark(bookmark, done) {
     var cmd = 'INSERT INTO bookmark(user_id, house_id) VALUES(?, ?) ';
-    cmd += 'ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id);';    
+    cmd += 'ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id);'; 
     var params = [bookmark.user_id, bookmark.house_id];
     pool.query(cmd, params, function (error, result) {
         if (error) {

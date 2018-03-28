@@ -17,10 +17,13 @@ function searchHouseController(user, houseTypes, currencies, addresses, appServi
      * @param {object} house search house
      */
     function submit(house) {
-        closeCollapsible();
-        vm.loading = true;
-        splitAddress(house);
+        var hasAddress = splitAddress(house);
+        if (!hasAddress) {
+            return appService.alert('Address required');
+        }
         houseService.getHouses(house).then(getHousesHandler);
+        vm.searchMode = false;
+        vm.loading = true;
 
         function getHousesHandler(response) {
             vm.results = response.data;
@@ -30,16 +33,13 @@ function searchHouseController(user, houseTypes, currencies, addresses, appServi
 
     function splitAddress(house) {
         if (!house.address) {
-            return;
+            return false;
         }
         var address = house.address.split(',');
         house.city = address[0];
         house.land = address[1];
         delete house.address;
-    }
-
-    function closeCollapsible() {
-        $('.collapsible').collapsible('close', 0);
+        return true;
     }
 
     function resetFilter() {

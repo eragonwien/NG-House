@@ -1,11 +1,10 @@
 angular
     .module('house')
     .controller('indexController', indexController);
-indexController.$inject = ['user', 'houses', 'message', 'houseService', 'userService', 'currencyService', 'appService'];
-function indexController(user, houses, message, houseService, userService, currencyService, appService) {
+indexController.$inject = ['user', 'houses', 'message', 'houseService', 'userService', 'currencyService', 'bookmarkService', 'appService'];
+function indexController(user, houses, message, houseService, userService, currencyService, bookmarkService, appService) {
     var vm = this;
     vm.user = user;
-    vm.showHouse = showHouse;
     vm.createHouse = createHouse;
     vm.houses = houses;
     vm.contact = contact;
@@ -15,20 +14,7 @@ function indexController(user, houses, message, houseService, userService, curre
     if (message) {
         appService.alert(message);
     }
-
-    /* House */
-    function getHouses() {
-        houseService.getHouses().then(getHousesHandler);
-
-        function getHousesHandler(response) {
-            var status = response.status;
-            if (status == 200) {
-                vm.houses = response.data;
-                return;
-            }
-            appService.alert(response.data);
-        }
-    }
+    getBookmarksOfHouses();
 
     function createHouse() {
         if (!vm.user) {
@@ -36,10 +22,6 @@ function indexController(user, houses, message, houseService, userService, curre
             return;
         }
         appService.moveTo('createHouse');
-    }
-
-    function showHouse(house) {
-        appService.alert(house);
     }
 
     function contact(house) {
@@ -84,6 +66,67 @@ function indexController(user, houses, message, houseService, userService, curre
     }
 
     function bookmark(house) {
-        house.bookmark = house.bookmark ? false : true;
+        if (house.bookmark) {
+            return addBookmark(house);
+        }
+        removeBookmark(house);
+    }
+
+    function addBookmark(house) {
+        var data = {
+            user_id: vm.user.id,
+            house_id: house.id
+        }
+        bookmarkService.createBookmark(data).then(createBookmarkHandler);
+        house.bookmark = true;
+
+        function createBookmarkHandler(response) {
+            if (response.status == 200) {
+                return appService.alert('Bookmark added: Nr.' + response.data.insertId);
+            }
+            appService.alert(response.data, 10000);
+        }
+    }
+
+    function removeBookmark(house) {
+        bookmarkService.deleteBookmarkById(house.bookmark_id).then(deleteBookmarkHandler);
+
+        function deleteBookmarkHandler(response) {
+            if (response.status == 200) {
+                house.bookmark = false;
+                return appService.alert('Bookmark removed');
+            }
+            appService.alert(response.data);
+        }
+    }
+
+    function getBookmarksOfHouses() {
+        getBookmarksOfUser(user).then(getBookmarksOfHousesHandler);
+
+        function getBookmarksOfHousesHandler(bookmarks) {
+            addBookmarksToHouses(bookmarks, vm.houses)
+        }
+
+        function addBookmarksToHouses(bookmarks, houses) {
+            houses.forEach(function (house) {
+                bookmarks.forEach(function (bookmark) {
+                    if (bookmark.house_id == house.id) {
+                        house.bookmark = true;
+                        house.bookmark_id = bookmark.id;
+                    }
+                });
+            });
+        }
+    }
+
+    function getBookmarksOfUser(user) {
+        return bookmarkService.getBookmarksByUser(user.id).then(getBookmarksOfUserHandler);
+
+        function getBookmarksOfUserHandler(response) {
+            if (response.status == 200) {
+                return response.data;
+            }
+            appService.alert(response.data);
+        }
     }
 }

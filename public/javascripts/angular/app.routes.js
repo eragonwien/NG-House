@@ -194,6 +194,29 @@ function routing(stateProvider, urlRouterProvider) {
         }
     }
 
+    var testGenerator = {
+        name: 'testGenerator',
+        url: '/test/generator',
+        views: {
+            navbar: {
+                templateUrl: 'javascripts/angular/navbar/navbar.view.html',
+                controller: 'navbarController',
+                controllerAs: 'navbar'
+            },
+            content: {
+                templateUrl: 'javascripts/angular/test/test.generator.view.html',
+                controller: 'testGeneratorController',
+                controllerAs: 'testGenerator'
+            }
+        },
+        resolve: {
+            addresses: getAddresses,
+            houseTypes: getHouseTypes,
+            currencies: getCurrencies,
+            user: getUser
+        }
+    }
+
     stateProvider.state(index);
     stateProvider.state(signup);
     stateProvider.state(login);
@@ -230,6 +253,19 @@ function getAddresses(addressService) {
     }
 }
 getAddresses.$inject = ['addressService'];
+
+/**
+ * get bookmarks
+ * @param {*} bookmarkService address service
+ */
+function getBookmarks(addressService) {
+    return bookmarkService.getBookmarks().then(bookmarkServiceHander);
+
+    function bookmarkServiceHander(response) {
+        return response.data;
+    }
+}
+getBookmarks.$inject = ['bookmarkService'];
 
 /**
  * get houses
