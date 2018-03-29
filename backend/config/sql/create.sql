@@ -91,6 +91,7 @@ CREATE TABLE IF NOT EXISTS house_tag (
     house_id INT NOT NULL,
     FOREIGN KEY (tag_id) REFERENCES tag(id),
     FOREIGN KEY (house_id) REFERENCES house(id),
+    CONSTRAINT uq_book_house UNIQUE(tag_id, house_id),
     PRIMARY KEY(id)
 );
 
