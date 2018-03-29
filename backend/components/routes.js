@@ -11,6 +11,7 @@ var houseType = require('./houseType/houseTypeController');
 var houseStatus = require('./houseStatus/houseStatusController');
 var bookmark = require('./bookmark/bookmarkController');
 var mailer = require('./mailer/mailerController');
+var test = require('./testGenerator/testGeneratorController');
 
 var checkUser = user.checkUser;
 var checkAdmin = user.checkAdmin;
@@ -82,5 +83,8 @@ router.delete('/api/bookmarks/:bmid',checkUser, bookmark.deleteBookmarkById);
 
 // Mailer
 router.post('/mailer',checkUser, mailer.sendMail);
+
+// Test
+router.post('/test', checkAdmin, test.generateTest);
 
 module.exports = router;
