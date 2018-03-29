@@ -29,7 +29,7 @@
 <ul id="dropdown-module" class="dropdown-content">
 	<li><a href="" ui-sref="signup" ui-sref-active="active">New User</a></li>
 	<li><a href="" ui-sref="createAdmin" ui-sref-active="active">New Admin</a></li>
-	<li><a href="" ui-sref="test" ui-sref-active="active">Test generator</a></li>
+	<li><a href="" ui-sref="test" ui-sref-active="active" ng-if="navbar.user.role == 'Admin'">Test generator</a></li>
 </ul>
 
 <!-- side nav -->
@@ -63,7 +63,7 @@
     <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="profile" ng-if="navbar.user">View my profile</a></li>
     <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="createHouse">Create new house offer</a></li>
     <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="search">Search for house offer</a></li>
-    <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="test">Test generator</a></li>
+    <li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="test" ng-if="navbar.user.role == 'Admin'">Test generator</a></li>
 	<li><div class="divider"></div></li>
 	<li><a class="waves-effect waves-light sidenav-close" href="" ui-sref="about">About</a></li>	
     <li><a class="waves-effect waves-light sidenav-close" href="" ng-click="navbar.logout()" ng-if="navbar.user">Logout</a></li>		
