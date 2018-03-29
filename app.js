@@ -12,6 +12,7 @@ var session = require('express-session');
 var mySQLStore = require('express-mysql-session');
 var cors = require('cors');
 var compression = require('compression');
+var debug = require('debug')('app');
 var app = express();
 
 /* enable cors
