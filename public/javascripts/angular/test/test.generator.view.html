@@ -11,39 +11,44 @@
                 <option value="address">address</option>
                 <option value="bookmark">bookmark</option>
                 <option value="house">house</option>
-                <option value="tag">tag</option>
+                <option value="tag">house tag</option>
                 <option value="user">user</option>
             </select>
             <label for="test.case.type">data type</label>
         </div>
-        <div class="input-field col s12 m6">
-            <input type="number" name="test.case.number" id="test.case.number" ng-model="test.case.number" min="0" required>
-            <label for="test.case.number">Number of test cases</label>
+        <div class="input-field col s12 m6" ng-if="test.case.type == 'address'">
+            <input type="number" name="test.case.code_length" id="test.case.code_length" ng-model="test.case.code_length" min="4" max="10" required>
+            <label class="active" for="test.case.code_length">Length of postal code</label>
         </div>
         <div class="input-field col s12 m6">
-            <select name="test.case.names" id="test.case.names" ng-model="test.case.names" multiple>
-                <option value="" disabled>Names for the random generation</option>
-                <option value="Quick" ng-selected="true">address</option>
-                <option value="Brown" selected>bookmark</option>
-                <option value="Fox" selected>house</option>
-                <option value="Jump" selected>jump</option>
-                <option value="Over" selected>over</option>
-                <option value="Lazy" selected>lazy</option>
-                <option value="Dog" selected>dog</option>
-                <option value="Volt" selected>volt</option>
-                <option value="Captain" selected>captain</option>
-            </select>
+            <input type="number" name="test.case.number" id="test.case.number" ng-model="test.case.number" min="0" max="1000" required>
+            <label for="test.case.number">Number of test cases max. 1000</label>
         </div>
         <div class="col s12">
             <button class="btn waves-effect blue darken-4" ng-click="test.generate(test.case)">Generate</button>
         </div>
     </div>
-    <pre>{{test.case | json}}</pre>
 </form>
+<div class="preloader-wrapper big active absolute-loader" ng-if="test.loading">
+    <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+            <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+            <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
+        initSelect();
+    });
+    function initSelect() {
         $('select').formSelect({
             isMultiple: true
         });
-    });
+    }
 </script>
