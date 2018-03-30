@@ -1,5 +1,5 @@
-var model = require('./testGeneratorModel');
-var debug = require('debug')('test_generator_model');
+let model = require('./testGeneratorModel');
+let debug = require('debug')('test_generator_model');
 exports.generateTest = function (req, res, next) {
     model.startTest(req.body, function (error, result) {
         if (error) {

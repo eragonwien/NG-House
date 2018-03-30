@@ -4,7 +4,7 @@ angular
 
 houseService.$inject = ['$http']
 function houseService(http) {
-    var service = {
+    let service = {
         getHouses: getHouses,
         getHouseById: getHouseById,
         addHouse: addHouse,

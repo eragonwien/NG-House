@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+let mysql = require('mysql');
 require('dotenv').config();
 exports.pool = mysql.createPool({
     host     : process.env.DB_HOST,

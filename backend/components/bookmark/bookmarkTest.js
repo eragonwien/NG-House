@@ -1,17 +1,17 @@
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var app = require('../../../app');
-var should = chai.should;
-var expect = chai.expect;
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let app = require('../../../app');
+let should = chai.should;
+let expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Bookmark Model Test', function () {
-    var bookmark = {
+    let bookmark = {
         id: null,
         user_id: 1,
         house_id: 1
     };
-    var model = require('./bookmarkModel');
+    let model = require('./bookmarkModel');
     it('should create a new bookmark', function (done) {
         model.createBookmark(bookmark, function (error, result) {
             if (error) {
@@ -75,7 +75,7 @@ describe('Bookmark Model Test', function () {
 });
 
 describe('Bookmark Request Test', function () {
-    var bookmark = {
+    let bookmark = {
         id: null,
         user_id: 1,
         house_id: 1

@@ -1,9 +1,9 @@
-var pool = require('../../config/db').pool;
+let pool = require('../../config/db').pool;
 
 exports.createNewAddress = function (address, done) {
-    var cmd = 'INSERT INTO address(address, postal_code, city, land) VALUES (?, ?, ?, ?) ';
+    let cmd = 'INSERT INTO address(address, postal_code, city, land) VALUES (?, ?, ?, ?) ';
     cmd += 'ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id);';
-    var params = [address.address, address.postal_code, address.city, address.land];
+    let params = [address.address, address.postal_code, address.city, address.land];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);
@@ -13,7 +13,7 @@ exports.createNewAddress = function (address, done) {
 };
 
 exports.getAllAddresses = function (done) {
-    var cmd = 'SELECT * FROM address;'
+    let cmd = 'SELECT * FROM address;'
     pool.query(cmd, null, function (error, results) {
         if (error) {
             return done(error);
@@ -23,7 +23,7 @@ exports.getAllAddresses = function (done) {
 };
 
 exports.getDistinctCities = function (done) {
-    var cmd = 'SELECT DISTINCT city, land FROM address;'
+    let cmd = 'SELECT DISTINCT city, land FROM address;'
     pool.query(cmd, null, function (error, results) {
         if (error) {
             return done(error);
@@ -33,8 +33,8 @@ exports.getDistinctCities = function (done) {
 };
 
 exports.getAddressById = function (id, done) {
-    var cmd = 'SELECT * FROM address WHERE id=? LIMIT 1;';
-    var params = [id];
+    let cmd = 'SELECT * FROM address WHERE id=? LIMIT 1;';
+    let params = [id];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);
@@ -44,8 +44,8 @@ exports.getAddressById = function (id, done) {
 };
 
 exports.getAddressIdByAddress = function (address, done) {
-    var cmd = 'SELECT id FROM address WHERE address=? AND postal_code=? AND city=? AND land=? LIMIT 1;';
-    var params = [address.address, address.postal_code, address.city, address.land];
+    let cmd = 'SELECT id FROM address WHERE address=? AND postal_code=? AND city=? AND land=? LIMIT 1;';
+    let params = [address.address, address.postal_code, address.city, address.land];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);
@@ -55,9 +55,9 @@ exports.getAddressIdByAddress = function (address, done) {
 };
 
 exports.updateAddressById = function (id, address, done) {
-    var cmd = 'UPDATE address ';
+    let cmd = 'UPDATE address ';
     cmd += 'SET address=?, postal_code=?, city=?, land=? WHERE id=?;';
-    var params = [address.address, address.postal_code, address.city, address.land, id];
+    let params = [address.address, address.postal_code, address.city, address.land, id];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);
@@ -67,8 +67,8 @@ exports.updateAddressById = function (id, address, done) {
 };
 
 exports.deleteAddressById = function (id, done) {
-    var cmd = 'DELETE FROM address WHERE id=?;';
-    var params = [id];
+    let cmd = 'DELETE FROM address WHERE id=?;';
+    let params = [id];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);

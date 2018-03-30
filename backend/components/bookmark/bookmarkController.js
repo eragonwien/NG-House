@@ -1,4 +1,4 @@
-var model = require('./bookmarkModel');
+let model = require('./bookmarkModel');
 
 exports.createBookmark = function (req, res, next) {
     model.createBookmark(req.body, function (error, result) {

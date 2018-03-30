@@ -4,7 +4,7 @@ angular
 
 testService.$inject = ['$http']
 function testService(http) {
-    var service = {
+    let service = {
         sendTest: sendTest,
         getRandomUsers: getRandomUsers
     }

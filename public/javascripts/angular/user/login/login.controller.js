@@ -4,7 +4,7 @@ angular
 
 loginController.$inject = ['user', 'userService', 'appService'];
 function loginController(user, userService, appService) {
-    var vm = this;
+    let vm = this;
     vm.loginMode = true;
     vm.login = login;
     vm.signup = signup;
@@ -21,7 +21,7 @@ function loginController(user, userService, appService) {
         userService.login(vm.user.username, vm.user.password).then(loginHandler);
 
         function loginHandler(response) {
-            var status = response.status;
+            let status = response.status;
             if (status == 200) {
                 userService.setLocalUser(response.data, vm.user.remember);
                 appService.moveTo();
@@ -40,7 +40,7 @@ function loginController(user, userService, appService) {
         userService.signup(vm.user).then(signupHandler);
 
         function signupHandler(response) {
-            var status = response.status;
+            let status = response.status;
             if (status == 200) {
                 vm.loginMode = true;
                 return;

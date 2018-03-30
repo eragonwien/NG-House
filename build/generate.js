@@ -2,7 +2,7 @@
  * This script generates data based on user input
  * 
  * 1. let the user choose which data are going to be generated 
- * 2. check if variables for test generation is available. if not, abort
+ * 2. check if letiables for test generation is available. if not, abort
  * 3. ask the user to input how many data are going to be generated. user can abort from here.
  * 4. count the current number of data
  * 5. generate data base from the input
@@ -24,17 +24,17 @@
  * price = (2000 - 5000) * size
  */
 
-var readline = require('readline-sync');
-var dotenv = require('dotenv');
-var fs = require('fs');
-var helper = require('./helper');
-var pool = require('../backend/config/db').pool;
-var supportedTypes = ['address', 'user', 'house', 'admin', 'bookmark'];
+let readline = require('readline-sync');
+let dotenv = require('dotenv');
+let fs = require('fs');
+let helper = require('./helper');
+let pool = require('../backend/config/db').pool;
+let supportedTypes = ['address', 'user', 'house', 'admin', 'bookmark'];
 
-var addressModel = require('../backend/components/address/addressModel');
-var userModel = require('../backend/components/user/userModel');
-var houseModel = require('../backend/components/house/houseModel');
-var bookmarkModel = require('../backend/components/bookmark/bookmarkModel');
+let addressModel = require('../backend/components/address/addressModel');
+let userModel = require('../backend/components/user/userModel');
+let houseModel = require('../backend/components/house/houseModel');
+let bookmarkModel = require('../backend/components/bookmark/bookmarkModel');
 
 
 start();
@@ -46,11 +46,11 @@ function start() {
 
 // gets user commands and checking requirements
 function setupGeneration() {
-    var type = getDataType();
+    let type = getDataType();
     if (!type) {
         return finish('This data type is not supported.');
     }
-    var count = getDataCount();
+    let count = getDataCount();
 
     checkRequirements(function (error) {
         if (error) {
@@ -66,7 +66,7 @@ function setupGeneration() {
  */
 function getDataType() {
     console.log('Supported types: ' + supportedTypes.toString());
-    var type = readline.question('Which type is going to be generated ? ');
+    let type = readline.question('Which type is going to be generated ? ');
     type = (supportedTypes.includes(type)) ? type : null;
     return type;
 }
@@ -76,7 +76,7 @@ function getDataType() {
  * @returns {number} number of data to be generated
  */
 function getDataCount() {
-    var count = readline.questionInt('How many data should be generated: ');
+    let count = readline.questionInt('How many data should be generated: ');
     if (count < 0) {
         console.log('The number cannot be smaller than zero. Please try again.');
         return getDataCount();
@@ -90,7 +90,7 @@ function getDataCount() {
  * @param {function} done callback function
  */
 function checkRequirements(done) {
-    var path = '.env';
+    let path = '.env';
     fs.exists(path, function (fileIsExist) {
         if (!fileIsExist) {
             return done('File .env not found. Please run this first: npm run build');
@@ -105,12 +105,12 @@ function checkRequirements(done) {
  * @param {string} type The type of the data
  */
 function prepareGenerating(type) {
-    var path = '.env';
+    let path = '.env';
     fs.exists(path, function (fileIsExist) {
         if (!fileIsExist) {
             return console.log('File .env not found. Abort.');
         }
-        var count = readline.questionInt('How many data should be generated: ');
+        let count = readline.questionInt('How many data should be generated: ');
         if (count < 0) {
             console.log('The number cannot be smaller than zero. Please try again.')
             return prepareGenerating(type);
@@ -148,7 +148,7 @@ function startGeneration(type, count) {
 
 /**
  * generates user
- * first checks if the .env file has variable NAME, cancel process if not
+ * first checks if the .env file has letiable NAME, cancel process if not
  * query all address ids 
  * create queries to add user to the database
  * @param {number} count number of user being generated
@@ -156,16 +156,16 @@ function startGeneration(type, count) {
  */
 function generateUser(count, isAdmin) {
     if (!process.env.NAME) {
-        return finish(null, 'no NAME variables found.');
+        return finish(null, 'no NAME letiables found.');
     }
-    var names = helper.getListFromString(process.env.NAME);
-    var addressModel = require('../backend/components/address/addressModel');
+    let names = helper.getListFromString(process.env.NAME);
+    let addressModel = require('../backend/components/address/addressModel');
     addressModel.getAllAddresses(function (error, results) {
         if (error) {
             return console.log(error);
         } 
         // extract only the address id from the results
-        var address_ids = helper.filterValuesOfList(results, 'id');
+        let address_ids = helper.filterValuesOfList(results, 'id');
         if (isAdmin) {
             return spawnAdmins(count, names, address_ids);
         }
@@ -189,11 +189,11 @@ function spawnUsers(count, names, addressList, successCount) {
         return finish(null, 'Success: ' + successCount);
     }
     // generates an user object
-    var first_name = names[helper.getRandomInt(names.length)];
-    var last_name = names[helper.getRandomInt(names.length)];
-    var randomValue = helper.getRandomInt(1000);
-    var username = first_name + last_name + randomValue;
-    var user = {
+    let first_name = names[helper.getRandomInt(names.length)];
+    let last_name = names[helper.getRandomInt(names.length)];
+    let randomValue = helper.getRandomInt(1000);
+    let username = first_name + last_name + randomValue;
+    let user = {
         first_name: first_name,
         last_name: last_name,
         username: username,
@@ -225,11 +225,11 @@ function spawnAdmins(count, names, addressList, successCount) {
         return finish(null, 'Success: ' + successCount);
     }
     // generates an user object
-    var first_name = names[helper.getRandomInt(names.length)];
-    var last_name = names[helper.getRandomInt(names.length)];
-    var randomValue = helper.getRandomInt(1000);
-    var username = first_name + last_name + randomValue;
-    var user = {
+    let first_name = names[helper.getRandomInt(names.length)];
+    let last_name = names[helper.getRandomInt(names.length)];
+    let randomValue = helper.getRandomInt(1000);
+    let username = first_name + last_name + randomValue;
+    let user = {
         first_name: first_name,
         last_name: last_name,
         username: username,
@@ -252,11 +252,11 @@ function spawnAdmins(count, names, addressList, successCount) {
  */
 function generateAddress(count) {
     if (!process.env.NAME) {
-        return finish(null, 'no NAME variables found.');
+        return finish(null, 'no NAME letiables found.');
     }
     // set postal code length as 4 if no value in .env found
-    var postalCodeLength = (process.env.POSTAL_CODE) ? process.env.POSTAL_CODE : 4;
-    var names = helper.getListFromString(process.env.NAME);
+    let postalCodeLength = (process.env.POSTAL_CODE) ? process.env.POSTAL_CODE : 4;
+    let names = helper.getListFromString(process.env.NAME);
     // spawn addresses
     spawnAddresses(count, names, postalCodeLength)
 }
@@ -276,7 +276,7 @@ function spawnAddresses(count, names, postalCodeLength, successCount) {
         return finish(null, 'Success: ' + successCount);
     }
     // generate an address object
-    var address = {
+    let address = {
         address: names[helper.getRandomInt(names.length)] + 'Street ' + helper.getRandomInt(100),
         postal_code: helper.getRandomInt(Math.pow(10, postalCodeLength - 1), Math.pow(10, postalCodeLength)),
         city: names[helper.getRandomInt(names.length)] + ' City',
@@ -299,7 +299,7 @@ function generateHouse(count) {
     Promise.all([helper.getAllUsers(), helper.getAllHouseTypes(), helper.getAllAddresses(), helper.getAllCurrencies()]).then(promiseSuccess).catch(promiseError)
 
     function promiseSuccess(values) {
-        var userIds = values[0], houseTypeIds = values[1], addressIds = values[2], currencyIds = values[3];
+        let userIds = values[0], houseTypeIds = values[1], addressIds = values[2], currencyIds = values[3];
         spawnHouses(count, userIds, houseTypeIds, addressIds, currencyIds);
     }
 
@@ -329,12 +329,12 @@ function spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCo
         return finish(null, 'Success: ' + successCount);
     }
     // create house
-    var bathrooms = helper.getRandomInt(1, 5);
-    var bedrooms = helper.getRandomInt(1, 5);
-    var rooms = bathrooms + bedrooms + helper.getRandomInt(1, 3);
-    var size = helper.getRandomInt(rooms * 10, rooms * 100);
-    var price = helper.getRandomInt(200, 1000) * size;
-    var house = {
+    let bathrooms = helper.getRandomInt(1, 5);
+    let bedrooms = helper.getRandomInt(1, 5);
+    let rooms = bathrooms + bedrooms + helper.getRandomInt(1, 3);
+    let size = helper.getRandomInt(rooms * 10, rooms * 100);
+    let price = helper.getRandomInt(200, 1000) * size;
+    let house = {
         price: price,
         rooms : rooms,
         bathrooms: bathrooms,
@@ -356,21 +356,21 @@ function spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCo
 
 /**
  * generates bookmarks
- * first checks if the .env file has variable NAME, cancel process if not
+ * first checks if the .env file has letiable NAME, cancel process if not
  * query all user and house ids 
  * @param {number} count number of user being generated
  * @param {boolean} isAdmin true if admins are to be generated
  */
 function generateBookmark(count) {
     if (!process.env.NAME) {
-        return finish(null, 'no NAME variables found.');
+        return finish(null, 'no NAME letiables found.');
     }
-    var names = helper.getListFromString(process.env.NAME);
+    let names = helper.getListFromString(process.env.NAME);
     Promise.all([helper.getAllUsers(), helper.getAllHouses()]).then(promiseSuccess).catch(promiseError);
 
     function promiseSuccess(results) {
-        var userIds = results[0];
-        var houseIds = results[1];
+        let userIds = results[0];
+        let houseIds = results[1];
         spawnBookmarks(count, userIds, houseIds);
     }
     
@@ -394,7 +394,7 @@ function spawnBookmarks(count, userIds, houseIds, successCount) {
         return finish(null, 'Success: ' + successCount);
     }
 
-    var bookmark = {
+    let bookmark = {
         user_id: userIds[helper.getRandomInt(userIds.length)],
         house_id: houseIds[helper.getRandomInt(houseIds.length)]
     }

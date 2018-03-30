@@ -4,7 +4,7 @@ angular
 
 createHouseController.$inject = ['user', 'currencies', 'houseTypes', 'houseService', 'currencyService', 'userService', 'houseTypeService', 'appService']
 function createHouseController(user, currencies, houseTypes, houseService, currencyService, userService, houseTypeService, appService) {
-    var vm = this;
+    let vm = this;
     vm.user = user;
     vm.getCurrencies = getCurrencies;
     vm.submit = submit;

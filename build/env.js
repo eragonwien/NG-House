@@ -1,8 +1,8 @@
-var fs = require('fs');
-var readline = require('readline-sync');
-var envPath = '.env';
+let fs = require('fs');
+let readline = require('readline-sync');
+let envPath = '.env';
 require('dotenv').config();
-var dbConfigPath = './backend/config/db.js';
+let dbConfigPath = './backend/config/db.js';
 
 console.log('Checking environtment file.');
 if (!fs.existsSync(envPath)) {
@@ -16,47 +16,47 @@ if (!fs.existsSync(dbConfigPath)) {
 }
 
 function setEnv(path) {
-    var env = '';
-    var nodeEnv = readline.question('Node environtment ? (default is development)');
+    let env = '';
+    let nodeEnv = readline.question('Node environtment ? (default is development)');
     if (!nodeEnv) {
         nodeEnv = 'development';
     }
     env += ('NODE_ENV=' + nodeEnv + '\n');
 
-    var dbHost = readline.question('DB host ? (default is localhost)');
+    let dbHost = readline.question('DB host ? (default is localhost)');
     if (!dbHost) {
         dbHost = 'localhost';
     }
     env += ('DB_HOST=' + dbHost + '\n');
-    var dbUser = readline.question('DB Username ? ');
+    let dbUser = readline.question('DB Username ? ');
     env += ('DB_USER=' + dbUser + '\n');
 
-    var dbPassword = readline.question('DB Password ? ', {
+    let dbPassword = readline.question('DB Password ? ', {
         hideEchoBack: true
     });
     env += ('DB_PASSWORD=' + dbPassword + '\n');
 
-    var dbTest = readline.question('Name of development database ? ');
+    let dbTest = readline.question('Name of development database ? ');
     env += ('DB_TEST=' + dbTest + '\n');
 
-    var dbProduction = readline.question('Name of production database ? ');
+    let dbProduction = readline.question('Name of production database ? ');
     env += ('DB_PRODUCTION=' + dbProduction + '\n');
 
-    var dbPoolLimit = readline.question('DB Pool Limit ? (default is 10) ');
+    let dbPoolLimit = readline.question('DB Pool Limit ? (default is 10) ');
     if (!dbPoolLimit) {
         dbPoolLimit = 10;
     }
     env += ('DB_POOL_LIMIT=' + dbPoolLimit + '\n');
 
-    if (readline.keyInYN('Do you want to set variables for test data ?')) {
+    if (readline.keyInYN('Do you want to set letiables for test data ?')) {
         // User 
         console.log('Please write all the names you can think of, separated by commas');
-        var names = readline.question('Name: ');
+        let names = readline.question('Name: ');
         env += 'NAME=' + names + '\n';     
 
         // Postal Code 
         console.log('Please write the length of the postal code');
-        var post = Math.abs(readline.questionInt('postal code length: '));
+        let post = Math.abs(readline.questionInt('postal code length: '));
         env += 'POSTAL_CODE=' + post + '\n';    
     }
 

@@ -4,7 +4,7 @@ angular
 
 profileController.$inject = ['user', 'userService', 'appService', 'houseService', 'bookmarkService'];
 function profileController(user, userService, appService, houseService, bookmarkService) {
-    var vm = this;
+    let vm = this;
     vm.user = user;
     vm.editing = false;
     vm.save = save;
@@ -27,7 +27,7 @@ function profileController(user, userService, appService, houseService, bookmark
         userService.update(vm.user).then(updateHandler);
         
         function updateHandler(response) {
-            var status = response.status;
+            let status = response.status;
             if (status == 200) {
                 userService.setLocalUser(vm.user);
                 appService.alert('Changes saved.');
@@ -56,7 +56,7 @@ function profileController(user, userService, appService, houseService, bookmark
         function deleteHouseHandler(response) {
             if (response.status == 200) {
                 // remove house from current list
-                var index = vm.offers.indexOf(house);
+                let index = vm.offers.indexOf(house);
                 vm.offers.splice(index, 1);
                 appService.alert('Nr.' + house.id + ' is successfully deleted.');
                 return;                
@@ -82,7 +82,7 @@ function profileController(user, userService, appService, houseService, bookmark
 
         function deleteBookmarkHandler(response) {
             if (response.status == 200) {
-                var index = vm.bookmarks.indexOf(bookmark);
+                let index = vm.bookmarks.indexOf(bookmark);
                 vm.bookmarks.splice(index, 1);
                 return appService.alert('Bookmark removed');
             }

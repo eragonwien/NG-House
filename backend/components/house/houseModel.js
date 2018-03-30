@@ -1,5 +1,5 @@
-var pool = require('../../config/db').pool;
-var addressModel = require('../address/addressModel');
+let pool = require('../../config/db').pool;
+let addressModel = require('../address/addressModel');
 
 /**
  * add a new house
@@ -11,7 +11,7 @@ function createHouse(house, done) {
 		return insertHouse(house, done);
 	}
 	// if no address id available, query for one first
-	var address = {
+	let address = {
 		address: house.address,
 		postal_code: house.postal_code,
 		city: house.city,
@@ -33,8 +33,8 @@ exports.createHouse = createHouse;
  * @param {callback} done callback function
  */
 function insertHouse(house, done) {
-	var cmd = 'INSERT INTO house(price, rooms, bathrooms, bedrooms, size, user_id, address_id, house_type_id, house_status_id, currency_id) VALUES(?,?,?,?,?,?,?,?,?,?);';
-	var params = [house.price, house.rooms, house.bathrooms, house.bedrooms, house.size, house.user_id, house.address_id, house.house_type_id, house.house_status_id, house.currency_id];
+	let cmd = 'INSERT INTO house(price, rooms, bathrooms, bedrooms, size, user_id, address_id, house_type_id, house_status_id, currency_id) VALUES(?,?,?,?,?,?,?,?,?,?);';
+	let params = [house.price, house.rooms, house.bathrooms, house.bedrooms, house.size, house.user_id, house.address_id, house.house_type_id, house.house_status_id, house.currency_id];
 	pool.query(cmd, params, function(error, result){
 		if (error) {
 			return done(error);
@@ -62,7 +62,7 @@ exports.getHouses = getHouses;
  * @param {function} done callback function
  */
 function getAllHouses(done) {
-	var cmd = 'SELECT * FROM get_houses;';
+	let cmd = 'SELECT * FROM get_houses;';
 	pool.query(cmd, null, function(error, results){
 		if (error) {
 			return done(error);
@@ -81,10 +81,10 @@ function searchHouses(params, done) {
 	if (!params) {
 		return getAllHouses(done);
 	}
-	var cmd = 'SELECT * FROM get_houses ';
+	let cmd = 'SELECT * FROM get_houses ';
 
 	// create where clauses
-	var whereClause = getWhereClause(params);
+	let whereClause = getWhereClause(params);
 	if (whereClause.params.length > 0) {
 		cmd += whereClause.clause;		
 	}
@@ -109,9 +109,9 @@ function searchHouses(params, done) {
 	 * @returns {object} object contains string and params
 	 */
 	function getWhereClause(params) {
-		var clauses = [];
-		var clausesParams = [];
-		var str = "WHERE ";
+		let clauses = [];
+		let clausesParams = [];
+		let str = "WHERE ";
 		if (params.user_id) {
 			clauses.push('user_id=?');
 			clausesParams.push(params.user_id);
@@ -158,7 +158,7 @@ function searchHouses(params, done) {
 			}
 			str += clauses[i];
 		}
-		var result = {
+		let result = {
 			clause: str,
 			params: clausesParams
 		}
@@ -173,8 +173,8 @@ exports.searchHouses = searchHouses;
  * @param {function} done callback
  */
 function getHouseById(id, done) {
-	var cmd = 'SELECT * FROM get_houses WHERE id=? LIMIT 1;';
-	var params = [id];
+	let cmd = 'SELECT * FROM get_houses WHERE id=? LIMIT 1;';
+	let params = [id];
 	pool.query(cmd, params, function(error, results){
 		if (error) {
 			return done(error);
@@ -192,7 +192,7 @@ exports.getHouseById = getHouseById;
  */
 function updateHouseById(id, house, done) {
 	// get address id
-	var address = {
+	let address = {
 		address: house.address,
 		postal_code: house.postal_code,
 		city: house.city,
@@ -203,8 +203,8 @@ function updateHouseById(id, house, done) {
 			return done(error);
 		}
 		house.address_id = result.insertId;
-		var cmd = 'UPDATE house SET price=?, rooms=?, bathrooms=?, bedrooms=?, size=?, user_id=?, address_id=?, house_type_id=?, house_status_id=?, currency_id=? WHERE id=?;';
-		var params = [house.price, house.rooms, house.bathrooms, house.bedrooms, house.size, house.user_id, house.address_id, house.house_type_id, house.house_status_id, house.currency_id, id];
+		let cmd = 'UPDATE house SET price=?, rooms=?, bathrooms=?, bedrooms=?, size=?, user_id=?, address_id=?, house_type_id=?, house_status_id=?, currency_id=? WHERE id=?;';
+		let params = [house.price, house.rooms, house.bathrooms, house.bedrooms, house.size, house.user_id, house.address_id, house.house_type_id, house.house_status_id, house.currency_id, id];
 		pool.query(cmd, params, function(error, result) {
 			if (error) {
 				return done(error);
@@ -221,8 +221,8 @@ exports.updateHouseById = updateHouseById;
  * @param {function} done callback function
  */
 function deleteHouseById(id, done) {
-	var cmd = 'DELETE FROM house WHERE id=? LIMIT 1;';
-	var params = [id];
+	let cmd = 'DELETE FROM house WHERE id=? LIMIT 1;';
+	let params = [id];
 	pool.query(cmd, params, function(error, result){
 		if (error) {
 			return done(error);

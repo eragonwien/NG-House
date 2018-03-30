@@ -1,13 +1,13 @@
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var app = require('../../../app');
-var should = chai.should;
-var expect = chai.expect;
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let app = require('../../../app');
+let should = chai.should;
+let expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Mailer Test', function () {
-    var model = require('./mailerModel');
-    var params = {
+    let model = require('./mailerModel');
+    let params = {
         service: 'gmail',
         sender: 'kylo@rent.at',
         receiver: 'eragonwien@gmail.com',

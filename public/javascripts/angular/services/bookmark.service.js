@@ -4,7 +4,7 @@ angular
 
 bookmarkService.$inject = ['$http']
 function bookmarkService(http) {
-    var service = {
+    let service = {
         getBookmarksByUser: getBookmarksByUser,
         createBookmark: createBookmark,
         deleteBookmarkById: deleteBookmarkById

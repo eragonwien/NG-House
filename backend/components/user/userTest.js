@@ -1,12 +1,12 @@
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var app = require('../../../app');
-var should = chai.should;
-var expect = chai.expect;
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let app = require('../../../app');
+let should = chai.should;
+let expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('User Models Test', function () {
-    var user = {
+    let user = {
         id: null,
         role_id: 2,
         first_name: 'Test',
@@ -19,7 +19,7 @@ describe('User Models Test', function () {
         city: 'Vienna',
         land: 'Austria'
     }
-    var model = require('./userModel');
+    let model = require('./userModel');
 
     it('should create a new user', function (done) {
         model.createUser(user, function (error, result) {
@@ -110,7 +110,7 @@ describe('User Models Test', function () {
 });
 
 describe('User CRUD Test', function () {
-    var user = {
+    let user = {
         id: null,
         role_id: 2,
         first_name: 'Test',

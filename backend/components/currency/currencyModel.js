@@ -1,9 +1,9 @@
-var pool = require('../../config/db').pool;
+let pool = require('../../config/db').pool;
 
 exports.createCurrency = function (currency, done) {
-    var cmd = 'INSERT INTO currency(name, short) VALUES (?, ?) ';
+    let cmd = 'INSERT INTO currency(name, short) VALUES (?, ?) ';
     cmd += 'ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id);';    
-    var params = [currency.name, currency.short];
+    let params = [currency.name, currency.short];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);
@@ -13,7 +13,7 @@ exports.createCurrency = function (currency, done) {
 }
 
 exports.getAllCurrencies = function (done) {
-    var cmd = 'SELECT * FROM currency;';
+    let cmd = 'SELECT * FROM currency;';
     pool.query(cmd, null, function (error, results) {
         if (error) {
             return done(error);
@@ -23,8 +23,8 @@ exports.getAllCurrencies = function (done) {
 }
 
 exports.getCurrencyById = function (id, done) {
-    var cmd = 'SELECT * FROM currency WHERE id=? LIMIT 1;';
-    var params = [id];
+    let cmd = 'SELECT * FROM currency WHERE id=? LIMIT 1;';
+    let params = [id];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);
@@ -33,9 +33,9 @@ exports.getCurrencyById = function (id, done) {
     });
 }
 
-exports.updateCurrency = function (id, currency, done) {
-    var cmd = 'UPDATE currency SET name=?, short=? WHERE id=?;';
-    var params = [currency.name, currency.short, id];
+exports.updateCurrencyById = function (id, currency, done) {
+    let cmd = 'UPDATE currency SET name=?, short=? WHERE id=?;';
+    let params = [currency.name, currency.short, id];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);
@@ -45,8 +45,8 @@ exports.updateCurrency = function (id, currency, done) {
 }
 
 exports.deleteCurrencyById = function (id, done) {
-    var cmd = 'DELETE FROM currency WHERE id=?;';
-    var params = [id];
+    let cmd = 'DELETE FROM currency WHERE id=?;';
+    let params = [id];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);

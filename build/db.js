@@ -1,15 +1,15 @@
-var fs = require('fs');
+let fs = require('fs');
 require('dotenv').config();
-var readline = require('readline-sync');
-var db = require('../backend/config/db');
-var helper = require('./helper');
+let readline = require('readline-sync');
+let db = require('../backend/config/db');
+let helper = require('./helper');
 const sqlCreatePath = './backend/config/sql/create.sql';
 const sqlInsertPath = './backend/config/sql/insert.sql';
 const sqlViewsPath = './backend/config/sql/views.sql';
 const tablesList = ['address', 'currency', 'house', 'role', 'house_type', 'user'];
 
-var pool = db.pool;
-var pool_no_database = db.pool_no_database;
+let pool = db.pool;
+let pool_no_database = db.pool_no_database;
 
 start();
 
@@ -22,8 +22,8 @@ function start() {
 }
 
 function createDatabase(next) {
-    var database = (process.env.NODE_ENV == 'production') ? process.env.DB_PRODUCTION : process.env.DB_TEST;
-    var cmd = 'CREATE DATABASE IF NOT EXISTS ' + database + ';';
+    let database = (process.env.NODE_ENV == 'production') ? process.env.DB_PRODUCTION : process.env.DB_TEST;
+    let cmd = 'CREATE DATABASE IF NOT EXISTS ' + database + ';';
     pool_no_database.query(cmd, null, function (error, result) {
         if (error) {
             return close(error);
@@ -34,7 +34,7 @@ function createDatabase(next) {
 
 function checkTables(database) {
     console.log('Checking if the required tables exist in the current database')
-    var cmd = 'SHOW TABLES;';
+    let cmd = 'SHOW TABLES;';
     pool.query(cmd, null, function (error, result) {
         if (error) {
             return close(error);
@@ -54,7 +54,7 @@ function checkTables(database) {
 
 function createTables() {
     console.log('Creating tables.');
-    var sql = fs.readFileSync(sqlCreatePath);
+    let sql = fs.readFileSync(sqlCreatePath);
     sql = sql.toString();
     pool.query(sql, null, function (error, result) {
         if (error) {
@@ -67,7 +67,7 @@ function createTables() {
 
 function insertTables() {
     console.log('Inserting default values');
-    var sql = fs.readFileSync(sqlInsertPath);
+    let sql = fs.readFileSync(sqlInsertPath);
     sql = sql.toString();
     pool.query(sql, null, function (error, result) {
         if (error) {
@@ -83,7 +83,7 @@ function createViews() {
         return finish();
     }
     console.log('Creating views.');
-    var sql = fs.readFileSync(sqlViewsPath).toString();
+    let sql = fs.readFileSync(sqlViewsPath).toString();
     pool.query(sql, null, function (error, result) {
         if (error) {
             return close(error);
@@ -106,7 +106,7 @@ function finish() {
 
 function transformShowTableResultToList(result, database) {
     list = [];
-    var key = 'Tables_in_' + database;
+    let key = 'Tables_in_' + database;
     result.forEach(element => {
         list.push(element[key]);
     });

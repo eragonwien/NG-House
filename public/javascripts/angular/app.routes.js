@@ -4,7 +4,7 @@ angular
 
 routing.$inject = ['$stateProvider', '$urlRouterProvider'];
 function routing(stateProvider, urlRouterProvider) {
-    var index = {
+    let index = {
         name: 'index',
         url: '/',
         views: {
@@ -26,7 +26,7 @@ function routing(stateProvider, urlRouterProvider) {
         }
     }
 
-    var signup = {
+    let signup = {
         name: 'signup',
         url: '/signup',
         views: {
@@ -46,7 +46,7 @@ function routing(stateProvider, urlRouterProvider) {
         }
     }
 
-    var createAdmin = {
+    let createAdmin = {
         name: 'createAdmin',
         url: '/admin/create',
         views: {
@@ -66,7 +66,7 @@ function routing(stateProvider, urlRouterProvider) {
         }
     }
 
-    var login = {
+    let login = {
         name: 'login',
         url: '/login',
         views: {
@@ -85,7 +85,7 @@ function routing(stateProvider, urlRouterProvider) {
             user: getUser
         }
     }
-    var redirect = {
+    let redirect = {
         name: 'redirect',
         url: '/redirect',
         views: {
@@ -105,7 +105,7 @@ function routing(stateProvider, urlRouterProvider) {
         }
     }
 
-    var profile = {
+    let profile = {
         name: 'profile',
         url: '/profile',
         views: {
@@ -126,7 +126,7 @@ function routing(stateProvider, urlRouterProvider) {
         }
     }
 
-    var createHouse = {
+    let createHouse = {
         name: 'createHouse',
         url: '/houses/create',
         views: {
@@ -148,7 +148,7 @@ function routing(stateProvider, urlRouterProvider) {
         }
     }
 
-    var editHouse = {
+    let editHouse = {
         name: 'editHouse',
         url: '/houses/:house_id/edit',
         views: {
@@ -171,7 +171,7 @@ function routing(stateProvider, urlRouterProvider) {
         }
     }
 
-    var search = {
+    let search = {
         name: 'search',
         url: '/houses/search',
         views: {
@@ -194,7 +194,7 @@ function routing(stateProvider, urlRouterProvider) {
         }
     }
 
-    var testGenerator = {
+    let testGenerator = {
         name: 'test',
         url: '/test/generator',
         views: {
@@ -236,7 +236,7 @@ function routing(stateProvider, urlRouterProvider) {
  * @param {*} appService app service
  */
 function getMessage(appService) {
-    var message = appService.getMessage();
+    let message = appService.getMessage();
     appService.deleteMessage();
     return message;
 }
@@ -273,7 +273,7 @@ getBookmarks.$inject = ['bookmarkService'];
  * @param {*} houseService house service
  */
 function getHouses(houseService) {
-    var params = {
+    let params = {
         limit: 9
     };
     return houseService.getHouses(params).then(getHousesHandler);
@@ -329,7 +329,7 @@ getHouseById.$inject = ['houseService', '$stateParams'];
  * @param {*} userService user service
  */
 function getUser(userService) {
-    var user = userService.getLocalUser();
+    let user = userService.getLocalUser();
     if (!user) {
         return null;
     }

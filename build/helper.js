@@ -4,14 +4,14 @@
  * @returns {string[]} list of strings
  */
 function getListFromString(str) {
-    var list = [];
-    var lastIndex = -1;
+    let list = [];
+    let lastIndex = -1;
     for (let i = 0; i < str.length; i++) {
         if (lastIndex == -1) {
             lastIndex = i;
         }
         if (str.charAt(i) == ',') {
-            var item = str.substring(lastIndex, i);
+            let item = str.substring(lastIndex, i);
             lastIndex = -1;
             if (item != '') {
                 list.push(item);
@@ -19,7 +19,7 @@ function getListFromString(str) {
             continue;
         }
         if (i == (str.length - 1) && lastIndex != -1) {
-            var item = str.substring(lastIndex, str.length);
+            let item = str.substring(lastIndex, str.length);
             if (item != '') {
                 list.push(item);  
             }          
@@ -51,7 +51,7 @@ exports.getRandomInt = getRandomInt;
  * @returns {string[]} array of values of key
  */
 function filterValuesOfList(list, key) {
-    var result = [];
+    let result = [];
     list.forEach(function (value) {
         if (value[key]) {
             result.push(value[key]);
@@ -66,7 +66,7 @@ function doesContainerHasArray(container, array) {
         return false;
     }
     for (let x = 0; x < array.length; x++) {
-        var found = false;
+        let found = false;
         for (let y = 0; y < container.length; y++) {
             if (container[y] == array[x]) {
                 found = true;
@@ -88,12 +88,12 @@ function getAllUsers() {
     return new Promise(resolveUsers);
 
     function resolveUsers(resolve, reject) {
-        var userModel = require('../backend/components/user/userModel');
+        let userModel = require('../backend/components/user/userModel');
         userModel.getAllUsers(function (error, users) {
             if (error) {
                 return reject(error);
             }
-            var results = filterValuesOfList(users, 'id');
+            let results = filterValuesOfList(users, 'id');
             return resolve(results);
         });
     }
@@ -107,12 +107,12 @@ function getAllAddresses() {
     return new Promise(resolveAddresses);
 
     function resolveAddresses(resolve, reject) {
-        var addressModel = require('../backend/components/address/addressModel');
+        let addressModel = require('../backend/components/address/addressModel');
         addressModel.getAllAddresses(function (error, addresses) {
             if (error) {
                 return reject(error);
             }
-            var results = filterValuesOfList(addresses, 'id');
+            let results = filterValuesOfList(addresses, 'id');
             return resolve(results);
         });
     }
@@ -126,12 +126,12 @@ function getAllHouseTypes() {
     return new Promise(resolveHouseTypes);
 
     function resolveHouseTypes(resolve, reject) {
-        var houseTypeModel = require('../backend/components/houseType/houseTypeModel');      
+        let houseTypeModel = require('../backend/components/houseType/houseTypeModel');      
         houseTypeModel.getAllHouseType(function (error, houseTypes) {
             if (error) {
                 return reject(error);
             }
-            var results = filterValuesOfList(houseTypes, 'id');
+            let results = filterValuesOfList(houseTypes, 'id');
             return resolve(results);
         });
     }
@@ -145,12 +145,12 @@ function getAllCurrencies() {
     return new Promise(resolveCurrencies);
 
     function resolveCurrencies(resolve, reject) {
-        var currencyModel = require('../backend/components/currency/currencyModel');
+        let currencyModel = require('../backend/components/currency/currencyModel');
         currencyModel.getAllCurrencies(function (error, currencies) {
             if (error) {
                 return reject(error);
             }
-            var results = filterValuesOfList(currencies, 'id');
+            let results = filterValuesOfList(currencies, 'id');
             return resolve(results);
         });
     }
@@ -164,12 +164,12 @@ function getAllHouses() {
     return new Promise(resolveHouses);
 
     function resolveHouses(resolve, reject) {
-        var houseModel = require('../backend/components/house/houseModel');
+        let houseModel = require('../backend/components/house/houseModel');
         houseModel.getAllHouses(function (error, houses) {
             if (error) {
                 return reject(error);
             }
-            var results = filterValuesOfList(houses, 'id');
+            let results = filterValuesOfList(houses, 'id');
             return resolve(results);
         });
     }

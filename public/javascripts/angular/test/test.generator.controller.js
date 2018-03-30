@@ -4,7 +4,7 @@ angular
 
 testController.$inject = ['appService', 'testService']
 function testController(appService, testService) {
-    var vm = this;
+    let vm = this;
 
     vm.generate = generate;
     vm.loading = false;
@@ -20,7 +20,7 @@ function testController(appService, testService) {
 
         function sendTestHandler(response) {
             vm.loading = false;
-            var status = response.status;
+            let status = response.status;
             if (status == 200) {
                 return appService.alert(response.data.count + ' ' + test.type + 's created.');
             }

@@ -4,7 +4,7 @@ angular
 
 editHouseController.$inject = ['user', 'house', 'currencies', 'houseTypes', 'houseService', 'appService']
 function editHouseController(user, house, currencies, houseTypes, houseService, appService) {
-    var vm = this;
+    let vm = this;
     vm.user = user;
     vm.editHouse = house;
     vm.currencies = currencies;

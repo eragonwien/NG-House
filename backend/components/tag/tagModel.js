@@ -1,30 +1,29 @@
 let pool = require('../../config/db').pool;
 
-exports.createRole = function (role, done) {
-    let cmd = 'INSERT INTO role(name) VALUES (?) ';
+exports.createTag = function (tag, done) {
+    let cmd = 'INSERT INTO tag(name) VALUES (?) ';
     cmd += 'ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id);';    
-    let params = [role.name];
+    let params = [tag.name, tag.short];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);
         }
         done(null, result);
     });
-};
+}
 
-exports.getAllRoles = function (done) {
-    let cmd = 'SELECT * FROM role;';
-    let params = null;
-    pool.query(cmd, params, function (error, result) {
+exports.getAllTags = function (done) {
+    let cmd = 'SELECT * FROM tag;';
+    pool.query(cmd, null, function (error, results) {
         if (error) {
             return done(error);
         }
-        done(null, result);
+        done(null, results);
     });
-};
+}
 
-exports.getRoleById = function (id, done) {
-    let cmd = 'SELECT * FROM role WHERE id=?;';
+exports.getTagById = function (id, done) {
+    let cmd = 'SELECT * FROM tag WHERE id=? LIMIT 1;';
     let params = [id];
     pool.query(cmd, params, function (error, result) {
         if (error) {
@@ -32,21 +31,21 @@ exports.getRoleById = function (id, done) {
         }
         done(null, result[0]);
     });
-};
+}
 
-exports.updateRoleById = function (id, role, done) {
-    let cmd = 'UPDATE role SET name=? WHERE id=? LIMIT 1;';
-    let params = [role.name, id];
+exports.updateTagById = function (id, tag, done) {
+    let cmd = 'UPDATE tag SET name=? WHERE id=?;';
+    let params = [tag.name, id];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);
         }
         done(null, result);
     });
-};
+}
 
-exports.deleteRoleById = function (id, done) {
-    let cmd = 'DELETE FROM role WHERE id=?;';
+exports.deleteTagById = function (id, done) {
+    let cmd = 'DELETE FROM tag WHERE id=?;';
     let params = [id];
     pool.query(cmd, params, function (error, result) {
         if (error) {
@@ -54,4 +53,4 @@ exports.deleteRoleById = function (id, done) {
         }
         done(null, result);
     });
-};
+}

@@ -1,4 +1,4 @@
-var model = require('./currencyModel');
+let model = require('./currencyModel');
 
 exports.createCurrency = function (req, res, next) {
     model.createCurrency(req.body, function (error, result) {
@@ -27,8 +27,8 @@ exports.getCurrencyById = function (req, res, next) {
     });
 }
 
-exports.updateCurrency = function (req, res, next) {
-    model.updateCurrency(req.params.cid, req.body, function (error, result) {
+exports.updateCurrencyById = function (req, res, next) {
+    model.updateCurrencyById(req.params.cid, req.body, function (error, result) {
         if (error) {
             return next(error);
         }
@@ -36,7 +36,7 @@ exports.updateCurrency = function (req, res, next) {
     });
 }
 
-exports.deleteCurrency = function (req, res, next) {
+exports.deleteCurrencyById = function (req, res, next) {
     model.deleteCurrencyById(req.params.cid, function (error, result) {
         if (error) {
             return next(error);

@@ -1,5 +1,5 @@
-var model = require('./userModel');
-var debug = require('debug')('user_controller');
+let model = require('./userModel');
+let debug = require('debug')('user_controller');
 /**
  * get all users
  * @param {object} req request
@@ -12,7 +12,7 @@ exports.getAllUsers = function (req, res, next) {
             return next(error);
         }
         res.status(200).json(results);
-    })
+    });
 }
 
 /**
@@ -26,7 +26,7 @@ exports.getUserById = function (req, res, next) {
     // exception are admin and test mode
     
     if (process.env.NODE_ENV != 'test') {
-        var user = req.session.user;
+        let user = req.session.user;
         if (user.role != 'Admin' && user.id != req.params.uid) {
             res.status(401).json({message: 'Access denied'});
         }
@@ -55,7 +55,7 @@ exports.createUser = function (req, res, next) {
             return next(error);
         }
         res.status(200).json(result);
-    })
+    });
 }
 
 /**
@@ -64,13 +64,13 @@ exports.createUser = function (req, res, next) {
  * @param {object} res response
  * @param {function} next callback function
  */
-exports.updateUserbyId = function (req, res, next) {
+exports.updateUserById = function (req, res, next) {
     model.updateUserById(req.params.uid, req.body, function (error, result) {
         if (error) {
             return next(error);
         }
         res.status(200).json(result);
-    })
+    });
 }
 
 /**
@@ -85,8 +85,8 @@ exports.deleteUserById = function (req, res, next) {
             return next(error);
         }
         res.status(200).json(result);
-    })
-}
+    });
+};
 
 /* Authetication */
 
@@ -147,7 +147,7 @@ exports.getSignup = function (req, res, next) {
 function logout(req, res, next) {
     req.session.destroy();
     res.status(200).send('LOGGED OUT');
-}
+};
 exports.logout = logout;
 
 /**
@@ -164,7 +164,7 @@ function checkUser(req, res, next) {
         return next();
     }
     res.status(401).json({message: 'Access denied'});
-}
+};
 exports.checkUser = checkUser;
 
 /**
@@ -178,13 +178,13 @@ function checkAdmin(req, res, next) {
         return next();
     }
     checkUser(req, res, function () {
-        var user = req.session.user;
+        let user = req.session.user;
         if (!user.role || user.role != 'Admin') {
             return res.status(401).json({message: 'Access denied'});
         }
         next();
     });
-}
+};
 exports.checkAdmin = checkAdmin;
 
 

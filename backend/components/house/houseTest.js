@@ -1,11 +1,11 @@
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var app = require('../../../app');
-var should = chai.should;
-var expect = chai.expect;
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let app = require('../../../app');
+let should = chai.should;
+let expect = chai.expect;
 
 describe('Houses Models Test', function () {
-    var house = {
+    let house = {
         id: null,
         price: 1000,
         rooms: 5,
@@ -21,7 +21,7 @@ describe('Houses Models Test', function () {
         house_type_id: 1,
         house_status_id: 1
     };
-    var model = require('./houseModel');
+    let model = require('./houseModel');
     it('should create a house', function (done) {
         model.createHouse(house, function (error, result) {
             if (error) {
@@ -83,7 +83,7 @@ describe('Houses Models Test', function () {
 });
 
 describe('House Request Test', function () {
-    var house = {
+    let house = {
         id: null,
         price: 1000,
         rooms: 5,
@@ -121,7 +121,7 @@ describe('House Request Test', function () {
             });
     });
     it('should get 5 houses per GET on /api/houses', function (done) {
-        var limit = 5;
+        let limit = 5;
         chai.request(app)
             .get('/api/houses?limit=' + limit)
             .end(function (error, result) {

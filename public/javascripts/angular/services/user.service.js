@@ -4,7 +4,7 @@ angular
 
 userService.$inject = ['$window', '$http'];
 function userService(window, http) {
-    var service = {
+    let service = {
         getLocalUser: getLocalUser,
         setLocalUser: setLocalUser,
         deleteLocalUser: deleteLocalUser,
@@ -17,9 +17,9 @@ function userService(window, http) {
     return service;
 
     function getLocalUser() {
-        var local = window.localStorage.getItem('user');
-        var session = window.sessionStorage.getItem('user');
-        var result = (session) ? session : local;
+        let local = window.localStorage.getItem('user');
+        let session = window.sessionStorage.getItem('user');
+        let result = (session) ? session : local;
         return JSON.parse(result);
     }
 

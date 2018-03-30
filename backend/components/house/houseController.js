@@ -1,4 +1,4 @@
-var model = require('./houseModel');
+let model = require('./houseModel');
 
 exports.createHouse = function (req, res, next) {
 	model.createHouse(req.body, function (error, result) {

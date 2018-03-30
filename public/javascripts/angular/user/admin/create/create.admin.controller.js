@@ -4,7 +4,7 @@ angular
 
 createAdminController.$inject = ['userService', 'appService']
 function createAdminController(userService, appService) {
-    var vm = this;
+    let vm = this;
     vm.createAdmin = createAdmin;
 
     function createAdmin(form) {

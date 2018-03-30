@@ -1,16 +1,16 @@
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var app = require('../../../app');
-var should = chai.should;
-var expect = chai.expect;
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let app = require('../../../app');
+let should = chai.should;
+let expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('House Status Model Test', function () {
-    var houseStatus = {
+    let houseStatus = {
         id: null,
         name: new Date().getTime().toString()
     }
-    var model = require('./houseStatusModel');
+    let model = require('./houseStatusModel');
     it('should create a house status', function (done) {
         model.createHouseStatus(houseStatus, function (error, result) {
             if (error) {
@@ -64,7 +64,7 @@ describe('House Status Model Test', function () {
 });
 
 describe('House Status Request Test', function () {
-    var houseStatus = {
+    let houseStatus = {
         id: null,
         name: new Date().getTime().toString()
     }

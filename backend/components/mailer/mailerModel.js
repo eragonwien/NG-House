@@ -1,4 +1,4 @@
-var nodemailer = require('nodemailer');
+let nodemailer = require('nodemailer');
 
 //sendMail('gmail', 'eragonwien@gmail.com', 'tzlzngagxmpgnepr', 'benswolo@sw.com', 'eragonwien@gmail.com', 'Node mailer', 'Hello From Swoland');
 
@@ -18,9 +18,9 @@ function sendMail(service, user, password, sender, receiver, subject, text, done
             return done(error);
         }
         // create transporter
-        var transporter = getTransport(service, user, password);
+        let transporter = getTransport(service, user, password);
 
-        var mailOptions = {
+        let mailOptions = {
             from: sender,
             to: receiver,
 
@@ -44,8 +44,8 @@ function sendMail(service, user, password, sender, receiver, subject, text, done
  */
 function prepareEmail(params, done) {
     // get user and password
-    var service = process.env.EMAIL_SERVICE ? process.env.EMAIL_SERVICE : 'gmail';
-    var user = process.env.EMAIL ? process.env.EMAIL : 'eragonwien@gmail.com';
+    let service = process.env.EMAIL_SERVICE ? process.env.EMAIL_SERVICE : 'gmail';
+    let user = process.env.EMAIL ? process.env.EMAIL : 'eragonwien@gmail.com';
     const pass = process.env.EMAIL_PASSWORD ? process.env.EMAIL_PASSWORD : 'tzlzngagxmpgnepr';
 
     sendMail(service, user, pass, params.sender, params.receiver, params.subject, params.text, function (error, result) {
@@ -65,7 +65,7 @@ exports.prepareEmail = prepareEmail;
  */
 function getTransport(service, user, password) {
     // create transporter
-    var transporter = nodemailer.createTransport({
+    let transporter = nodemailer.createTransport({
         service: service,
         auth: {
             user: user,

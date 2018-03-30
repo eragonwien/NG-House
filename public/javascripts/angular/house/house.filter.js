@@ -10,7 +10,7 @@ function houseFilter() {
      * @param {object} user user object
      */
     function filter(houses, user) {
-        var result = [];
+        let result = [];
         houses.forEach(function (house) {
             if (!user || user.id != house.user_id) {
                 result.push(house);

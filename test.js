@@ -7,6 +7,7 @@ var userTest = require('./backend/components/user/userTest');
 var houseTest = require('./backend/components/house/houseTest');
 var houseStatusTest = require('./backend/components/houseStatus/houseStatusTest');
 var bookmarkTest = require('./backend/components/bookmark/bookmarkTest');
+var tagTest = require('./backend/components/tag/tagTest');
 
 // Setup Test
 var buildTest = require('./build/buildTest');

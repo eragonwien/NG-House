@@ -1,4 +1,4 @@
-var model = require('./roleModel');
+let model = require('./roleModel');
 
 exports.createRole = function (req, res, next) {
     model.createRole(req.body, function (error, result) {

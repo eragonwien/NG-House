@@ -1,4 +1,4 @@
-var model = require('./addressModel');
+let model = require('./addressModel');
 
 exports.createAddress = function (req, res, next) {
     model.createNewAddress(req.body, function (error, result) {

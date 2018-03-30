@@ -3,7 +3,7 @@ angular
     .controller('indexController', indexController);
 indexController.$inject = ['user', 'houses', 'message', 'houseService', 'userService', 'currencyService', 'bookmarkService', 'appService'];
 function indexController(user, houses, message, houseService, userService, currencyService, bookmarkService, appService) {
-    var vm = this;
+    let vm = this;
     vm.user = user;
     vm.createHouse = createHouse;
     vm.houses = houses;
@@ -39,10 +39,10 @@ function indexController(user, houses, message, houseService, userService, curre
             return;
         }
         appService.alert('Sending...');
-        var sender = vm.user.email;
-        var receiver = 'eragonwien@gmail.com'; // redirect email to dev instead
-        var text = getText(sender, receiver, vm.agent.message.content);
-        var params = {
+        let sender = vm.user.email;
+        let receiver = 'eragonwien@gmail.com'; // redirect email to dev instead
+        let text = getText(sender, receiver, vm.agent.message.content);
+        let params = {
             sender: sender,
             receiver: receiver, 
             subject: vm.agent.message.subject,
@@ -59,7 +59,7 @@ function indexController(user, houses, message, houseService, userService, curre
     }
 
     function getText(sender, receiver, text) {
-        var result = 'Redirect info: \n';
+        let result = 'Redirect info: \n';
         result += 'From: ' + sender + '\n';
         result += 'To: ' + receiver + '\n';
         result += '**********************\n';
@@ -75,7 +75,7 @@ function indexController(user, houses, message, houseService, userService, curre
     }
 
     function addBookmark(house) {
-        var data = {
+        let data = {
             user_id: vm.user.id,
             house_id: house.id
         }

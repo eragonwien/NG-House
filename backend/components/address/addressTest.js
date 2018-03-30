@@ -1,19 +1,19 @@
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var app = require('../../../app');
-var should = chai.should;
-var expect = chai.expect;
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let app = require('../../../app');
+let should = chai.should;
+let expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Address Model Test', function () {
-    var address = {
+    let address = {
         id: null,
         address: 'Neubaugasse ' + new Date().getTime(),
         postal_code: new Date().getTime().toString(),
         city: 'Vienna',
         land: 'Austria'
     }
-    var model = require('./addressModel');
+    let model = require('./addressModel');
     it('should create a new address and return an id', function (done) {
         model.createNewAddress(address, function (error, result) {
             if (error) {
@@ -95,7 +95,7 @@ describe('Address Model Test', function () {
 });
 
 describe('Address request Test', function () {
-    var address = {
+    let address = {
         id: null,
         address: 'Neubaugasse ' + new Date().getTime(),
         postal_code: new Date().getTime().toString(),

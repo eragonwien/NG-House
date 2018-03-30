@@ -1,14 +1,14 @@
-var pool = require('../../config/db').pool;
-var addressModel = require('../address/addressModel');
-var bcrypt = require('bcrypt');
-var debug = require('debug')('user_model');
+let pool = require('../../config/db').pool;
+let addressModel = require('../address/addressModel');
+let bcrypt = require('bcrypt');
+let debug = require('debug')('user_model');
 
 /**
  * gets all users
  * @param {function({error}, {results: object[]})} done callback
  */
 function getAllUsers (done) {
-    var cmd = 'SELECT * FROM get_users ORDER BY id;';
+    let cmd = 'SELECT * FROM get_users ORDER BY id;';
     pool.query(cmd, null, function (error, results) {
         if (error) {
             return done(error);
@@ -24,8 +24,8 @@ exports.getAllUsers = getAllUsers
  * @param {function({error}, {result})} done callback
  */
 function getUserById (id, done) {
-    var cmd = 'SELECT * FROM get_users WHERE id=? LIMIT 1;';
-    var params = [id];
+    let cmd = 'SELECT * FROM get_users WHERE id=? LIMIT 1;';
+    let params = [id];
     pool.query(cmd, params, function (error, results) {
         if (error) {
             return done(error);
@@ -41,8 +41,8 @@ exports.getUserById = getUserById;
  * @param {function({error}, {result})} done callback
  */
 function getUserByUsername (username, done) {
-    var cmd = 'SELECT * FROM get_users WHERE username=? LIMIT 1;';
-    var params = [username];
+    let cmd = 'SELECT * FROM get_users WHERE username=? LIMIT 1;';
+    let params = [username];
     pool.query(cmd, params, function (error, results) {
         if (error) {
             return done(error);
@@ -58,8 +58,8 @@ exports.getUserByUsername = getUserByUsername;
  * @param {function({error}, {result})} done callback
  */
 function getUserByEmail (email, done) {
-    var cmd = 'SELECT * FROM get_users WHERE email=? LIMIT 1;';
-    var params = [email];
+    let cmd = 'SELECT * FROM get_users WHERE email=? LIMIT 1;';
+    let params = [email];
     pool.query(cmd, params, function (error, results) {
         if (error) {
             return done(error);
@@ -75,9 +75,9 @@ exports.getUserByEmail = getUserByEmail;
  * @param {function({error}, {result})} done callback
  */
 function insertUser(user, done) {
-    var cmd = 'INSERT INTO user(first_name, last_name, username, password, email, role_id, address_id) ';
+    let cmd = 'INSERT INTO user(first_name, last_name, username, password, email, role_id, address_id) ';
     cmd += 'VALUES (?, ?, ?, ?, ?, ?, ?);';
-    var params = [user.first_name, user.last_name, user.username, user.password, user.email, user.role_id, user.address_id];
+    let params = [user.first_name, user.last_name, user.username, user.password, user.email, user.role_id, user.address_id];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);
@@ -93,7 +93,7 @@ function insertUser(user, done) {
  */
 function createUser (user, done) {
     // hashes user password
-    var salt = (process.env.SALT) ? process.env.SALT : 10; // set salt default is 10
+    let salt = (process.env.SALT) ? process.env.SALT : 10; // set salt default is 10
     bcrypt.hash(user.password, salt, function (error, hashedPassword) {
         user.password = hashedPassword;
         // if address_id is available, skip searching address
@@ -101,7 +101,7 @@ function createUser (user, done) {
             insertUser(user, done);
             return;
         }
-        var address = {
+        let address = {
             address: user.address,
             postal_code: user.postal_code,
             city: user.city,
@@ -125,16 +125,16 @@ exports.createUser = createUser;
  * @param {function({error}, {result})} done callback
  */
 function updateUserById (id, user, done) {
-    var cmd = 'UPDATE user SET first_name=?, last_name=?, address_id=?, role_id=?, password=? WHERE id=?;';
+    let cmd = 'UPDATE user SET first_name=?, last_name=?, address_id=?, role_id=?, password=? WHERE id=?;';
 
     // hashes user password
-    var salt = (process.env.SALT) ? process.env.SALT : 10; // set salt default is 10
+    let salt = (process.env.SALT) ? process.env.SALT : 10; // set salt default is 10
     bcrypt.hash(user.password, salt, function (error, hashedPassword) {
         if (error) {
             return done(error);
         }
         user.password = hashedPassword;
-        var params = [user.first_name, user.last_name, user.address_id, user.role_id, user.password, id];
+        let params = [user.first_name, user.last_name, user.address_id, user.role_id, user.password, id];
         pool.query(cmd, params, function (error, result) {
             if (error) {
                 return done(error);
@@ -151,8 +151,8 @@ exports.updateUserById = updateUserById;
  * @param {function({error}, {result})} done callback
  */
 function deleteUserById (id, done) {
-    var cmd = 'DELETE FROM user WHERE id=? LIMIT 1;';
-    var params = [id];
+    let cmd = 'DELETE FROM user WHERE id=? LIMIT 1;';
+    let params = [id];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);

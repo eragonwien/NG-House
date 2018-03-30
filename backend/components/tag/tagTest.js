@@ -4,47 +4,46 @@ let app = require('../../../app');
 let should = chai.should;
 let expect = chai.expect;
 chai.use(chaiHttp);
+var debug = require('debug')('tag_test');
 
-describe('Role Model Test', function () {
-    let role = {
+describe('Tag Model Test', function () {
+    let tag = {
         id: null,
-        name: new Date().getTime().toString()
-    }
-    let model = require('./roleModel');
-    it('should create a new role', function (done) {
-        model.createRole(role, function (error, result) {
+        name: 'FAKER'
+    };
+    let model = require('./tagModel');
+    it('should create a new tag', function (done) {
+        model.createTag(tag, function (error, result) {
             if (error) {
                 return done(error);
             }
             expect(result).to.be.an('object');
             expect(result).to.have.property('insertId');
-            role.id = result.insertId;
+            tag.id = result.insertId;
             done();
-        });
-    }); 
-    it('should get all available roles', function (done) {
-        model.getAllRoles(function (error, result) {
+        })
+    });
+    it('should get all tags', function (done) {
+        model.getAllTags(function (error, results) {
             if (error) {
                 return done(error);
             }
-            expect(result).to.be.an('array');
-            expect(result.length).to.be.greaterThan(0);
+            expect(results).to.be.an('array');
             done();
-        });
-    }); 
-    it('should get the created role', function (done) {
-        model.getRoleById(role.id, function (error, result) {
+        })
+    });
+    it('should get the created tag', function (done) {
+        model.getTagById(tag.id, function (error, result) {
             if (error) {
                 return done(error);
             }
             expect(result).to.be.an('object');
-            expect(result).to.have.property('name').which.is.equal(role.name);
+            expect(result).to.have.property('name').which.is.equal(tag.name);
             done();
         });
-    }); 
-    it('should update the created role', function (done) {
-        role.name = 'Rolex';
-        model.updateRoleById(role.id, role, function (error, result) {
+    });
+    it('should update the tag', function (done) {
+        model.updateTagById(tag.id, tag, function (error, result) {
             if (error) {
                 return done(error);
             }
@@ -52,10 +51,9 @@ describe('Role Model Test', function () {
             expect(result).to.have.property('affectedRows').which.is.greaterThan(0);
             done();
         });
-    }); 
-    
-    it('should delete the created role', function (done) {
-        model.deleteRoleById(role.id, function (error, result) {
+    });
+    it('delete the created tag', function (done) {
+        model.deleteTagById(tag.id, function (error, result) {
             if (error) {
                 return done(error);
             }
@@ -63,64 +61,68 @@ describe('Role Model Test', function () {
             expect(result).to.have.property('affectedRows').which.is.greaterThan(0);
             done();
         });
-    }); 
+    });
 });
 
-describe('Role Request Test', function () {
-    let role = {
+describe('Tag Request Test', function () {
+    let tag = {
         id: null,
-        name: new Date().getTime().toString()
-    }
-    it('should create a new role per POST on /api/roles', function (done) {
+        name: 'FAKERR'
+    };
+    it('should create a new tag per POST on /api/tags', function (done) {
         chai.request(app)
-            .post('/api/roles')
-            .send(role)
+            .post('/api/tags')
+            .send(tag)
             .end(function (error, result) {
+                expect(error).to.be.null;
                 expect(result).to.have.status(200);
-                expect(result.body).to.have.property('insertId');
-                role.id = result.body.insertId;
+                expect(result.body).to.be.have.property('insertId');
+                tag.id = result.body.insertId;
                 done();
-            });
-    }); 
-    it('should get all available roles per GET on /api/roles', function (done) {
+            })
+    });
+    it('should get all tags per GET on /api/tags', function (done) {
         chai.request(app)
-            .get('/api/roles')
+            .get('/api/tags')
             .end(function (error, result) {
+                expect(error).to.be.null;
                 expect(result).to.have.status(200);
                 expect(result.body).to.be.an('array');
                 done();
             });
-    }); 
-    it('should get the created role per GET on /api/roles/:rid', function (done) {
+    });
+    it('should get the created tag per GET on /api/tags/:cid', function (done) {
         chai.request(app)
-            .get('/api/roles/' + role.id)
+            .get('/api/tags/' + tag.id)
             .end(function (error, result) {
+                expect(error).to.be.null;
                 expect(result).to.have.status(200);
                 expect(result.body).to.be.an('object');
-                expect(result.body).to.have.property('name').which.is.equal(role.name);
+                expect(result.body).to.have.property('name').which.is.equal(tag.name);
                 done();
             });
-    }); 
-    it('should update the created role per PUT on /api/roles/:rid', function (done) {
-        role.name = 'changed Role';
+    });
+    it('should update the tag per PUT on /api/tags/:cid', function (done) {
         chai.request(app)
-            .put('/api/roles/' + role.id)
-            .send(role)
+            .put('/api/tags/' + tag.id)
+            .send(tag)
             .end(function (error, result) {
-                expect(result).to.have.status(200);
-                expect(result.body).to.be.an('object');
-                expect(result.body).to.have.property('affectedRows').which.is.greaterThan(0);
-                done();
-            });
-    }); 
-    it('should delete the created role per DELETE on /api/roles/:rid', function (done) {
-        chai.request(app)
-            .delete('/api/roles/' + role.id)
-            .end(function (error, result) {
+                expect(error).to.be.null;
                 expect(result).to.have.status(200);
                 expect(result.body).to.be.an('object');
                 expect(result.body).to.have.property('affectedRows').which.is.greaterThan(0);
                 done();
             });
+    });
+    it('delete the created tag per DELETE on /api/tags/:cid', function (done) {
+        chai.request(app)
+            .delete('/api/tags/' + tag.id)
+            .end(function (error, result) {
+                expect(error).to.be.null;
+                expect(result).to.have.status(200);
+                expect(result.body).to.be.an('object');
+                expect(result.body).to.have.property('affectedRows').which.is.greaterThan(0);
+                done();
+            })
     }); 
- });
+});

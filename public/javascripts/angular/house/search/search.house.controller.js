@@ -4,7 +4,7 @@ angular
 
 searchHouseController.$inject = ['user', 'houseTypes', 'currencies', 'addresses', 'appService', 'houseService', 'userService']
 function searchHouseController(user, houseTypes, currencies, addresses, appService, houseService, userService) {
-    var vm = this;
+    let vm = this;
     vm.user = user;
     vm.houseTypes = houseTypes;
     vm.currencies = currencies;
@@ -17,7 +17,7 @@ function searchHouseController(user, houseTypes, currencies, addresses, appServi
      * @param {object} house search house
      */
     function submit(house) {
-        var hasAddress = splitAddress(house);
+        let hasAddress = splitAddress(house);
         if (!hasAddress) {
             return appService.alert('Address required');
         }
@@ -35,7 +35,7 @@ function searchHouseController(user, houseTypes, currencies, addresses, appServi
         if (!house.address) {
             return false;
         }
-        var address = house.address.split(',');
+        let address = house.address.split(',');
         house.city = address[0];
         house.land = address[1];
         delete house.address;
@@ -57,25 +57,25 @@ function searchHouseController(user, houseTypes, currencies, addresses, appServi
     }
 
     function initCollapsible() {
-        var elem = document.querySelector('.collapsible');
-        var options = {};
-        var instance = M.Collapsible.init(elem, options);
+        let elem = document.querySelector('.collapsible');
+        let options = {};
+        let instance = M.Collapsible.init(elem, options);
     }
 
     function initAutocomplete() {
-        var results = filterAddresses(addresses);
-        var elem = document.querySelector('.autocomplete');
-        var options = {
+        let results = filterAddresses(addresses);
+        let elem = document.querySelector('.autocomplete');
+        let options = {
             data: results
         };
-        var instance = M.Autocomplete.init(elem, options);
+        let instance = M.Autocomplete.init(elem, options);
 
 
         function filterAddresses(addresses) {
-            var results = {};
+            let results = {};
             for (let i = 0; i < addresses.length; i++) {
-                var address = addresses[i];
-                var key =  address.city + ',' + address.land;
+                let address = addresses[i];
+                let key =  address.city + ',' + address.land;
                 results[key] = null;
             }
             return results;

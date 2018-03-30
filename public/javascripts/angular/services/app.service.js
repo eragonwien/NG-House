@@ -4,7 +4,7 @@ angular
 
 appService.$inject = ['$state', '$window', '$http']
 function appService(state, window, http) {
-    var service = {
+    let service = {
         alert: alert,
         moveTo: moveTo,
         reload: reload,
@@ -23,7 +23,7 @@ function appService(state, window, http) {
      * @param {number} duration duration of the message in ms
      */
     function alert(message, duration) {
-        var duration = (duration) ? duration: 5000;
+        let duration = (duration) ? duration: 5000;
         if (typeof message === 'object') {
             message = JSON.stringify(message);
         }

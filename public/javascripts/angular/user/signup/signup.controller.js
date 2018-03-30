@@ -4,7 +4,7 @@ angular
 
 signupController.$inject = ['userService', 'appService']
 function signupController(userService, appService) {
-    var vm = this;
+    let vm = this;
     vm.signup = signup;
 
     function signup(form) {
@@ -15,7 +15,7 @@ function signupController(userService, appService) {
         userService.signup(vm.user).then(signupHandler);
 
         function signupHandler(response) {
-            var status = response.status;
+            let status = response.status;
             if (status == 200) {
                 appService.moveTo('login');
                 return;

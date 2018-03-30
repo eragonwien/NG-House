@@ -4,7 +4,7 @@ angular
 
 redirectController.$inject = ['appService'];
 function redirectController(appService) {
-    var vm = this;
+    let vm = this;
     
     appService.moveTo();
 }

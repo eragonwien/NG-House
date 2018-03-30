@@ -4,7 +4,7 @@ angular
 
 navbarController.$inject = ['user', 'userService', 'appService']
 function navbarController(user, userService, appService) {
-    var vm = this;
+    let vm = this;
     vm.user = user;
     vm.reload = reload;
     vm.logout = logout;
@@ -29,8 +29,8 @@ function navbarController(user, userService, appService) {
     }
 
     function initSideNav() {
-        var elem = document.querySelector('.sidenav');
-        var options = {};
-        var instance = M.Sidenav.init(elem, options);
+        let elem = document.querySelector('.sidenav');
+        let options = {};
+        let instance = M.Sidenav.init(elem, options);
     }
 }

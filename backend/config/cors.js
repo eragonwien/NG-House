@@ -1,5 +1,5 @@
-var debug = require('debug')('cors');
-var origins = [
+let debug = require('debug')('cors');
+let origins = [
     'http://127.0.0.1:8887', 'http://localhost:8887',
     'http://127.0.0.1:3000', 'http://localhost:3000'
 ]

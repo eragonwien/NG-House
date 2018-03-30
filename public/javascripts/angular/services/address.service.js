@@ -4,7 +4,7 @@ angular
 
 addressService.$inject = ['$http'];
 function addressService(http) {
-    var service = {
+    let service = {
         getAddresses: getAddresses
     }
     return service;

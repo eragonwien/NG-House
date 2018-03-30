@@ -4,7 +4,7 @@ angular
 
 currencyService.$inject = ['$http', '$q'];
 function currencyService(http, q) {
-    var service = {
+    let service = {
         getCurrencies: getCurrencies
     }
     return service;
