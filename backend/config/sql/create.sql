@@ -1,12 +1,39 @@
-DROP TABLE IF EXISTS house_image, house_tag, bookmark, house, user, image, tag, house_type, house_status, currency, role, address;
+DROP TABLE IF EXISTS house_image, house_tag, bookmark, house, user, image, tag, house_type, house_status, currency, role, address, postal_code, city, land;
+
+CREATE TABLE IF NOT EXISTS land (
+    id INT NOT NULL AUTO_INCREMENT,    
+    name VARCHAR(255) NOT NULL UNIQUE,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS city (
+    id INT NOT NULL AUTO_INCREMENT,    
+    name VARCHAR(255) NOT NULL,
+    land_id INT NOT NULL,
+    FOREIGN KEY (land_id) REFERENCES land(id),
+    CONSTRAINT UNIQUE_land_city UNIQUE(name, land_id),
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS postal_code (
+    id INT NOT NULL AUTO_INCREMENT,    
+    code VARCHAR(255) NOT NULL,
+    name VARCHAR(255),
+    city_id INT NOT NULL,
+    land_id INT NOT NULL,
+    FOREIGN KEY (city_id) REFERENCES city(id),
+    FOREIGN KEY (land_id) REFERENCES land(id),
+    CONSTRAINT UNIQUE_city_code UNIQUE(code, city_id, land_id),
+    PRIMARY KEY(id)
+);
 
 CREATE TABLE IF NOT EXISTS address (
     id INT NOT NULL AUTO_INCREMENT,
-    address VARCHAR(255) NOT NULL,
-    postal_code VARCHAR(16) NOT NULL,
-    city VARCHAR(255) NOT NULL,
-    land VARCHAR(255) NOT NULL,
-    CONSTRAINT UNIQUE_Address UNIQUE(address, postal_code, city, land),
+    street_name VARCHAR(255) NOT NULL,
+    house_number INT NOT NULL,
+    postal_code_id INT NOT NULL,
+    FOREIGN KEY (postal_code_id) REFERENCES postal_code(id),
+    CONSTRAINT UNIQUE_Address UNIQUE(street_name, house_number, postal_code_id),
     PRIMARY KEY(id)
 );
 
