@@ -1,16 +1,19 @@
 process.env.NODE_ENV = 'test';
 // API Tests
-var addressTest = require('./backend/components/address/addressTest');  
-var currencyTest = require('./backend/components/currency/currencyTest');
-var roleTest = require('./backend/components/role/roleTest');
-var userTest = require('./backend/components/user/userTest');
-var houseTest = require('./backend/components/house/houseTest');
-var houseStatusTest = require('./backend/components/houseStatus/houseStatusTest');
-var bookmarkTest = require('./backend/components/bookmark/bookmarkTest');
-var tagTest = require('./backend/components/tag/tagTest');
+let addressTest = require('./backend/components/address/address.test');  
+let landTest = require('./backend/components/land/land.test');  
+let cityTest = require('./backend/components/city/city.test');  
+let postalCodeTest = require('./backend/components/postalCode/postal.code.test');  
+//let currencyTest = require('./backend/components/currency/currencyTest');
+//let roleTest = require('./backend/components/role/roleTest');
+//let userTest = require('./backend/components/user/userTest');
+//let houseTest = require('./backend/components/house/houseTest');
+//let houseStatusTest = require('./backend/components/houseStatus/houseStatusTest');
+//let bookmarkTest = require('./backend/components/bookmark/bookmarkTest');
+//let tagTest = require('./backend/components/tag/tagTest');
 
 // Setup Test
-var buildTest = require('./build/buildTest');
+//let buildTest = require('./build/buildTest'); 
 
 // Mailer Test
-//var mailerTest = require('./backend/components/mailer/mailerTest');
+//let mailerTest = require('./backend/components/mailer/mailerTest');

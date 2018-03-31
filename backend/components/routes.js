@@ -1,18 +1,23 @@
+'use strict';
+
 let express = require('express');
 let router = express.Router();
 
 // Controllers
-let house = require('./house/houseController');
-let user = require('./user/userController');
-let address = require('./address/addressController');
-let currency = require('./currency/currencyController');
-let role = require('./role/roleController');
-let houseType = require('./houseType/houseTypeController');
-let houseStatus = require('./houseStatus/houseStatusController');
-let bookmark = require('./bookmark/bookmarkController');
-let tag = require('./tag/tagController');
-let mailer = require('./mailer/mailerController');
-let test = require('./testGenerator/testGeneratorController');
+let house = require('./house/house.controller');
+let user = require('./user/user.controller');
+let address = require('./address/address.controller');
+let land = require('./land/land.controller');
+let city = require('./city/city.controller');
+let postalCode = require('./postalCode/postal.code.controller');
+let currency = require('./currency/currency.controller');
+let role = require('./role/role.controller');
+let houseType = require('./houseType/house.type.controller');
+let houseStatus = require('./houseStatus/house.status.controller');
+let bookmark = require('./bookmark/bookmark.controller');
+let tag = require('./tag/tag.controller');
+let mailer = require('./mailer/mailer.controller');
+let test = require('./testGenerator/test.generator.controller');
 
 
 let checkUser = user.checkUser;
@@ -35,11 +40,32 @@ router.get('/api/users/:uid/bookmarks',checkUser, bookmark.getBookmarksByUser);
 
 // Address
 router.post('/api/addresses',checkUser, address.createAddress);
-router.get('/api/addresses', address.getAllAddresses);
+router.get('/api/addresses', address.getAddresses);
 router.get('/api/addresses/:aid',checkUser, address.getAddressById);
 router.post('/api/addresses/id',checkUser, address.getAddressIdByAddress);
 router.put('/api/addresses/:aid',checkUser, address.updateAddressById);
 router.delete('/api/addresses/:aid',checkUser, address.deleteAddressById);
+
+// Land
+router.post('/api/lands',checkUser, land.create);
+router.get('/api/lands', land.get);
+router.get('/api/lands/:lid', land.get);
+router.put('/api/lands/:lid',checkUser, land.update);
+router.delete('/api/lands/:lid',checkUser, land.remove);
+
+// City
+router.post('/api/cities',checkUser, city.create);
+router.get('/api/cities', city.get);
+router.get('/api/cities/:ctid', city.get);
+router.put('/api/cities/:ctid',checkUser, city.update);
+router.delete('/api/cities/:ctid',checkUser, city.remove);
+
+// Postal Code
+router.post('/api/postalCodes',checkUser, postalCode.create);
+router.get('/api/postalCodes', postalCode.get);
+router.get('/api/postalCodes/:pcid', postalCode.get);
+router.put('/api/postalCodes/:pcid',checkUser, postalCode.update);
+router.delete('/api/postalCodes/:pcid',checkUser, postalCode.remove);
 
 // Currency
 router.post('/api/currencies',checkUser, currency.createCurrency);
