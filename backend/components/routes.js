@@ -36,15 +36,14 @@ router.get('/api/users/:uid',checkUser, user.getUserById);
 router.put('/api/users/:uid',checkUser, user.updateUserById);
 router.delete('/api/users/:uid',checkUser, user.deleteUserById);
 
-router.get('/api/users/:uid/bookmarks',checkUser, bookmark.getBookmarksByUser);
+router.get('/api/users/:uid/bookmarks',checkUser, bookmark.get);
 
 // Address
-router.post('/api/addresses',checkUser, address.createAddress);
-router.get('/api/addresses', address.getAddresses);
-router.get('/api/addresses/:aid',checkUser, address.getAddressById);
-router.post('/api/addresses/id',checkUser, address.getAddressIdByAddress);
-router.put('/api/addresses/:aid',checkUser, address.updateAddressById);
-router.delete('/api/addresses/:aid',checkUser, address.deleteAddressById);
+router.post('/api/addresses',checkUser, address.create);
+router.get('/api/addresses', address.get);
+router.get('/api/addresses/:aid',checkUser, address.get);
+router.put('/api/addresses/:aid',checkUser, address.update);
+router.delete('/api/addresses/:aid',checkUser, address.remove);
 
 // Land
 router.post('/api/lands',checkUser, land.create);
@@ -68,11 +67,11 @@ router.put('/api/postalCodes/:pcid',checkUser, postalCode.update);
 router.delete('/api/postalCodes/:pcid',checkUser, postalCode.remove);
 
 // Currency
-router.post('/api/currencies',checkUser, currency.createCurrency);
-router.get('/api/currencies', currency.getAllCurrencies);
-router.get('/api/currencies/:cid',checkUser, currency.getCurrencyById);
-router.put('/api/currencies/:cid',checkUser, currency.updateCurrencyById);
-router.delete('/api/currencies/:cid',checkUser, currency.deleteCurrencyById);
+router.post('/api/currencies',checkUser, currency.create);
+router.get('/api/currencies', currency.get);
+router.get('/api/currencies/:cid',checkUser, currency.get);
+router.put('/api/currencies/:cid',checkUser, currency.update);
+router.delete('/api/currencies/:cid',checkUser, currency.remove);
 
 // Role
 router.post('/api/roles',checkUser, role.createRole);
@@ -96,18 +95,18 @@ router.put('/api/houseTypes/:htid',checkUser, houseType.updateHouseTypeById);
 router.delete('/api/houseTypes/:htid',checkUser, houseType.deleteHouseTypeById);
 
 // House Status
-router.post('/api/houseStatuses',checkUser, houseStatus.createHouseStatus);
-router.get('/api/houseStatuses', houseStatus.getAllHouseStatuses);
-router.get('/api/houseStatuses/:hsid',checkUser, houseStatus.getHouseStatusById);
-router.put('/api/houseStatuses/:hsid',checkUser, houseStatus.updateHouseStatusById);
-router.delete('/api/houseStatuses/:hsid',checkUser, houseStatus.deleteHouseStatusById);
+router.post('/api/houseStatuses',checkUser, houseStatus.create);
+router.get('/api/houseStatuses', houseStatus.get);
+router.get('/api/houseStatuses/:hsid',checkUser, houseStatus.get);
+router.put('/api/houseStatuses/:hsid',checkUser, houseStatus.update);
+router.delete('/api/houseStatuses/:hsid',checkUser, houseStatus.remove);
 
 // Bookmark
-router.post('/api/bookmarks',checkUser, bookmark.createBookmark);
-router.get('/api/bookmarks', bookmark.getAllBookmarks);
-router.get('/api/bookmarks/:bmid',checkUser, bookmark.getBookmarkById);
-router.put('/api/bookmarks/:bmid',checkUser, bookmark.updateBookmarkById);
-router.delete('/api/bookmarks/:bmid',checkUser, bookmark.deleteBookmarkById);
+router.post('/api/bookmarks',checkUser, bookmark.create);
+router.get('/api/bookmarks', bookmark.get);
+router.get('/api/bookmarks/:bmid',checkUser, bookmark.get);
+router.put('/api/bookmarks/:bmid',checkUser, bookmark.update);
+router.delete('/api/bookmarks/:bmid',checkUser, bookmark.remove);
 
 // Tag
 router.post('/api/tags',checkUser, tag.createTag);

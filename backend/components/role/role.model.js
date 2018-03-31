@@ -1,6 +1,6 @@
 let pool = require('../../config/db').pool;
 
-exports.createRole = function (role, done) {
+function createRole (role, done) {
     let cmd = 'INSERT INTO role(name) VALUES (?) ';
     cmd += 'ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id);';    
     let params = [role.name];
@@ -10,10 +10,11 @@ exports.createRole = function (role, done) {
         }
         done(null, result);
     });
-};
+}
 
-exports.getAllRoles = function (done) {
-    let cmd = 'SELECT * FROM role;';
+function getRoles (count, done) {
+    count = count ? count : 1000;
+    let cmd = 'SELECT * FROM role LIMIT ' + count + ';';
     let params = null;
     pool.query(cmd, params, function (error, result) {
         if (error) {
@@ -21,9 +22,9 @@ exports.getAllRoles = function (done) {
         }
         done(null, result);
     });
-};
+}
 
-exports.getRoleById = function (id, done) {
+function getRoleById (id, done) {
     let cmd = 'SELECT * FROM role WHERE id=?;';
     let params = [id];
     pool.query(cmd, params, function (error, result) {
@@ -32,9 +33,9 @@ exports.getRoleById = function (id, done) {
         }
         done(null, result[0]);
     });
-};
+}
 
-exports.updateRoleById = function (id, role, done) {
+function updateRoleById (id, role, done) {
     let cmd = 'UPDATE role SET name=? WHERE id=? LIMIT 1;';
     let params = [role.name, id];
     pool.query(cmd, params, function (error, result) {
@@ -43,9 +44,9 @@ exports.updateRoleById = function (id, role, done) {
         }
         done(null, result);
     });
-};
+}
 
-exports.deleteRoleById = function (id, done) {
+function deleteRoleById (id, done) {
     let cmd = 'DELETE FROM role WHERE id=?;';
     let params = [id];
     pool.query(cmd, params, function (error, result) {
@@ -54,4 +55,6 @@ exports.deleteRoleById = function (id, done) {
         }
         done(null, result);
     });
-};
+}
+
+module.exports = {createRole, getRoles, getRoleById, updateRoleById, deleteRoleById};

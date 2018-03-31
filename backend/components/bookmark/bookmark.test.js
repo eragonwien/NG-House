@@ -21,16 +21,16 @@ describe('Bookmark Model Test', function () {
             expect(result).to.have.property('insertId');
             bookmark.id = result.insertId;
             done();
-        })
+        });
     });
     it('should get all bookmarks', function (done) {
-        model.getAllBookmarks(function (error, results) {
+        model.getBookmarks(null, function (error, results) {
             if (error) {
                 return done(error);
             }
             expect(results).to.be.an('array');
             done();
-        })
+        });
     });
     it('should get the created bookmark', function (done) {
         model.getBookmarkById(bookmark.id, function (error, result) {
@@ -41,7 +41,7 @@ describe('Bookmark Model Test', function () {
             expect(result).to.have.property('bookmarker_id').which.is.equal(bookmark.user_id);
             expect(result).to.have.property('house_id').which.is.equal(bookmark.house_id);
             done();
-        })
+        });
     });
     it('should get the created bookmark of the given user', function (done) {
         model.getBookmarksByUser(bookmark.user_id, function (error, result) {
@@ -50,7 +50,7 @@ describe('Bookmark Model Test', function () {
             }
             expect(result).to.be.an('array');
             done();
-        })
+        });
     });
     it('should update the bookmark', function (done) {
         model.updateBookmarkById(bookmark.id, bookmark, function (error, result) {
@@ -60,7 +60,7 @@ describe('Bookmark Model Test', function () {
             expect(result).to.be.an('object');
             expect(result).to.have.property('affectedRows').which.is.greaterThan(0);
             done();
-        })
+        });
     });
     it('delete the created bookmark', function (done) {
         model.deleteBookmarkById(bookmark.id, function (error, result) {
@@ -70,7 +70,7 @@ describe('Bookmark Model Test', function () {
             expect(result).to.be.an('object');
             expect(result).to.have.property('affectedRows').which.is.greaterThan(0);
             done();
-        })
+        });
     });
 });
 
@@ -90,7 +90,7 @@ describe('Bookmark Request Test', function () {
                 expect(result.body).to.be.have.property('insertId');
                 bookmark.id = result.body.insertId;
                 done();
-            })
+            });
     });
     it('should get all bookmarks per GET on /api/bookmarks', function (done) {
         chai.request(app)
@@ -100,7 +100,7 @@ describe('Bookmark Request Test', function () {
                 expect(result).to.have.status(200);
                 expect(result.body).to.be.an('array');
                 done();
-            })
+            });
     });
     it('should get the created bookmark per GET on /api/bookmarks/:bmid', function (done) {
         chai.request(app)
@@ -112,7 +112,7 @@ describe('Bookmark Request Test', function () {
                 expect(result.body).to.have.property('bookmarker_id').which.is.equal(bookmark.user_id);
                 expect(result.body).to.have.property('house_id').which.is.equal(bookmark.house_id);
                 done();
-            })
+            });
     });
     it('should list all bookmark of the given user per GET on /api/users/:uid/bookmarks', function (done) {
         chai.request(app)
@@ -122,7 +122,7 @@ describe('Bookmark Request Test', function () {
                 expect(result).to.have.status(200);
                 expect(result.body).to.be.an('array');
                 done();
-            })
+            });
     });
     it('should update the bookmark per PUT on /api/bookmarks/:bmid', function (done) {
         chai.request(app)
@@ -145,6 +145,6 @@ describe('Bookmark Request Test', function () {
                 expect(result.body).to.be.an('object');
                 expect(result.body).to.have.property('affectedRows').which.is.greaterThan(0);
                 done();
-            })
+            });
     }); 
 });

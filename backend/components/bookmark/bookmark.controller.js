@@ -1,6 +1,12 @@
 let model = require('./bookmark.model');
 
-exports.createBookmark = function (req, res, next) {
+/**
+ * create new bookmark
+ * @param {object} req request
+ * @param {object} res response
+ * @param {callback} next callback
+ */
+function create (req, res, next) {
     model.createBookmark(req.body, function (error, result) {
         if (error) {
             return next(error);
@@ -9,34 +15,44 @@ exports.createBookmark = function (req, res, next) {
     });
 }
 
-exports.getAllBookmarks = function (req, res, next) {
-    model.getAllBookmarks(function (error, results) {
-        if (error) {
-            return next(error);
-        }
-        res.status(200).json(results);
-    });
+/**
+ * get bookmark
+ * @param {object} req request
+ * @param {object} res response
+ * @param {callback} next callback
+ */
+function get (req, res, next) {
+    if (req.params.bmid) {
+        model.getBookmarkById(req.params.bmid, function (error, result) {
+            if (error) {
+                return next(error);
+            }
+            res.status(200).json(result);
+        });
+    } else if (req.params.uid) {
+        model.getBookmarksByUser(req.params.uid, function (error, results) {
+            if (error) {
+                return next(error);
+            }
+            res.status(200).json(results);
+        });
+    } else {
+        model.getBookmarks(req.query.count, function (error, results) {
+            if (error) {
+                return next(error);
+            }
+            res.status(200).json(results);
+        });
+    }
 }
 
-exports.getBookmarksByUser = function (req, res, next) {
-    model.getBookmarksByUser(req.params.uid, function (error, results) {
-        if (error) {
-            return next(error);
-        }
-        res.status(200).json(results);
-    });
-}
-
-exports.getBookmarkById = function (req, res, next) {
-    model.getBookmarkById(req.params.bmid, function (error, result) {
-        if (error) {
-            return next(error);
-        }
-        res.status(200).json(result);
-    });
-}
-
-exports.updateBookmarkById = function (req, res, next) {
+/**
+ * update new bookmark
+ * @param {object} req request
+ * @param {object} res response
+ * @param {callback} next callback
+ */
+function update (req, res, next) {
     model.updateBookmarkById(req.params.bmid, req.body, function (error, result) {
         if (error) {
             return next(error);
@@ -45,7 +61,13 @@ exports.updateBookmarkById = function (req, res, next) {
     });
 }
 
-exports.deleteBookmarkById = function (req, res, next) {
+/**
+ * delete bookmark
+ * @param {object} req request
+ * @param {object} res response
+ * @param {callback} next callback
+ */
+function remove (req, res, next) {
     model.deleteBookmarkById(req.params.bmid, function (error, result) {
         if (error) {
             return next(error);
@@ -53,3 +75,5 @@ exports.deleteBookmarkById = function (req, res, next) {
         res.status(200).json(result);
     });
 }
+
+module.exports = {create, get, update, remove};

@@ -1,7 +1,7 @@
 let model = require('./mailer.model');
 let debug = require('debug')('mailer_controller');
 
-exports.sendMail = function (req, res, next) {
+function sendMail (req, res, next) {
     model.prepareEmail(req.body, function (error, result) {
         if (error) {
             return next(error);

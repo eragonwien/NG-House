@@ -24,7 +24,7 @@ describe('Currency Model Test', function () {
         });
     });
     it('should get all currencies', function (done) {
-        model.getAllCurrencies(function (error, results) {
+        model.getCurrencies(null, function (error, results) {
             if (error) {
                 return done(error);
             }

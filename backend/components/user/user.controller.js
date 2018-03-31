@@ -6,7 +6,7 @@ let debug = require('debug')('user_controller');
  * @param {object} res response
  * @param {function} next callback function
  */
-exports.getAllUsers = function (req, res, next) {
+function get (req, res, next) {
     model.getAllUsers(function (error, results) {
         if (error) {
             return next(error);
@@ -21,7 +21,7 @@ exports.getAllUsers = function (req, res, next) {
  * @param {object} res response
  * @param {function} next callback function
  */
-exports.getUserById = function (req, res, next) {
+function getUserById (req, res, next) {
     // user cannot access user profile other than itself
     // exception are admin and test mode
     
@@ -49,7 +49,7 @@ exports.getUserById = function (req, res, next) {
  * @param {object} res response
  * @param {function} next callback function
  */
-exports.createUser = function (req, res, next) {  
+function create (req, res, next) {  
     model.createUser(req.body, function (error, result) {
         if (error) {
             return next(error);
@@ -64,7 +64,7 @@ exports.createUser = function (req, res, next) {
  * @param {object} res response
  * @param {function} next callback function
  */
-exports.updateUserById = function (req, res, next) {
+function update (req, res, next) {
     model.updateUserById(req.params.uid, req.body, function (error, result) {
         if (error) {
             return next(error);
@@ -79,14 +79,14 @@ exports.updateUserById = function (req, res, next) {
  * @param {object} res response
  * @param {function} next callback function
  */
-exports.deleteUserById = function (req, res, next) {
+function remove (req, res, next) {
     model.deleteUserById(req.params.uid, function (error, result) {
         if (error) {
             return next(error);
         }
         res.status(200).json(result);
     });
-};
+}
 
 /* Authetication */
 
@@ -96,9 +96,9 @@ exports.deleteUserById = function (req, res, next) {
  * @param {object} res response
  * @param {function} next callback function
  */
-exports.getLogin = function (req, res, next) {
+function getLogin (req, res, next) {
     res.render('login');
-};
+}
 
 /**
  * authenticats user
@@ -107,7 +107,7 @@ exports.getLogin = function (req, res, next) {
  * @param {object} res response
  * @param {function} next callback function
  */
-exports.authenticate = function (req, res, next) {
+function authenticate (req, res, next) {
     model.getUserByUsername(req.body.username, function (error, user) {
         if (error) {
             return next(error);
@@ -126,7 +126,7 @@ exports.authenticate = function (req, res, next) {
             res.status(200).json(user);
         });
     });
-};
+}
 
 /**
  * show sign up page
@@ -134,9 +134,9 @@ exports.authenticate = function (req, res, next) {
  * @param {object} res response
  * @param {function} next callback function
  */
-exports.getSignup = function (req, res, next) {
+function getSignup (req, res, next) {
     res.render('signup');
-};
+}
 
 /**
  * middleware for logout
@@ -147,8 +147,7 @@ exports.getSignup = function (req, res, next) {
 function logout(req, res, next) {
     req.session.destroy();
     res.status(200).send('LOGGED OUT');
-};
-exports.logout = logout;
+}
 
 /**
  * middleware checking if user is logged in
@@ -164,8 +163,7 @@ function checkUser(req, res, next) {
         return next();
     }
     res.status(401).json({message: 'Access denied'});
-};
-exports.checkUser = checkUser;
+}
 
 /**
  * middleware checking if user is an admin
@@ -184,7 +182,6 @@ function checkAdmin(req, res, next) {
         }
         next();
     });
-};
-exports.checkAdmin = checkAdmin;
+}
 
-
+module.exports = {create, get, update, remove, authenticate, checkAdmin, checkUser, login, logout, getLogin, getSignup};
