@@ -1,6 +1,7 @@
 {
     "node": true,
     "esversion": 6,
+    "expr": true,
     "globals": {
         "describe": false,
         "it": false
