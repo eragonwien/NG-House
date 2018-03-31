@@ -23,7 +23,7 @@ function appService(state, window, http) {
      * @param {number} duration duration of the message in ms
      */
     function alert(message, duration) {
-        let duration = (duration) ? duration: 5000;
+        duration = (duration) ? duration: 5000;
         if (typeof message === 'object') {
             message = JSON.stringify(message);
         }
