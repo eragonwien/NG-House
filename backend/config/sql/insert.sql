@@ -63,7 +63,6 @@ INSERT INTO postal_code(code, city_id, land_id) VALUES(1240, 1, 1);
 
 INSERT INTO address(street_name, house_number, postal_code_id) VALUES('Neustiftgasse', 66, 7);
 
-#INSERT INTO address(address, postal_code, city, land) VALUES('Neustiftgasse', 1070, 'Vienna', 'Austria');
 INSERT INTO user(first_name, last_name, username, password, email, role_id, address_id, image_id) VALUES('Caesar', 'Salat', 'csalat', 'test', 'caesar@rome.it', 1, 1, null);
 INSERT INTO house(price, rooms, bathrooms, bedrooms, size, user_id, address_id, house_type_id, house_status_id, currency_id) VALUES (10000, 5, 1, 2, 50, 1, 1, 2, 1, 1);
 

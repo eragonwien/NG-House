@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS house_image, house_tag, bookmark, house, user, image, tag, house_type, house_status, currency, role, address, postal_code, city, land;
+DROP TABLE IF EXISTS bookmark, house_image, house_tag, house, user, image, tag, house_status, house_type, currency, role, address, postal_code, city, land;
 
 CREATE TABLE IF NOT EXISTS land (
     id INT NOT NULL AUTO_INCREMENT,    
