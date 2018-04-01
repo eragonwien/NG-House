@@ -14,8 +14,9 @@ describe('User Models Test', function () {
         username: 'JTest_' + new Date().getTime(),
         password: 'test',
         email: 'JTest_' + new Date().getTime() + '@mail.com',
-        address: 'Neubaugasse 78',
-        postal_code: '1070',
+        street_name: 'Neubaugasse',
+        house_number: 78,
+        postal_code_id: 7,
         city: 'Vienna',
         land: 'Austria'
     }
@@ -29,7 +30,7 @@ describe('User Models Test', function () {
             expect(result).to.have.property('insertId');
             user.id = result.insertId;
             done();
-        })
+        });
     });
 
     it('should find the newly created user by id', function (done) {
@@ -47,7 +48,7 @@ describe('User Models Test', function () {
             user.address_id = result.address_id;
             expect(result).to.have.property('username').which.is.equal(user.username);
             done();
-        })
+        });
     });
 
     it('should find the newly created user by username', function (done) {
@@ -64,17 +65,17 @@ describe('User Models Test', function () {
             expect(result).to.have.property('email').which.is.equal(user.email);
             expect(result).to.have.property('username').which.is.equal(user.username);
             done();
-        })
+        });
     });
     it('should list all users', function (done) {
-        model.getAllUsers(function (error, results) {
+        model.getUsers(null, function (error, results) {
             if (error) {
                 return done(error);
             }
             expect(results).to.be.an('array');
             expect(results.length).to.be.greaterThan(0);
             done();
-        })    
+        });
     });
     it('should update the newly created user', function (done) {
         user.first_name = 'Jimmy';
@@ -83,29 +84,18 @@ describe('User Models Test', function () {
             if (error) {
                 return done(error);
             }
-            model.getUserById(user.id, function (error, result) {
-                if (error) {
-                    return done(error);
-                }
-                expect(result).to.have.property('first_name').which.is.equal(user.first_name);
-                expect(result).to.have.property('last_name').which.is.equal(user.last_name);
-                done();
-            })
-        })
+            expect(result.affectedRows).to.be.greaterThan(0);
+            done();
+        });
     });
     it('should delete the newly created user', function (done) {
         model.deleteUserById(user.id, function (error, result) {
             if (error) {
                 return done(error);
             }
-            model.getUserById(user.id, function (error, result) {
-                if (error) {
-                    return done(error);
-                }
-                expect(result).to.be.undefined;
-                done();
-            })
-        })
+            expect(result.affectedRows).to.be.greaterThan(0);
+            done();
+        });
     });
 });
 

@@ -5,15 +5,16 @@ let landTest = require('./backend/components/land/land.test');
 let cityTest = require('./backend/components/city/city.test');  
 let postalCodeTest = require('./backend/components/postalCode/postal.code.test');  
 let currencyTest = require('./backend/components/currency/currency.test');
-//let roleTest = require('./backend/components/role/roleTest');
-//let userTest = require('./backend/components/user/userTest');
-//let houseTest = require('./backend/components/house/houseTest');
-//let houseStatusTest = require('./backend/components/houseStatus/houseStatusTest');
+let roleTest = require('./backend/components/role/role.test');
+let userTest = require('./backend/components/user/user.test');
+let houseTest = require('./backend/components/house/house.test');
+let houseStatusTest = require('./backend/components/houseStatus/house.status.test');
+let houseTypeTest = require('./backend/components/houseType/house.type.test');
 let bookmarkTest = require('./backend/components/bookmark/bookmark.test');
-//let tagTest = require('./backend/components/tag/tagTest');
+let tagTest = require('./backend/components/tag/tag.test');
 
 // Setup Test
-//let buildTest = require('./build/buildTest'); 
+let buildTest = require('./build/build.test'); 
 
 // Mailer Test
-//let mailerTest = require('./backend/components/mailer/mailerTest');
+//let mailerTest = require('./backend/components/mailer/mailer.test');

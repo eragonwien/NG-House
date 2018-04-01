@@ -2,6 +2,12 @@
 
 let model = require('./city.model');
 
+/**
+ * middleware for creating city
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
+ */
 function create(req, res, next) {
     model.createCity(req.body, function(error, result) {
         if (error) {
@@ -12,6 +18,12 @@ function create(req, res, next) {
     });
 }
 
+/**
+ * middleware for getting city
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
+ */
 function get(req, res, next) {
 
     if (req.params.ctid) {
@@ -36,6 +48,12 @@ function get(req, res, next) {
     
 }
 
+/**
+ * middleware for updating city
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
+ */
 function update(req, res, next) {
     model.updateCityById(req.params.ctid, req.body, function(error, result) {
         if (error) {
@@ -46,6 +64,12 @@ function update(req, res, next) {
     });
 }
 
+/**
+ * middleware for removing city
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
+ */
 function remove(req, res, next) {
     model.deleteCityById(req.params.ctid, function(error, result) {
         if (error) {

@@ -1,5 +1,10 @@
 let pool = require('../../config/db').pool;
 
+/**
+ * create role
+ * @param {object} role role
+ * @param {callback} done callback
+ */
 function createRole (role, done) {
     let cmd = 'INSERT INTO role(name) VALUES (?) ';
     cmd += 'ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id);';    
@@ -12,6 +17,11 @@ function createRole (role, done) {
     });
 }
 
+/**
+ * get roles
+ * @param {number} count query limit
+ * @param {callback} done callback
+ */
 function getRoles (count, done) {
     count = count ? count : 1000;
     let cmd = 'SELECT * FROM role LIMIT ' + count + ';';
@@ -24,6 +34,11 @@ function getRoles (count, done) {
     });
 }
 
+/**
+ * get role by id
+ * @param {number} id role id
+ * @param {callback} done callback
+ */
 function getRoleById (id, done) {
     let cmd = 'SELECT * FROM role WHERE id=?;';
     let params = [id];
@@ -35,6 +50,12 @@ function getRoleById (id, done) {
     });
 }
 
+/**
+ * update role by id
+ * @param {number} id role id
+ * @param {object} role updated role
+ * @param {callback} done callback
+ */
 function updateRoleById (id, role, done) {
     let cmd = 'UPDATE role SET name=? WHERE id=? LIMIT 1;';
     let params = [role.name, id];
@@ -46,6 +67,11 @@ function updateRoleById (id, role, done) {
     });
 }
 
+/**
+ * delete role by id
+ * @param {number} id role id
+ * @param {callback} done callback
+ */
 function deleteRoleById (id, done) {
     let cmd = 'DELETE FROM role WHERE id=?;';
     let params = [id];

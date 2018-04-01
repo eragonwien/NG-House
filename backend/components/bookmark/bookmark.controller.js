@@ -1,10 +1,10 @@
 let model = require('./bookmark.model');
 
 /**
- * create new bookmark
- * @param {object} req request
- * @param {object} res response
- * @param {callback} next callback
+ * middleware for creating bookmark
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function create (req, res, next) {
     model.createBookmark(req.body, function (error, result) {
@@ -16,10 +16,10 @@ function create (req, res, next) {
 }
 
 /**
- * get bookmark
- * @param {object} req request
- * @param {object} res response
- * @param {callback} next callback
+ * middleware for getting bookmarks
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function get (req, res, next) {
     if (req.params.bmid) {
@@ -47,10 +47,10 @@ function get (req, res, next) {
 }
 
 /**
- * update new bookmark
- * @param {object} req request
- * @param {object} res response
- * @param {callback} next callback
+ * middleware for updating bookmark
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function update (req, res, next) {
     model.updateBookmarkById(req.params.bmid, req.body, function (error, result) {
@@ -62,10 +62,10 @@ function update (req, res, next) {
 }
 
 /**
- * delete bookmark
- * @param {object} req request
- * @param {object} res response
- * @param {callback} next callback
+ * middleware for removing bookmark
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function remove (req, res, next) {
     model.deleteBookmarkById(req.params.bmid, function (error, result) {

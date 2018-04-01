@@ -13,8 +13,9 @@ describe('Houses Models Test', function () {
         bedrooms: 2,
         size: 40,
         user_id: 1,
-        address: 'Model House 1',
-        postal_code: '1234',
+        street_name: 'Model House',
+        house_number: 1,
+        postal_code_id: 12,
         city: 'Modelist',
         land: 'Mode Land',
         currency_id: 1,        
@@ -34,11 +35,28 @@ describe('Houses Models Test', function () {
         });
     });
     it('should list all houses', function (done) {
-        model.getAllHouses(function (error, result) {
+        model.getHouses(null, null, function (error, result) {
             if (error) {
                 return done(error);
             }
             expect(result).to.be.an('array');
+            done();
+        });
+    });
+    it('should search the correct houses', function (done) {
+        let query = {
+            bedrooms: house.bedrooms,
+            bathrooms: house.bathrooms
+        };
+        model.getHouses(null, query, function (error, results) {
+            if (error) {
+                return done(error);
+            }
+            expect(results).to.be.an('array');
+            // first pick
+            let firstResult = results[0];
+            expect(firstResult).to.have.property('bathrooms').which.is.equal(house.bathrooms);
+            expect(firstResult).to.have.property('bedrooms').which.is.equal(house.bedrooms);
             done();
         });
     });
@@ -91,8 +109,9 @@ describe('House Request Test', function () {
         bedrooms: 2,
         size: 40,
         user_id: 1,
-        address: 'Model House 1',
-        postal_code: '1234',
+        street_name: 'Model House',
+        house_number: 1,
+        postal_code_id: 12,
         city: 'Modelist',
         land: 'Mode Land',
         currency_id: 1,        
@@ -120,14 +139,33 @@ describe('House Request Test', function () {
                 done();
             });
     });
-    it('should get 5 houses per GET on /api/houses', function (done) {
-        let limit = 5;
+    it('should get all houses of specific trait per GET on /api/houses', function (done) {
+        let options = {
+            rooms: 5,
+            bathrooms: 1,
+            bedrooms: 2
+        }
         chai.request(app)
-            .get('/api/houses?limit=' + limit)
+            .get('/api/houses')
+            .end(function (error, results) {
+                expect(results).to.have.status(200);
+                expect(results.body).to.be.an('array');
+                expect(results.body).to.have.length.greaterThan(0);
+                let result = results.body[0];
+                expect(result.rooms >= options.rooms).to.be.true;
+                expect(result.bathrooms >= options.bathrooms).to.be.true;
+                expect(result.bedrooms >= options.bedrooms).to.be.true;
+                done();
+            });
+    });
+    it('should get 5 houses per GET on /api/houses', function (done) {
+        let count = 5;
+        chai.request(app)
+            .get('/api/houses?count=' + count)
             .end(function (error, result) {
                 expect(result).to.have.status(200);
                 expect(result.body).to.be.an('array');
-                expect(result.body.length <= limit).to.be.true;
+                expect(result.body.length <= count).to.be.true;
                 done();
             });
     });

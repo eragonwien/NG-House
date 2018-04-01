@@ -2,6 +2,12 @@
 
 let model = require('./postal.code.model');
 
+/**
+ * middleware for
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
+ */
 function create(req, res, next) {
     model.createPostalCode(req.body, function(error, result) {
         if (error) {
@@ -12,6 +18,12 @@ function create(req, res, next) {
     });
 }
 
+/**
+ * middleware for
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
+ */
 function get(req, res, next) {
 
     if (req.params.pcid) {
@@ -36,6 +48,12 @@ function get(req, res, next) {
     
 }
 
+/**
+ * middleware for
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
+ */
 function update(req, res, next) {
     model.updatePostalCodeById(req.params.pcid, req.body, function(error, result) {
         if (error) {
@@ -46,6 +64,12 @@ function update(req, res, next) {
     });
 }
 
+/**
+ * middleware for
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
+ */
 function remove(req, res, next) {
     model.deletePostalCodeById(req.params.pcid, function(error, result) {
         if (error) {

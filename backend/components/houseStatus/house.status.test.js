@@ -23,7 +23,7 @@ describe('House Status Model Test', function () {
         });
     });
     it('should get all house statuses', function (done) {
-        model.getAllHouseStatuses(function (error, result) {
+        model.getHouseStatuses(null, function (error, result) {
             if (error) {
                 return done(error);
             }

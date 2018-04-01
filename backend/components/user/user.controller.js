@@ -1,53 +1,45 @@
 let model = require('./user.model');
 let debug = require('debug')('user_controller');
+
 /**
- * get all users
- * @param {object} req request
- * @param {object} res response
- * @param {function} next callback function
+ * middleware for getting user
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function get (req, res, next) {
-    model.getAllUsers(function (error, results) {
-        if (error) {
-            return next(error);
+    if (req.params.uid) {
+        if (process.env.NODE_ENV != 'test') {
+            let user = req.session.user;
+            if (user.role != 'Admin' && user.id != req.params.uid) {
+                res.status(401).json({message: 'Access denied'});
+            }
         }
-        res.status(200).json(results);
-    });
-}
-
-/**
- * get user by id
- * @param {object} req request
- * @param {object} res response
- * @param {function} next callback function
- */
-function getUserById (req, res, next) {
-    // user cannot access user profile other than itself
-    // exception are admin and test mode
-    
-    if (process.env.NODE_ENV != 'test') {
-        let user = req.session.user;
-        if (user.role != 'Admin' && user.id != req.params.uid) {
-            res.status(401).json({message: 'Access denied'});
-        }
+        model.getUserById(req.params.uid, function (error, user) {
+            if (error) {
+                return next(error);
+            }
+            // remove password
+            if (user) {
+                delete user.password;
+            }
+            return res.status(200).json(user);
+        });
+    } else {
+        model.getUsers(req.query.count, function (error, results) {
+            if (error) {
+                return next(error);
+            }
+            res.status(200).json(results);
+        });
     }
-    model.getUserById(req.params.uid, function (error, user) {
-        if (error) {
-            return next(error);
-        }
-        // remove password
-        if (user) {
-            delete user.password;
-        }
-        return res.status(200).json(user);
-    });
 }
 
 /**
- * create new user
- * @param {object} req request
- * @param {object} res response
- * @param {function} next callback function
+ * middleware for creating user
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function create (req, res, next) {  
     model.createUser(req.body, function (error, result) {
@@ -59,10 +51,10 @@ function create (req, res, next) {
 }
 
 /**
- * update user by id
- * @param {object} req request
- * @param {object} res response
- * @param {function} next callback function
+ * middleware for updating user
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function update (req, res, next) {
     model.updateUserById(req.params.uid, req.body, function (error, result) {
@@ -73,11 +65,12 @@ function update (req, res, next) {
     });
 }
 
+
 /**
- * delete user by id
- * @param {object} req request
- * @param {object} res response
- * @param {function} next callback function
+ * middleware for removing user
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function remove (req, res, next) {
     model.deleteUserById(req.params.uid, function (error, result) {
@@ -90,22 +83,32 @@ function remove (req, res, next) {
 
 /* Authetication */
 
+
 /**
- * render the login page
- * @param {object} req request
- * @param {object} res response
- * @param {function} next callback function
+ * middleware for render login page
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function getLogin (req, res, next) {
     res.render('login');
 }
 
 /**
- * authenticats user
- * first checks if user exists, then validates password, returns status 401 if fails
- * @param {object} req request
- * @param {object} res response
- * @param {function} next callback function
+ * middleware for rendering the sign up page
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
+ */
+function getSignup (req, res, next) {
+    res.render('signup');
+}
+
+/**
+ * middleware for authenticating user
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function authenticate (req, res, next) {
     model.getUserByUsername(req.body.username, function (error, user) {
@@ -129,20 +132,10 @@ function authenticate (req, res, next) {
 }
 
 /**
- * show sign up page
- * @param {object} req request
- * @param {object} res response
- * @param {function} next callback function
- */
-function getSignup (req, res, next) {
-    res.render('signup');
-}
-
-/**
- * middleware for logout
- * @param {*} req request
- * @param {*} res response
- * @param {*} next callback
+ * middleware for logging out
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function logout(req, res, next) {
     req.session.destroy();
@@ -150,10 +143,10 @@ function logout(req, res, next) {
 }
 
 /**
- * middleware checking if user is logged in
- * @param {*} req request
- * @param {*} res response
- * @param {*} next callback
+ * middleware for checking user access
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function checkUser(req, res, next) {
     if (process.env.NODE_ENV == 'test') {
@@ -166,10 +159,10 @@ function checkUser(req, res, next) {
 }
 
 /**
- * middleware checking if user is an admin
- * @param {*} req request
- * @param {*} res response
- * @param {*} next callback
+ * middleware for checking admin access
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function checkAdmin(req, res, next) {
     if (process.env.NODE_ENV == 'test') {
@@ -184,4 +177,4 @@ function checkAdmin(req, res, next) {
     });
 }
 
-module.exports = {create, get, update, remove, authenticate, checkAdmin, checkUser, login, logout, getLogin, getSignup};
+module.exports = {create, get, update, remove, authenticate, checkAdmin, checkUser, getLogin, logout, getSignup};

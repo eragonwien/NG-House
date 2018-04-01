@@ -3,10 +3,10 @@
 let model = require('./address.model');
 
 /**
- * create new address
- * @param {object} req request
- * @param {object} res response
- * @param {routeCallback} next callback
+ * middleware for creating address
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function create (req, res, next) {
     model.createNewAddress(req.body, function (error, result) {
@@ -18,10 +18,10 @@ function create (req, res, next) {
 }
 
 /**
- * get addresses
- * @param {object} req request
- * @param {object} res response
- * @param {routeCallback} next callback
+ * middleware for getting address
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function get (req, res, next) {
     if (req.params.aid) {
@@ -43,10 +43,10 @@ function get (req, res, next) {
 }
 
 /**
- * update address
- * @param {object} req request
- * @param {object} res response
- * @param {routeCallback} next callback
+ * middleware for updating address
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function update (req, res, next) {
     model.updateAddressById(req.params.aid, req.body, function (error, result) {
@@ -58,10 +58,10 @@ function update (req, res, next) {
 }
 
 /**
- * delete address
- * @param {object} req request
- * @param {object} res response
- * @param {routeCallback} next callback
+ * middleware for removing address
+ * @param {object} req express request object
+ * @param {object} res express request object
+ * @param {function} next middleware function
  */
 function remove (req, res, next) {
     model.deleteAddressById(req.params.aid, function (error, result) {

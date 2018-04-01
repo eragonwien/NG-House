@@ -1,5 +1,6 @@
 let pool = require('../../config/db').pool;
 let addressModel = require('../address/address.model');
+let debug = require('debug')('house_model');
 
 /**
  * add a new house
@@ -12,20 +13,18 @@ function createHouse(house, done) {
 	}
 	// if no address id available, query for one first
 	let address = {
-		address: house.address,
-		postal_code: house.postal_code,
-		city: house.city,
-		land: house.land
-	}
+		street_name: house.street_name,
+		house_number: house.house_number,
+		postal_code_id: house.postal_code_id,
+	};
 	addressModel.createNewAddress(address, function (error, result) {
 		if (error) {
 			return done(error);
 		}
 		house.address_id = result.insertId;
 		insertHouse(house, done);
-	})
+	});
 }
-exports.createHouse = createHouse;
 
 /**
  * insert a new house
@@ -41,67 +40,36 @@ function insertHouse(house, done) {
 		}
 		done(null, result);
 	});
-};
-exports.insertHouse = insertHouse;
+}
 
 /**
  * get houses based on paramters
+ * @param {number} count query limit
  * @param {object} params parameter of query string
  * @param {function} done callback function
  */
-function getHouses(params, done) {
-	if (!params) {
-		return getAllHouses(done);
-	}
-	searchHouses(params, done);
-}
-exports.getHouses = getHouses;
-
-/**
- * get all houses
- * @param {function} done callback function
- */
-function getAllHouses(done) {
-	let cmd = 'SELECT * FROM get_houses;';
-	pool.query(cmd, null, function(error, results){
-		if (error) {
-			return done(error);
-		}
-		done(null, results);
-	});
-};
-exports.getAllHouses = getAllHouses;
-
-/**
- * search houses by parameters
- * @param {?object} params search parameters
- * @param {function} done callback function
- */
-function searchHouses(params, done) {
-	if (!params) {
-		return getAllHouses(done);
-	}
+function getHouses(count, queries, done) {
 	let cmd = 'SELECT * FROM get_houses ';
-
 	// create where clauses
-	let whereClause = getWhereClause(params);
-	if (whereClause.params.length > 0) {
+	let whereClause = getWhereClause(queries);
+	if (whereClause.clause) {
 		cmd += whereClause.clause;		
 	}
 	cmd += ' ORDER BY last_update DESC, id ASC ';
 
 	// set limit
-	if (params.limit) {
-		cmd += 'LIMIT ' + params.limit;
-	}
-	// close up
-	cmd += ';';
-	pool.query(cmd, whereClause.params, function(error, results){
+	count = count ? count : 1000;
+	cmd += 'LIMIT ' + count;
+
+	let query = pool.query(cmd, whereClause.params, function(error, results){
 		if (error) {
+			debug(error);
 			return done(error);
 		}
 		done(null, results);
 	});
+	debug(query.sql);
+	
 
 	/**
 	 * use parameters to create a where clause string
@@ -109,9 +77,16 @@ function searchHouses(params, done) {
 	 * @returns {object} object contains string and params
 	 */
 	function getWhereClause(params) {
+		let result = {
+			clause: null,
+			params: null
+		};
+		if (!params) {
+			return result;
+		}
 		let clauses = [];
 		let clausesParams = [];
-		let str = "WHERE ";
+		let str = "";
 		if (params.user_id) {
 			clauses.push('user_id=?');
 			clausesParams.push(params.user_id);
@@ -158,14 +133,14 @@ function searchHouses(params, done) {
 			}
 			str += clauses[i];
 		}
-		let result = {
-			clause: str,
-			params: clausesParams
+		if (clausesParams.length > 0) {
+			str = "WHERE " + str;
 		}
+		result.clause = str;
+		result.params = clausesParams;
 		return result;
 	}
 }
-exports.searchHouses = searchHouses;
 
 /**
  * get house by id
@@ -181,8 +156,7 @@ function getHouseById(id, done) {
 		}
 		done(null, results[0]);
 	});
-};
-exports.getHouseById = getHouseById;
+}
 
 /**
  * update house by id
@@ -193,11 +167,10 @@ exports.getHouseById = getHouseById;
 function updateHouseById(id, house, done) {
 	// get address id
 	let address = {
-		address: house.address,
-		postal_code: house.postal_code,
-		city: house.city,
-		land: house.land
-	}
+		street_name: house.street_name,
+		house_number: house.house_number,
+		postal_code_id: house.postal_code_id,
+	};
 	addressModel.createNewAddress(address, function (error, result) {
 		if (error) {
 			return done(error);
@@ -212,8 +185,7 @@ function updateHouseById(id, house, done) {
 			done(null, result);
 		});
 	});
-};
-exports.updateHouseById = updateHouseById;
+}
 
 /**
  * delete house by id
@@ -229,5 +201,6 @@ function deleteHouseById(id, done) {
 		}
 		done(null, result);
 	});
-};
-exports.deleteHouseById = deleteHouseById;
+}
+
+module.exports = {createHouse, getHouses, getHouseById, updateHouseById, deleteHouseById};

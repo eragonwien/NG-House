@@ -24,7 +24,7 @@ describe('Tag Model Test', function () {
         })
     });
     it('should get all tags', function (done) {
-        model.getAllTags(function (error, results) {
+        model.getTags(null, function (error, results) {
             if (error) {
                 return done(error);
             }
@@ -91,7 +91,7 @@ describe('Tag Request Test', function () {
                 done();
             });
     });
-    it('should get the created tag per GET on /api/tags/:cid', function (done) {
+    it('should get the created tag per GET on /api/tags/:tid', function (done) {
         chai.request(app)
             .get('/api/tags/' + tag.id)
             .end(function (error, result) {
@@ -102,7 +102,7 @@ describe('Tag Request Test', function () {
                 done();
             });
     });
-    it('should update the tag per PUT on /api/tags/:cid', function (done) {
+    it('should update the tag per PUT on /api/tags/:tid', function (done) {
         chai.request(app)
             .put('/api/tags/' + tag.id)
             .send(tag)
@@ -114,7 +114,7 @@ describe('Tag Request Test', function () {
                 done();
             });
     });
-    it('delete the created tag per DELETE on /api/tags/:cid', function (done) {
+    it('delete the created tag per DELETE on /api/tags/:tid', function (done) {
         chai.request(app)
             .delete('/api/tags/' + tag.id)
             .end(function (error, result) {

@@ -30,11 +30,11 @@ router.post('/login', user.authenticate);
 router.get('/logout', user.logout);
 
 // User
-router.post('/api/users', user.createUser);
-router.get('/api/users',checkAdmin, user.getAllUsers);
-router.get('/api/users/:uid',checkUser, user.getUserById);
-router.put('/api/users/:uid',checkUser, user.updateUserById);
-router.delete('/api/users/:uid',checkUser, user.deleteUserById);
+router.post('/api/users', user.create);
+router.get('/api/users',checkAdmin, user.get);
+router.get('/api/users/:uid',checkUser, user.get);
+router.put('/api/users/:uid',checkUser, user.update);
+router.delete('/api/users/:uid',checkUser, user.remove);
 
 router.get('/api/users/:uid/bookmarks',checkUser, bookmark.get);
 
@@ -74,25 +74,25 @@ router.put('/api/currencies/:cid',checkUser, currency.update);
 router.delete('/api/currencies/:cid',checkUser, currency.remove);
 
 // Role
-router.post('/api/roles',checkUser, role.createRole);
-router.get('/api/roles',checkUser, role.getAllRoles);
-router.get('/api/roles/:rid',checkUser, role.getRoleById);
-router.put('/api/roles/:rid',checkUser, role.updateRoleById);
-router.delete('/api/roles/:rid',checkUser, role.deleteRoleById);
+router.post('/api/roles',checkUser, role.create);
+router.get('/api/roles',checkUser, role.get);
+router.get('/api/roles/:rid',checkUser, role.get);
+router.put('/api/roles/:rid',checkUser, role.update);
+router.delete('/api/roles/:rid',checkUser, role.remove);
 
 // House
-router.post('/api/houses', house.createHouse);
-router.get('/api/houses', house.getHouses);
-router.get('/api/houses/:hid',checkUser, house.getHouseById);
-router.put('/api/houses/:hid',checkUser, house.updateHouseById);
-router.delete('/api/houses/:hid',checkUser, house.deleteHouseById);
+router.post('/api/houses', house.create);
+router.get('/api/houses', house.get);
+router.get('/api/houses/:hid',checkUser, house.get);
+router.put('/api/houses/:hid',checkUser, house.update);
+router.delete('/api/houses/:hid',checkUser, house.remove);
 
 // House Type
-router.post('/api/houseTypes', checkAdmin, houseType.createHouseType);
-router.get('/api/houseTypes', houseType.getAllHouseType);
-router.get('/api/houseTypes/:htid',checkUser, houseType.getHouseTypeById);
-router.put('/api/houseTypes/:htid',checkUser, houseType.updateHouseTypeById);
-router.delete('/api/houseTypes/:htid',checkUser, houseType.deleteHouseTypeById);
+router.post('/api/houseTypes', checkAdmin, houseType.create);
+router.get('/api/houseTypes', houseType.get);
+router.get('/api/houseTypes/:htid',checkUser, houseType.get);
+router.put('/api/houseTypes/:htid',checkUser, houseType.update);
+router.delete('/api/houseTypes/:htid',checkUser, houseType.remove);
 
 // House Status
 router.post('/api/houseStatuses',checkUser, houseStatus.create);
@@ -109,14 +109,14 @@ router.put('/api/bookmarks/:bmid',checkUser, bookmark.update);
 router.delete('/api/bookmarks/:bmid',checkUser, bookmark.remove);
 
 // Tag
-router.post('/api/tags',checkUser, tag.createTag);
-router.get('/api/tags', tag.getAllTags);
-router.get('/api/tags/:tid',checkUser, tag.getTagById);
-router.put('/api/tags/:tid',checkUser, tag.updateTagById);
-router.delete('/api/tags/:tid',checkUser, tag.deleteTagById);
+router.post('/api/tags',checkUser, tag.create);
+router.get('/api/tags', tag.get);
+router.get('/api/tags/:tid',checkUser, tag.get);
+router.put('/api/tags/:tid',checkUser, tag.update);
+router.delete('/api/tags/:tid',checkUser, tag.remove);
 
 // Mailer
-router.post('/mailer',checkUser, mailer.sendMail);
+router.post('/mailer',checkUser, mailer.send);
 
 // Test
 router.post('/test', checkAdmin, test.generateTest);

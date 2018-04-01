@@ -23,7 +23,7 @@ describe('Role Model Test', function () {
         });
     }); 
     it('should get all available roles', function (done) {
-        model.getAllRoles(function (error, result) {
+        model.getRoles(null, function (error, result) {
             if (error) {
                 return done(error);
             }

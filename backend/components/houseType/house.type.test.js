@@ -23,7 +23,7 @@ describe('House Type Model Test', function () {
         });
     });
     it('should get all house types', function (done) {
-        model.getAllHouseType(function (error, result) {
+        model.getHouseTypes(null, function (error, result) {
             if (error) {
                 return done(error);
             }
