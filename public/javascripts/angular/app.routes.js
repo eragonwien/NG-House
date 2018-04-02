@@ -63,6 +63,7 @@ function routing(stateProvider, urlRouterProvider) {
             }
         },
         resolve: {
+            regions: getRegions,
             user: getUser
         }
     }

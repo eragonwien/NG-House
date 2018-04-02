@@ -27,20 +27,16 @@
             <input class="validate" type="hidden" name="user.role_id" id="user.role_id" ng-init="createAdmin.user.role_id=2">
         </div>
         <div class="input-field col s12 m6">
-            <input class="validate" type="text" name="user.address" id="user.address" ng-model="createAdmin.user.address" required>
-            <label class="active" for="user.address">Address</label>
+            <input class="autocomplete" type="text" name="user.region" id="user.region" ng-model="createAdmin.user.region" required>
+            <label for="user.region">Postal code, city or region</label>
         </div>
-        <div class="input-field col s6 m3">
-            <input class="validate" type="text" name="user.postal_code" id="user.postal_code" ng-model="createAdmin.user.postal_code" required>
-            <label class="active" for="user.postal_code">Postal Code</label>
+        <div class="input-field col s10 m5">
+            <input class="validate" type="text" name="user.street_name" id="user.street_name" ng-model="createAdmin.user.street_name" required>
+            <label class="active" for="user.street_name">Street name</label>
         </div>
-        <div class="input-field col s6 m3">
-            <input class="validate" type="text" name="user.city" id="user.city" ng-model="createAdmin.user.city" required>
-            <label class="active" for="user.city">City</label>
-        </div>
-        <div class="input-field col s6 m6">
-            <input class="validate" type="text" name="user.land" id="user.land" ng-model="createAdmin.user.land" required>
-            <label class="active" for="user.land">Land</label>
+        <div class="input-field col s2 m1">
+            <input class="validate" type="number" name="user.house_number" id="user.house_number" ng-model="createAdmin.user.house_number" min="0" required>
+            <label class="active" for="user.house_number">Nr.</label>
         </div>
         <div class="col s12">
             <button type="submit" class="waves-effect waves-light btn blue darken-4" ng-click="createAdmin.createAdmin(createAdminForm)">Create</button>
