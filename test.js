@@ -14,7 +14,7 @@ let bookmarkTest = require('./backend/components/bookmark/bookmark.test');
 let tagTest = require('./backend/components/tag/tag.test');
 
 // Setup Test
-let buildTest = require('./build/build.test'); 
+//let buildTest = require('./build/build.test'); 
 
 // Mailer Test
 //let mailerTest = require('./backend/components/mailer/mailer.test');
