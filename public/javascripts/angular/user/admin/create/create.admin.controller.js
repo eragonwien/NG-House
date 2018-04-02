@@ -24,7 +24,12 @@ function createAdminController(user, regions, userService, appService) {
                 appService.alert('Admin created.');
                 return appService.moveTo();
             }
-            appService.alert(response.data);
+            if (response.status == 400) {
+                appService.alert(response.data.message);
+                return;
+            }
+            appService.alert(response.status + ' : ' + response.statusText);
+            console.log(response.data);
         }
     }
 }

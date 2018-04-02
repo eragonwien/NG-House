@@ -18,13 +18,17 @@ function signupController(regions, userService, appService) {
             appService.alert('Region required');
             return;
         }
-        vm.user.postal_code_id = getUserPostalCode(vm.user.region, regions);
+        vm.user.postal_code_id = appService.getUserPostalCode(vm.user.region, regions);
         userService.signup(vm.user).then(signupHandler);
 
         function signupHandler(response) {
             let status = response.status;
             if (status == 200) {
                 appService.moveTo('login');
+                return;
+            }
+            if (status == 400) {
+                appService.alert(response.data.message);
                 return;
             }
             appService.alert(response.status + ' : ' + response.statusText);

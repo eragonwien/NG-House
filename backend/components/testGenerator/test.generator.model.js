@@ -39,7 +39,7 @@ exports.startTest = startTest;
 function prepareAddresses(test, done) {    
     postalCodeModel.getPostalCodes(null, function (error, results) {
         let postalCodeIds = helper.filterValuesOfList(results, 'id');
-        spawnAddresses(test.count, postalCodeIds, 0, done); 
+        spawnAddresses(test.count, postalCodeIds, 0, null, done); 
     });
 }
 
@@ -48,17 +48,22 @@ function prepareAddresses(test, done) {
  * @param {number} count number of tries
  * @param {number[]} postalCodeIds list of postal code ids
  * @param {number} successCount success times
+ * @param {object[]} errors list of errors
  * @param {callback} done callback
  */
-function spawnAddresses(count, postalCodeIds, successCount, done) {
+function spawnAddresses(count, postalCodeIds, successCount, errors, done) {
     
     if (!successCount) {
         successCount = 0;
     }
+    if (!errors) {
+        errors = [];
+    }
     if (count <= 0) {
         let result = {
             success: (successCount > 0),
-            count: successCount
+            count: successCount,
+            errors: errors
         };
         return done(null, result);
     }
@@ -70,9 +75,12 @@ function spawnAddresses(count, postalCodeIds, successCount, done) {
     };
     // insert query
     addressModel.createNewAddress(address, function (error, result) {
+        if (error) {
+            errors.push(error);
+        }
         successCount = (error) ? successCount : successCount + 1;
         count--;
-        spawnAddresses(count, postalCodeIds, successCount, done);
+        spawnAddresses(count, postalCodeIds, successCount, errors, done);
     });
 }
 
@@ -82,7 +90,7 @@ function prepareBookmarks(test, done) {
     function promiseSuccess(values) {
         let userIds = values[0];
         let houseIds = values[1];
-        spawnBookmarks(test.count, userIds, houseIds, 0, done);
+        spawnBookmarks(test.count, userIds, houseIds, 0, null, done);
     }
 
     function promiseError(error) {
@@ -96,11 +104,15 @@ function prepareBookmarks(test, done) {
  * @param {number} count number of users to be generated
  * @param {string[]} userIds list of user ids
  * @param {string[]} houseIds list of house ids
- * @param {string[]} successCount number of successful query
+ * @param {number} successCount number of successful query
+ * @param {object[]} errors list of errors
  */
-function spawnBookmarks(count, userIds, houseIds, successCount, done) {
+function spawnBookmarks(count, userIds, houseIds, successCount, errors, done) {
     if (!successCount) {
         successCount = 0;
+    }
+    if (!errors) {
+        errors = [];
     }
     if (count <= 0) {
         let result = {
@@ -116,21 +128,24 @@ function spawnBookmarks(count, userIds, houseIds, successCount, done) {
     };
 
     bookmarkModel.createBookmark(bookmark, function (error, result) {
+        if (error) {
+            errors.push(error);
+        }
         successCount = (error) ? successCount : successCount + 1;
         count--;
-        spawnBookmarks(count, userIds, houseIds, successCount, done);
+        spawnBookmarks(count, userIds, houseIds, successCount, errors, done);
     });
 }
 
 function prepareHouses(test, done) {
-    Promise.all([helper.getHouses(), helper.getHouseTypes(), helper.getAddresses(), helper.getCurrencies()]).then(promiseSuccess).catch(promiseError)
+    Promise.all([helper.getUsers(), helper.getHouseTypes(), helper.getAddresses(), helper.getCurrencies()]).then(promiseSuccess).catch(promiseError)
 
     function promiseSuccess(values) {
-        let userIds = values[0]
+        let userIds = values[0];
         let houseTypeIds = values[1];
         let addressIds = values[2];
         let currencyIds = values[3];
-        spawnHouses(test.count, userIds, houseTypeIds, addressIds, currencyIds, 0, done);
+        spawnHouses(test.count, userIds, houseTypeIds, addressIds, currencyIds, 0, null, done);
     }
 
     function promiseError(error) {
@@ -152,14 +167,18 @@ function prepareHouses(test, done) {
  * size: min 20 - max. 1000, 1-2 bathrooms, 1-2 bedrooms
  * price = (2000 - 5000) * size
  */
-function spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCount, done) {
+function spawnHouses(count, userIds, houseTypeIds, addressIds, currencyIds, successCount, errors, done) {
     if (!successCount) {
         successCount = 0;
+    }
+    if (!errors) {
+        errors = [];
     }
     if (count <= 0) {
         let result = {
             success: (successCount > 0),
-            count: successCount
+            count: successCount,
+            errors: errors
         };
         return done(null, result);
     }
@@ -177,24 +196,32 @@ function spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCo
         size: size,
         user_id: userIds[helper.random(userIds.length)],
         address_id: addressIds[helper.random(addressIds.length)],
-        house_type_id: typeIds[helper.random(typeIds.length)],
+        house_type_id: houseTypeIds[helper.random(houseTypeIds.length)],
         house_status_id: 1, 
         currency_id: currencyIds[helper.random(currencyIds.length)],
     };
     houseModel.createHouse(house, function (error, result) {
+        if (error) {
+            errors.push(error);
+        }
         successCount = (error) ? successCount : successCount + 1;
         count--;
-        spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCount, done);
+        spawnHouses(count, userIds, houseTypeIds, addressIds, currencyIds, successCount, errors, done);
     });
 }
 
+/**
+ * prepare for generating tags
+ * @param {object} test test object
+ * @param {callback} done callback
+ */
 function prepareTags(test, done) {
     Promise.all([helper.getHouses(), helper.getTags()]).then(promiseSuccess).catch(promiseError)
 
     function promiseSuccess(values) {
         let houseIds = values[0];
         let tagIds = values[1];
-        spawnTags(test.count, houseIds, tagIds, 0, done);
+        spawnTags(test.count, houseIds, tagIds, 0, null, done);
     }
 
     function promiseError(error) {
@@ -202,9 +229,21 @@ function prepareTags(test, done) {
     }
 }
 
-function spawnTags(count, houseList, tagList, successCount, done) {
+/**
+ * generates tags
+ * @param {number} count number of tries
+ * @param {number[]} houseList list of house id
+ * @param {number[]} tagList list of tag id
+ * @param {number} successCount number of success
+ * @param {object[]} errors list of errors
+ * @param {callback} done callback
+ */
+function spawnTags(count, houseList, tagList, successCount, errors, done) {
     if (!successCount) {
         successCount = 0;
+    }
+    if (!errors) {
+        errors = [];
     }
     if (count <= 0) {
         let result = {
@@ -218,12 +257,20 @@ function spawnTags(count, houseList, tagList, successCount, done) {
         house_id: houseList[helper.random(houseList.length)]
     };
     tagModel.createHouseTag(houseTag, function (error, result) {
+        if (error) {
+            errors.push(error);
+        }
         successCount = (error) ? successCount : successCount + 1;
         count--;
-        spawnTags(count, houseList, tagList, successCount, done);
+        spawnTags(count, houseList, tagList, successCount, errors, done);
     });
 }
 
+/**
+ * prepares for generating users
+ * @param {object} test test object
+ * @param {callback} done callback
+ */
 function prepareUsers(test, done) {
     addressModel.getAddresses(null, function (error, results) {
         if (error) {
@@ -231,19 +278,24 @@ function prepareUsers(test, done) {
         } 
         // extract only the address id from the results
         let address_ids = helper.filterValuesOfList(results, 'id');
-        spawnUsers(test.count, address_ids, 0, done); 
+        spawnUsers(test.count, address_ids, 0, null, done); 
     });
 }
 
 /**
  * generate users
  * @param {number} count number of users to be generated
- * @param {string[]} addressList list of addresses
- * @param {string[]} successCount number of successful query
+ * @param {number[]} addressList list of addresses
+ * @param {number[]} successCount number of successful query
+ * @param {object[]} errors list of errors
+ * @param {callback} done callback
  */
-function spawnUsers(count, addressList, successCount, done) {
+function spawnUsers(count, addressList, successCount, errors, done) {
     if (!successCount) {
         successCount = 0;
+    }
+    if (!errors) {
+        errors = [];
     }
     if (count <= 0) {
         let result = {
@@ -268,8 +320,11 @@ function spawnUsers(count, addressList, successCount, done) {
     };
     // insert query
     userModel.createUser(user, function (error, result) {
+        if (error) {
+            errors.push(error);
+        }
         successCount = (error) ? successCount : successCount + 1;
         count--;
-        spawnUsers(count, addressList, successCount, done);
+        spawnUsers(count, addressList, successCount, errors, done);
     });
 }

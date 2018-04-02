@@ -16,6 +16,11 @@ function testController(appService, testService) {
         function sendTestHandler(response) {
             vm.loading = false;
             if (response.status == 200) {
+                if (response.data.errors) {
+                    response.data.errors.forEach(error => {
+                        console.error(error);
+                    });
+                }
                 return appService.alert(response.data.count + ' ' + test.type + 's created.');
             }
             appService.alert(response.status + ': ' + response.statusText);

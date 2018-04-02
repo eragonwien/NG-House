@@ -43,11 +43,30 @@ function get (req, res, next) {
  * @param {function} next middleware function
  */
 function create (req, res, next) {  
-    model.createUser(req.body, function (error, result) {
+    model.getUserByUsername(req.body.username, function (error, user) {
         if (error) {
             return next(error);
         }
-        res.status(200).json(result);
+        if (user) {
+            res.status(400).json({
+                message: 'This username is occupied.'
+            });
+            return;
+        }
+        model.getUserByEmail(req.body.email, function (error, user) {
+            if (user) {
+                res.status(400).json({
+                    message: 'This email address is occupied.'
+                });
+                return;
+            }
+            model.createUser(req.body, function (error, result) {
+                if (error) {
+                    return next(error);
+                }
+                res.status(200).json(result);
+            });
+        });
     });
 }
 

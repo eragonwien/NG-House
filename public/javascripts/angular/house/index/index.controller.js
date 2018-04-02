@@ -18,6 +18,9 @@ function indexController(user, houses, message, houseService, userService, curre
         getBookmarksOfHouses();   
     }
 
+    /**
+     * change app to create house
+     */
     function createHouse() {
         if (!vm.user) {
             appService.alert('Please login first!');
@@ -26,13 +29,21 @@ function indexController(user, houses, message, houseService, userService, curre
         appService.moveTo('createHouse');
     }
 
+    /**
+     * add the house to focus for email sending
+     * @param {object} house house
+     */
     function contact(house) {
         vm.agent = {
             username: house.username,
             email: house.email
-        }
+        };
     }
 
+    /**
+     * send email to the receiver
+     * @param {object} receiver 
+     */
     function sendMail(receiver) {
         if (!vm.agent.message) {
             appService.alert('Empty message cannot be sent.');
@@ -40,11 +51,11 @@ function indexController(user, houses, message, houseService, userService, curre
         }
         appService.alert('Sending...');
         let sender = vm.user.email;
-        let receiver = 'eragonwien@gmail.com'; // redirect email to dev instead
+        let redirectAddress = 'eragonwien@gmail.com'; // redirect email to dev instead
         let text = getText(sender, receiver, vm.agent.message.content);
         let params = {
             sender: sender,
-            receiver: receiver, 
+            receiver: redirectAddress, 
             subject: vm.agent.message.subject,
             text: text
         }
@@ -58,15 +69,25 @@ function indexController(user, houses, message, houseService, userService, curre
         }
     }
 
+    /**
+     * create a generic email message 
+     * @param {string} sender address of sender
+     * @param {string} receiver address of receiver
+     * @param {string} text content of the email
+     */
     function getText(sender, receiver, text) {
         let result = 'Redirect info: \n';
         result += 'From: ' + sender + '\n';
-        result += 'To: ' + receiver + '\n';
+        result += 'To: ' + receiver.email + ' of ' + receiver.username + '\n';
         result += '**********************\n';
         result += text + '\n';
         return result;
     }
 
+    /**
+     * add or remove the house from bookmark
+     * @param {object} house house
+     */
     function bookmark(house) {
         if (house.bookmark) {
             return addBookmark(house);
@@ -74,6 +95,10 @@ function indexController(user, houses, message, houseService, userService, curre
         removeBookmark(house);
     }
 
+    /**
+     * add this house to bookmark
+     * @param {object} house house
+     */
     function addBookmark(house) {
         let data = {
             user_id: vm.user.id,
@@ -90,6 +115,10 @@ function indexController(user, houses, message, houseService, userService, curre
         }
     }
 
+    /**
+     * remove bookmark of the specific house
+     * @param {object} house house
+     */
     function removeBookmark(house) {
         bookmarkService.deleteBookmarkById(house.bookmark_id).then(deleteBookmarkHandler);
 
@@ -102,6 +131,10 @@ function indexController(user, houses, message, houseService, userService, curre
         }
     }
 
+    /**
+     * get all bookmarks of the user
+     * then add these bookmarks to the current houses
+     */
     function getBookmarksOfHouses() {
         getBookmarksOfUser(user).then(getBookmarksOfHousesHandler);
 
@@ -121,6 +154,10 @@ function indexController(user, houses, message, houseService, userService, curre
         }
     }
 
+    /**
+     * get all bookmarks of the user
+     * @param {object} user user object
+     */
     function getBookmarksOfUser(user) {
         return bookmarkService.getBookmarksByUser(user.id).then(getBookmarksOfUserHandler);
 

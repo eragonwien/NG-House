@@ -144,7 +144,7 @@ function updateUserById (id, user, done) {
                 return done(error);
             }
             user.address_id = result.insertId;
-            
+            executeUpdateUser(id, user, done);
         });
     });
 }
