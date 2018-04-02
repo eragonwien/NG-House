@@ -42,7 +42,8 @@ function routing(stateProvider, urlRouterProvider) {
             }
         },
         resolve: {
-            user: getUser
+            user: getUser,
+            regions: getRegions
         }
     }
 
@@ -121,6 +122,7 @@ function routing(stateProvider, urlRouterProvider) {
             }
         },
         resolve: {
+            regions: getRegions,
             houses: getHouses,
             user: getUser
         }
@@ -142,6 +144,7 @@ function routing(stateProvider, urlRouterProvider) {
             }
         },
         resolve: {
+            regions: getRegions,
             currencies: getCurrencies,
             houseTypes: getHouseTypes,
             user: getUser
@@ -187,7 +190,7 @@ function routing(stateProvider, urlRouterProvider) {
             }
         },
         resolve: {
-            addresses: getAddresses,
+            regions: getRegions,
             houseTypes: getHouseTypes,
             currencies: getCurrencies,
             user: getUser
@@ -256,6 +259,19 @@ function getAddresses(addressService) {
 getAddresses.$inject = ['addressService'];
 
 /**
+ * get regions
+ * @param {*} addressService address service
+ */
+function getRegions(addressService) {
+    return addressService.getRegions().then(getRegionsHandler);
+
+    function getRegionsHandler(response) {
+        return response.data;
+    }
+}
+getAddresses.$inject = ['addressService'];
+
+/**
  * get bookmarks
  * @param {*} bookmarkService address service
  */
@@ -274,7 +290,7 @@ getBookmarks.$inject = ['bookmarkService'];
  */
 function getHouses(houseService) {
     let params = {
-        limit: 9
+        count: 9
     };
     return houseService.getHouses(params).then(getHousesHandler);
 
