@@ -84,3 +84,17 @@ from
 
 select * from get_bookmarks;
 
+# get postal codes
+
+CREATE OR REPLACE VIEW get_postal_codes AS
+SELECT 
+	postal_code.id as id, postal_code.code as postal_code_code, postal_code.name as postal_code_name,
+    city.id as city_id, city.name as city_name,
+    land.id as land_id, land.name as land_name
+FROM
+	postal_code
+    INNER JOIN city on city.id = postal_code.city_id
+    INNER JOIN land on land.id = postal_code.land_id;
+    
+select * from get_postal_codes;
+
