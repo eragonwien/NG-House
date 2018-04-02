@@ -5,7 +5,7 @@
 <div class="row" ng-if="profile.user">
     <div class="col s12"><h3>Profile of {{::profile.user.first_name}} {{::profile.user.last_name}}</h3></div>
 </div>
-<div ng-if="profile.user && !profile.editing">
+<div ng-show="profile.user && !profile.editing">
     <div class="fixed-action-btn">
         <button class="btn-floating btn-large green" ng-click="profile.editing = true" ng-if="!profile.editing">
             <i class="large material-icons">mode_edit</i>
@@ -24,7 +24,7 @@
                         <div class="col s5 m3"><strong>Email</strong></div>
                         <div class="col s7 m9">{{::profile.user.email}}</div>
                         <div class="col s5 m3"><strong>Address</strong></div>
-                        <div class="col s7 m9">{{::profile.user.address}}</div>
+                        <div class="col s7 m9">{{::profile.user.street_name}} {{::profile.user.house_number}}</div>
                         <div class="col s7 offset-s5 m9 offset-m3">{{::profile.user.postal_code}} {{::profile.user.city}}, {{::profile.user.land}}</div>
                         <div class="col s5 m3"><strong>Role</strong></div>
                         <div class="col s7 m9">{{::profile.user.role}}</div>
@@ -36,7 +36,7 @@
         </div>
     </div>
 </div>
-<div ng-if="profile.user && profile.editing">
+<div ng-show="profile.user && profile.editing">
     <form name="profileForm" method="post">
         <div class="row">
             <div class="input-field col s12 m6">
@@ -62,21 +62,18 @@
             <div class="input-field">
                 <input class="validate" type="hidden" name="user.role_id" id="user.role_id" ng-init="profile.user.role_id=1">
             </div>
-            <div class="input-field col s12 m6">
-                <input class="validate" type="text" name="user.address" id="user.address" ng-model="profile.user.address" required>
-                <label class="active" for="user.address">Address</label>
+            <div class="input-field col s10 m5">
+                <input class="validate" type="text" name="user.street_name" id="user.street_name" ng-model="profile.user.street_name" required>
+                <label class="active" for="user.street_name">Street name</label>
             </div>
-            <div class="input-field col s6 m3">
-                <input class="validate" type="text" name="user.postal_code" id="user.postal_code" ng-model="profile.user.postal_code" required>
-                <label class="active" for="user.postal_code">Postal Code</label>
+            <div class="input-field col s2 m1">
+                <input class="validate" type="text" name="user.house_number" id="user.house_number" ng-model="profile.user.house_number" required>
+                <label class="active" for="user.house_number">Nr.</label>
             </div>
-            <div class="input-field col s6 m3">
-                <input class="validate" type="text" name="user.city" id="user.city" ng-model="profile.user.city" required>
-                <label class="active" for="user.city">City</label>
-            </div>
-            <div class="input-field col s6 m6">
-                <input class="validate" type="text" name="user.land" id="user.land" ng-model="profile.user.land" required>
-                <label class="active" for="user.land">Land</label>
+            <div class="input-field col s12">
+                <input class="autocomplete" type="text" name="user.region" id="user.region" 
+                    ng-model="profile.user.region" ng-init="profile.user.region = profile.user.postal_code + ', ' + profile.user.city + ', ' + profile.user.land">
+                <label class="active" for="user.region">Region</label>
             </div>
             <div class="fixed-action-btn">
                 <button class="btn-floating btn-large green" ng-click="profile.save(profileForm)">
@@ -86,7 +83,7 @@
         </div>
     </form>
 </div>
-<div ng-if="profile.user && !profile.editing">
+<div ng-show="profile.user && !profile.editing">
     <ul class="collapsible" data-collapsible="accordion">
         <li>
             <div class="collapsible-header"><i class="material-icons left">local_offer</i>Your offers</div>
@@ -128,7 +125,7 @@
         });
     </script>
 </div>
-<div ng-if="profile.user && !profile.editing">
+<div ng-show="profile.user && !profile.editing">
     <ul class="collapsible" data-collapsible="accordion">
         <li>
             <div class="collapsible-header"><i class="material-icons left">bookmark</i>Your bookmarks</div>

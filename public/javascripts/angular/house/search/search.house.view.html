@@ -92,16 +92,16 @@
             </div>
             <div class="card-content">
                 <span class="card-title activator">
-                    {{result.house_type}} in {{ result.address }}
+                    {{result.house_type}} in {{ result.street_name }} {{ result.house_number }}
                 </span>
                 <div class="chip green white-text waves-effect waves-light" ng-if="result.house_status == 'Active'">For Sale</div>
                 <div class="chip red white-text waves-effect waves-light" ng-if="result.house_status == 'Inactive'">{{result.house_status}}</div>
             </div>
             <div class="card-reveal">
-                <span class="card-title">{{ result.address }}<i class="material-icons right">close</i></span>
+                <span class="card-title">{{ result.street_name }} {{ result.house_number }}<i class="material-icons right">close</i></span>
                 <p><strong>Owner:</strong> {{result.first_name}} {{result.last_name}}</p>
                 <p><strong>Price:</strong>  {{result.price | currency : result.currency + " " : 2}} </p>
-                <p><strong>Address:</strong> {{result.address}}, {{result.postal_code}} {{result.city}}, {{result.land}}</p>
+                <p><strong>Address:</strong> {{ result.street_name }} {{ result.house_number }}, {{result.postal_code}} {{result.city}}, {{result.land}}</p>
                 <p><strong>Details:</strong> {{result.house_type}}, {{result.rooms}}, {{result.bathrooms}} bathrooms, {{result.bedrooms}} bedrooms, {{result.size}} m&sup2;</p>
                 <div class="card-action blue darken-4">
                     <a class="modal-trigger left" href="" data-target="contactAgentModal" ng-click="searchHouse.contact(house)">
@@ -125,3 +125,4 @@
         $('select').formSelect();
     });
 </script>
+<pre>{{searchHouse.house | json}}</pre>

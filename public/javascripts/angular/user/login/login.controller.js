@@ -7,7 +7,6 @@ function loginController(user, userService, appService) {
     let vm = this;
     vm.loginMode = true;
     vm.login = login;
-    vm.signup = signup;
     
     if (user) {
         return appService.moveTo();
@@ -27,25 +26,12 @@ function loginController(user, userService, appService) {
                 appService.moveTo();
                 return;
             }
-            console.log(response);
-            appService.alert(response);
-        }
-    }
-
-    function signup(form) {
-        if (!validateForm(form)) {
-            appService.alert('Form invalid');
-            return;
-        }
-        userService.signup(vm.user).then(signupHandler);
-
-        function signupHandler(response) {
-            let status = response.status;
-            if (status == 200) {
-                vm.loginMode = true;
+            if (status == 401) {
+                appService.alert(response.data);
                 return;
             }
-            appService.alert(response)
+            appService.alert(response.status + ' : ' + response.statusText);
+            console.log(response.data);
         }
     }
 

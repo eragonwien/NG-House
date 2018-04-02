@@ -2,8 +2,8 @@ angular
     .module('house')
     .controller('searchHouseController', searchHouseController);
 
-searchHouseController.$inject = ['user', 'houseTypes', 'currencies', 'addresses', 'appService', 'houseService', 'userService']
-function searchHouseController(user, houseTypes, currencies, addresses, appService, houseService, userService) {
+searchHouseController.$inject = ['user', 'houseTypes', 'currencies', 'regions', 'appService', 'houseService', 'userService']
+function searchHouseController(user, houseTypes, currencies, regions, appService, houseService, userService) {
     let vm = this;
     vm.user = user;
     vm.houseTypes = houseTypes;
@@ -17,29 +17,33 @@ function searchHouseController(user, houseTypes, currencies, addresses, appServi
      * @param {object} house search house
      */
     function submit(house) {
-        let hasAddress = splitAddress(house);
-        if (!hasAddress) {
+        if (!house.address) {
             return appService.alert('Address required');
         }
+        splitAddress(house.address);
         houseService.getHouses(house).then(getHousesHandler);
         vm.searchMode = false;
         vm.loading = true;
 
         function getHousesHandler(response) {
-            vm.results = response.data;
-            vm.loading = false;
+            vm.loading = false;            
+            if (response.status === 200) {
+                vm.results = response.data;
+                return;
+            }
+            appService.alert(response.status + ': ' + response.statusText);
         }
     }
 
-    function splitAddress(house) {
-        if (!house.address) {
-            return false;
-        }
-        let address = house.address.split(',');
-        house.city = address[0];
-        house.land = address[1];
-        delete house.address;
-        return true;
+    /**
+    * splits address text and assigns values to house object
+    * @param {string} address address text
+    */
+    function splitAddress(address) {
+        let str = address.split(', ');
+        vm.house.postal_code = str[0];
+        vm.house.city = str[1];
+        vm.house.land = str[2];
     }
 
     function resetFilter() {
@@ -63,7 +67,7 @@ function searchHouseController(user, houseTypes, currencies, addresses, appServi
     }
 
     function initAutocomplete() {
-        let results = filterAddresses(addresses);
+        let results = filterRegions(regions);
         let elem = document.querySelector('.autocomplete');
         let options = {
             data: results
@@ -71,14 +75,16 @@ function searchHouseController(user, houseTypes, currencies, addresses, appServi
         let instance = M.Autocomplete.init(elem, options);
 
 
-        function filterAddresses(addresses) {
+        function filterRegions(regions) {
             let results = {};
-            for (let i = 0; i < addresses.length; i++) {
-                let address = addresses[i];
-                let key =  address.city + ',' + address.land;
+            for (let i = 0; i < regions.length; i++) {
+                let region = regions[i];
+                let key =  region.postal_code_code + ', ' + region.city_name + ', ' + region.land_name;
                 results[key] = null;
             }
             return results;
         }
     }
+
+    
 }

@@ -46,21 +46,17 @@
             <input class="validate" type="number" min="0" name="house.bedrooms" id="house.bedrooms" ng-model="createHouse.newHouse.bedrooms" required>
             <label class="active" for="house.bedrooms">Bedrooms</label>
         </div>
+        <div class="input-field col s10 m5">
+            <input class="validate" type="text" name="house.street_name" id="house.street_name" ng-model="createHouse.newHouse.street_name" required>
+            <label class="active" for="house.street_name">Street name</label>
+        </div>
+        <div class="input-field col s2 m1">
+            <input class="validate" type="text" name="house.house_number" id="house.house_number" ng-model="createHouse.newHouse.house_number" required>
+            <label class="active" for="house.house_number">Nr.</label>
+        </div>
         <div class="input-field col s12 m6">
-            <input class="validate" type="text" name="house.address" id="house.address" ng-model="createHouse.newHouse.address" required>
-            <label class="active" for="house.address">Address</label>
-        </div>
-        <div class="input-field col s4 m2">
-            <input class="validate" type="text" name="house.postal_code" id="house.postal_code" ng-model="createHouse.newHouse.postal_code" required>
-            <label class="active" for="house.postal_code">Postal Code</label>
-        </div>
-        <div class="input-field col s4 m2">
-            <input class="validate" type="text" name="house.city" id="house.city" ng-model="createHouse.newHouse.city" required>
-            <label class="active" for="house.city">City</label>
-        </div>
-        <div class="input-field col s4 m2">
-            <input class="validate" type="text" name="house.land" id="house.land" ng-model="createHouse.newHouse.land" required>
-            <label class="active" for="house.land">Land</label>
+            <input class="autocomplete" type="text" name="newHouse.region" id="newHouse.region" ng-model="createHouse.newHouse.region">
+            <label class="active" for="newHouse.region">Region</label>
         </div>
         <div class="fixed-action-btn">
             <button type="submit" class="btn-floating btn-large green" ng-click="createHouse.submit(houseAddingForm)">
@@ -68,6 +64,7 @@
             </button>
         </div>
     </div>
+    <pre>{{createHouse.newHouse | json}}</pre>
 </form>
 <script>
     $(document).ready(function() {
