@@ -13,6 +13,7 @@ function get (req, res, next) {
             let user = req.session.user;
             if (user.role != 'Admin' && user.id != req.params.uid) {
                 res.status(401).json({message: 'Access denied'});
+                return;
             }
         }
         model.getUserById(req.params.uid, function (error, user) {

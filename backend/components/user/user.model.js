@@ -123,22 +123,35 @@ exports.createUser = createUser;
  */
 function updateUserById (id, user, done) {
     let cmd = 'UPDATE user SET first_name=?, last_name=?, address_id=?, role_id=?, password=? WHERE id=?;';
-
-    // hashes user password
-    let salt = (process.env.SALT) ? process.env.SALT : 10; // set salt default is 10
-    bcrypt.hash(user.password, salt, function (error, hashedPassword) {
-        if (error) {
-            return done(error);
-        }
-        user.password = hashedPassword;
-        let params = [user.first_name, user.last_name, user.address_id, user.role_id, user.password, id];
-        pool.query(cmd, params, function (error, result) {
+    // check if address id exists
+    if (!user.address_id) {
+        let address = {
+            street_name: user.street_name,
+            house_number: user.house_number,
+            postal_code_id: user.postal_code_id
+        };
+        addressModel.createNewAddress(address, function (error, result) {
             if (error) {
                 return done(error);
             }
-            done(null, result);
+            user.address_id = result.insertId;
+            // hashes user password
+            let salt = (process.env.SALT) ? process.env.SALT : 10; // set salt default is 10
+            bcrypt.hash(user.password, salt, function (error, hashedPassword) {
+                if (error) {
+                    return done(error);
+                }
+                user.password = hashedPassword;
+                let params = [user.first_name, user.last_name, user.address_id, user.role_id, user.password, id];
+                pool.query(cmd, params, function (error, result) {
+                    if (error) {
+                        return done(error);
+                    }
+                    done(null, result);
+                });
+            });
         });
-    });
+    }
 }
 exports.updateUserById = updateUserById;
 
