@@ -8,6 +8,7 @@
  */
 
 let pool = require('../../config/db').pool;
+let debug = require('debug')('postal_code_model');
 
 /**
  * add a new postal_code and returns a new id
@@ -35,7 +36,7 @@ function getPostalCodes(count, done) {
     if (!count) {
         count = 1000;
     }
-    let cmd = 'SELECT * FROM postal_code LIMIT ' + count + ';';
+    let cmd = 'SELECT * FROM get_postal_codes LIMIT ' + count + ';';
     pool.query(cmd, null, function (error, result) {
         if (error) {
             return done(error);
@@ -50,8 +51,26 @@ function getPostalCodes(count, done) {
  * @param {queryCallback} done callback
  */
 function getPostalCodeById(id, done) {
-    let cmd = 'SELECT * FROM postal_code WHERE id=? LIMIT 1;';
+    let cmd = 'SELECT * FROM get_postal_codes WHERE id=? LIMIT 1;';
     let params = [id];
+    let query = pool.query(cmd, params, function (error, result) {
+        if (error) {
+            return done(error);
+        }
+        done(null, result[0]);
+    });
+}
+
+/**
+ * get postal code by code, city and land names
+ * @param {number} code postal code
+ * @param {string} city city name
+ * @param {string} land land name
+ * @param {queryCallback} done callback
+ */
+function getPostalCodeByAddress(address, done) {
+    let cmd = 'SELECT * FROM get_postal_codes WHERE postal_code_code=? AND city_name=? AND land_name=? LIMIT 1;';
+    let params = [address.postal_code_code, address.city_name, address.land_name];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);
@@ -94,4 +113,4 @@ function deletePostalCodeById(id, done) {
 }
 
 
-module.exports = {createPostalCode, getPostalCodes, getPostalCodeById, updatePostalCodeById, deletePostalCodeById};
+module.exports = {createPostalCode, getPostalCodes, getPostalCodeById, getPostalCodeByAddress, updatePostalCodeById, deletePostalCodeById};

@@ -35,6 +35,15 @@ function get(req, res, next) {
             res.status(200).json(result);
             return;
         });
+    } else if (req.query.postal_code_code && req.query.city_name && req.query.land_name) {
+        model.getPostalCodeByAddress(req.query, function(error, result) {
+            if (error) {
+                next(error);
+                return;
+            }
+            res.status(200).json(result);
+            return;
+        });
     } else {
         model.getPostalCodes(req.query.count, function(error, result) {
             if (error) {
