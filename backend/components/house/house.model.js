@@ -63,12 +63,10 @@ function getHouses(count, queries, done) {
 
 	let query = pool.query(cmd, whereClause.params, function(error, results){
 		if (error) {
-			debug(error);
 			return done(error);
 		}
 		done(null, results);
 	});
-	debug(query.sql);
 	
 
 	/**
@@ -87,42 +85,57 @@ function getHouses(count, queries, done) {
 		let clauses = [];
 		let clausesParams = [];
 		let str = "";
+		// owner
 		if (params.user_id) {
 			clauses.push('user_id=?');
 			clausesParams.push(params.user_id);
 		}
+		// postal code
+		if (params.postal_code) {
+			clauses.push('postal_code=?');
+			clausesParams.push(params.postal_code);
+		}
+		// city
 		if (params.city) {
 			clauses.push('city=?');
 			clausesParams.push(params.city);
 		}
+		// land
 		if (params.land) {
 			clauses.push('land=?');
 			clausesParams.push(params.land);			
 		}
-		if (params.minSize) {
-			clauses.push('size>=?');
-			clausesParams.push(params.minSize);			
-		}
+		// max price
 		if (params.maxPrice) {
 			clauses.push('price<=?');
 			clausesParams.push(params.maxPrice);		
 		}
+		// currency id
 		if (params.currency_id) {
 			clauses.push('currency_id=?');
 			clausesParams.push(params.currency_id);			
 		}
+		// house type
 		if (params.house_type_id) {
 			clauses.push('house_type_id=?');
 			clausesParams.push(params.house_type_id);			
 		}
+		// min size
+		if (params.minSize) {
+			clauses.push('size>=?');
+			clausesParams.push(params.minSize);			
+		}
+		// rooms
 		if (params.rooms) {
 			clauses.push('rooms >= ?');
 			clausesParams.push(params.rooms);						
 		}
+		// bathrooms
 		if (params.bathrooms) {
 			clauses.push('bathrooms >= ?');
 			clausesParams.push(params.bathrooms);						
 		}
+		// bedrooms
 		if (params.bedrooms) {
 			clauses.push('bedrooms >= ?');
 			clausesParams.push(params.bedrooms);			
