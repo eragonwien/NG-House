@@ -46,21 +46,18 @@
             <input class="validate" type="number" min="0" name="house.bedrooms" id="house.bedrooms" ng-model="editHouse.editHouse.bedrooms" required>
             <label class="active" for="house.bedrooms">Bedrooms</label>
         </div>
+        <div class="input-field col s10 m5">
+            <input class="validate" type="text" name="house.street_name" id="house.street_name" ng-model="editHouse.editHouse.street_name" required>
+            <label class="active" for="house.street_name">Street name</label>
+        </div>
+        <div class="input-field col s2 m1">
+            <input class="validate" type="text" name="house.house_number" id="house.house_number" ng-model="editHouse.editHouse.house_number" required>
+            <label class="active" for="house.house_number">Nr.</label>
+        </div>
         <div class="input-field col s12 m6">
-            <input class="validate" type="text" name="house.address" id="house.address" ng-model="editHouse.editHouse.address" required>
-            <label class="active" for="house.address">Address</label>
-        </div>
-        <div class="input-field col s4 m2">
-            <input class="validate" type="text" name="house.postal_code" id="house.postal_code" ng-model="editHouse.editHouse.postal_code" required>
-            <label class="active" for="house.postal_code">Postal Code</label>
-        </div>
-        <div class="input-field col s4 m2">
-            <input class="validate" type="text" name="house.city" id="house.city" ng-model="editHouse.editHouse.city" required>
-            <label class="active" for="house.city">City</label>
-        </div>
-        <div class="input-field col s4 m2">
-            <input class="validate" type="text" name="house.land" id="house.land" ng-model="editHouse.editHouse.land" required>
-            <label class="active" for="house.land">Land</label>
+            <input class="autocomplete" type="text" name="editHouse.region" id="editHouse.region" 
+                ng-model="editHouse.editHouse.region" ng-init="editHouse.editHouse.region = editHouse.editHouse.postal_code + ', ' + editHouse.editHouse.city + ', ' + editHouse.editHouse.land">
+            <label class="active" for="editHouse.region">Region</label>
         </div>
         <div class="col s12">
             <button class="btn waves-effect waves-light blue darken-4" ng-click="editHouse.submit(houseEditingForm)">save changes<i class="material-icons left">save</i></button>

@@ -18,18 +18,18 @@ function profileController(user, regions, userService, appService, houseService,
 
     getOffers();
     getBookmarksOfUser(user);
-    initAutocomplete();
+    appService.initRegionAutocomplete(regions);
 
     function save(form) {
         if (!form.$valid) {
             vm.message = "Invalid Form";
             return;
         }
-        if (!user.region) {
+        if (!vm.user.region) {
             appService.alert('Region required');
             return;
         }
-        setUserPostalCode(user.region);
+        vm.user.postal_code_id = appService.getUserPostalCode(vm.user.region, regions);
         delete user.address_id;
         userService.update(vm.user).then(updateHandler);
         

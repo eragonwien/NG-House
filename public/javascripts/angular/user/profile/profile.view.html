@@ -3,7 +3,7 @@
     <p>User's profile cannot be loaded. Click this <a href="" ui-sref="index">link</a> to return to the main page</p>
 </div>
 <div class="row" ng-if="profile.user">
-    <div class="col s12"><h3>Profile of {{::profile.user.first_name}} {{::profile.user.last_name}}</h3></div>
+    <div class="col s12"><h3>Profile of {{profile.user.first_name}} {{profile.user.last_name}}</h3></div>
 </div>
 <div ng-show="profile.user && !profile.editing">
     <div class="fixed-action-btn">
@@ -18,18 +18,18 @@
                     <div class="row">
                         <div class="col s12"><span class="card-title">Personal Information</span></div>
                         <div class="col s5 m3"><strong>Name</strong></div>
-                        <div class="col s7 m9">{{::profile.user.first_name}} {{::profile.user.last_name}}</div>
+                        <div class="col s7 m9">{{profile.user.first_name}} {{profile.user.last_name}}</div>
                         <div class="col s5 m3"><strong>Username</strong></div>
-                        <div class="col s7 m9">{{::profile.user.username}}</div>
+                        <div class="col s7 m9">{{profile.user.username}}</div>
                         <div class="col s5 m3"><strong>Email</strong></div>
-                        <div class="col s7 m9">{{::profile.user.email}}</div>
+                        <div class="col s7 m9">{{profile.user.email}}</div>
                         <div class="col s5 m3"><strong>Address</strong></div>
-                        <div class="col s7 m9">{{::profile.user.street_name}} {{::profile.user.house_number}}</div>
-                        <div class="col s7 offset-s5 m9 offset-m3">{{::profile.user.postal_code}} {{::profile.user.city}}, {{::profile.user.land}}</div>
+                        <div class="col s7 m9">{{profile.user.street_name}} {{profile.user.house_number}}</div>
+                        <div class="col s7 offset-s5 m9 offset-m3">{{profile.user.postal_code}} {{profile.user.city}}, {{profile.user.land}}</div>
                         <div class="col s5 m3"><strong>Role</strong></div>
-                        <div class="col s7 m9">{{::profile.user.role}}</div>
+                        <div class="col s7 m9">{{profile.user.role}}</div>
                         <div class="col s5 m3"><strong>Last Updated</strong></div>
-                        <div class="col s7 m9">{{::profile.user.last_update | date}}</div>
+                        <div class="col s7 m9">{{profile.user.last_update | date}}</div>
                     </div>
                 </div>
             </div>

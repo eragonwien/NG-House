@@ -169,6 +169,7 @@ function routing(stateProvider, urlRouterProvider) {
         },
         resolve: {
             user: getUser,
+            regions: getRegions,
             house: getHouseById,
             currencies: getCurrencies,
             houseTypes: getHouseTypes

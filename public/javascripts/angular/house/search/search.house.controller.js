@@ -17,10 +17,10 @@ function searchHouseController(user, houseTypes, currencies, regions, appService
      * @param {object} house search house
      */
     function submit(house) {
-        if (!house.address) {
-            return appService.alert('Address required');
+        if (!house.region) {
+            return appService.alert('Region is required');
         }
-        splitAddress(house.address);
+        splitAddress(house.region);
         houseService.getHouses(house).then(getHousesHandler);
         vm.searchMode = false;
         vm.loading = true;
@@ -57,7 +57,7 @@ function searchHouseController(user, houseTypes, currencies, regions, appService
 
     function initMaterialize() {
         initCollapsible();
-        initAutocomplete();
+        appService.initRegionAutocomplete(regions);
     }
 
     function initCollapsible() {

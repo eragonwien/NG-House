@@ -2,8 +2,8 @@ angular
     .module('house')
     .controller('editHouseController', editHouseController);
 
-editHouseController.$inject = ['user', 'house', 'currencies', 'houseTypes', 'houseService', 'appService']
-function editHouseController(user, house, currencies, houseTypes, houseService, appService) {
+editHouseController.$inject = ['user', 'house', 'regions', 'currencies', 'houseTypes', 'houseService', 'appService']
+function editHouseController(user, house, regions, currencies, houseTypes, houseService, appService) {
     let vm = this;
     vm.user = user;
     vm.editHouse = house;
@@ -12,6 +12,7 @@ function editHouseController(user, house, currencies, houseTypes, houseService, 
     vm.submit = submit;
     vm.cancelEditing = cancelEditing;
 
+    appService.initRegionAutocomplete(regions);
 
     function getHouseById(id) {
         houseService.getHouseById(id).then(getHouseByIdHandler);
@@ -31,6 +32,12 @@ function editHouseController(user, house, currencies, houseTypes, houseService, 
             appService.alert('INVALID FORM');
             return;
         }
+        if (!vm.editHouse.region) {
+            appService.alert('Region is required');
+            return;
+        }
+        vm.editHouse.postal_code_id = appService.getUserPostalCode(vm.editHouse.region, regions);
+        delete vm.editHouse.address_id;
         houseService.updateHouse(vm.editHouse).then(updateHouseHandler);
 
         function updateHouseHandler(response) {
