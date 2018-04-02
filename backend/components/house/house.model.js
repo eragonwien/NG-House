@@ -61,11 +61,11 @@ function getHouses(count, queries, done) {
 	count = count ? count : 1000;
 	cmd += 'LIMIT ' + count;
 
-	let query = pool.query(cmd, whereClause.params, function(error, results){
+	let query = pool.query(cmd, whereClause.params, function(error, houses){
 		if (error) {
 			return done(error);
 		}
-		done(null, results);
+		done(null, houses);
 	});
 	
 
@@ -167,7 +167,15 @@ function getHouseById(id, done) {
 		if (error) {
 			return done(error);
 		}
-		done(null, results[0]);
+		let house = results[0];
+		let tagModel = require('../houseTag/house.tag.model');
+		tagModel.getHouseTagByHouse(house.id, function (error, tags) {
+			if (error) {
+				return done(error);
+			}
+			house.tags = tags;
+			done(null, house);
+		});
 	});
 }
 

@@ -10,6 +10,7 @@ let userTest = require('./backend/components/user/user.test');
 let houseTest = require('./backend/components/house/house.test');
 let houseStatusTest = require('./backend/components/houseStatus/house.status.test');
 let houseTypeTest = require('./backend/components/houseType/house.type.test');
+let houseTagTest = require('./backend/components/houseTag/house.tag.test');
 let bookmarkTest = require('./backend/components/bookmark/bookmark.test');
 let tagTest = require('./backend/components/tag/tag.test');
 

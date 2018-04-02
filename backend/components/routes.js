@@ -13,6 +13,7 @@ let postalCode = require('./postalCode/postal.code.controller');
 let currency = require('./currency/currency.controller');
 let role = require('./role/role.controller');
 let houseType = require('./houseType/house.type.controller');
+let houseTag = require('./houseTag/house.tag.controller');
 let houseStatus = require('./houseStatus/house.status.controller');
 let bookmark = require('./bookmark/bookmark.controller');
 let tag = require('./tag/tag.controller');
@@ -93,6 +94,13 @@ router.get('/api/houseTypes', houseType.get);
 router.get('/api/houseTypes/:htid',checkUser, houseType.get);
 router.put('/api/houseTypes/:htid',checkUser, houseType.update);
 router.delete('/api/houseTypes/:htid',checkUser, houseType.remove);
+
+// House Tag
+router.post('/api/houseTags', checkAdmin, houseTag.create);
+router.get('/api/houseTags', houseTag.get);
+router.get('/api/houseTags/:htid',checkUser, houseTag.get);
+router.put('/api/houseTags/:htid',checkUser, houseTag.update);
+router.delete('/api/houseTags/:htid',checkUser, houseTag.remove);
 
 // House Status
 router.post('/api/houseStatuses',checkUser, houseStatus.create);

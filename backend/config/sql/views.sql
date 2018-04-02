@@ -53,7 +53,7 @@ SELECT * FROM get_houses;
 # get tags
 
 CREATE OR REPLACE VIEW get_tags AS 
-SELECT house_tag.house_id, tag.name
+SELECT house_tag.id, house_tag.tag_id, house_tag.house_id, tag.name
 FROM 
 	house_tag
     INNER JOIN tag ON house_tag.tag_id = tag.id;

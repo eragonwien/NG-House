@@ -16,13 +16,9 @@
             </select>
             <label for="test.case.type">data type</label>
         </div>
-        <div class="input-field col s12 m6" ng-if="test.case.type == 'address'">
-            <input type="number" name="test.case.code_length" id="test.case.code_length" ng-model="test.case.code_length" min="4" max="10" required>
-            <label class="active" for="test.case.code_length">Length of postal code</label>
-        </div>
         <div class="input-field col s12 m6">
-            <input type="number" name="test.case.number" id="test.case.number" ng-model="test.case.number" min="0" max="1000" required>
-            <label for="test.case.number">Number of test cases max. 1000</label>
+            <input type="number" name="test.case.count" id="test.case.count" ng-model="test.case.count" min="0" max="2000" required>
+            <label for="test.case.count">Number of test cases max. 2000</label>
         </div>
         <div class="col s12">
             <button class="btn waves-effect blue darken-4" ng-click="test.generate(test.case)">Generate</button>
@@ -44,11 +40,6 @@
 </div>
 <script>
     $(document).ready(function () {
-        initSelect();
+        $('select').formSelect();
     });
-    function initSelect() {
-        $('select').formSelect({
-            isMultiple: true
-        });
-    }
 </script>

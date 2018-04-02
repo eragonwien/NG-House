@@ -1,10 +1,13 @@
 let debug = require('debug')('test_generator_model');
 let helper = require('./helper');
+let random = require('random-name');
 
 let addressModel = require('../address/address.model');
+let postalCodeModel = require('../postalCode/postal.code.model');
 let userModel = require('../user/user.model');
 let houseModel = require('../house/house.model');
 let bookmarkModel = require('../bookmark/bookmark.model');
+let tagModel = require('../houseTag/house.tag.model');
 
 function startTest(test, done) {
     if (!test) {
@@ -12,9 +15,6 @@ function startTest(test, done) {
     }
     switch (test.type) {
         case 'address':
-            if (!test.code_length) {
-                return done(new Error('postal code length not found.'));
-            }
             prepareAddresses(test, done);
             break;
         case 'bookmark':
@@ -37,10 +37,20 @@ function startTest(test, done) {
 exports.startTest = startTest;
 
 function prepareAddresses(test, done) {    
-    spawnAddresses(test.number, test.names, test.code_length, 0, done);
+    postalCodeModel.getPostalCodes(null, function (error, results) {
+        let postalCodeIds = helper.filterValuesOfList(results, 'id');
+        spawnAddresses(test.count, postalCodeIds, 0, done); 
+    });
 }
 
-function spawnAddresses(count, names, postalCodeLength, successCount, done) {
+/**
+ * generates addresses
+ * @param {number} count number of tries
+ * @param {number[]} postalCodeIds list of postal code ids
+ * @param {number} successCount success times
+ * @param {callback} done callback
+ */
+function spawnAddresses(count, postalCodeIds, successCount, done) {
     
     if (!successCount) {
         successCount = 0;
@@ -49,30 +59,30 @@ function spawnAddresses(count, names, postalCodeLength, successCount, done) {
         let result = {
             success: (successCount > 0),
             count: successCount
-        }
+        };
         return done(null, result);
     }
     // generate an address object
     let address = {
-        address: names[helper.getRandomInt(names.length)] + 'Street ' + helper.getRandomInt(100),
-        postal_code: helper.getRandomInt(Math.pow(10, postalCodeLength - 1), Math.pow(10, postalCodeLength)),
-        city: names[helper.getRandomInt(names.length)] + ' City',
-        land: names[helper.getRandomInt(names.length)] + ' Land'
-    }
+        street_name: random.place(),
+        house_number: helper.random(1, 500),
+        postal_code_id: postalCodeIds[helper.random(postalCodeIds.length)]
+    };
     // insert query
     addressModel.createNewAddress(address, function (error, result) {
         successCount = (error) ? successCount : successCount + 1;
         count--;
-        spawnAddresses(count, names, postalCodeLength, successCount, done);
+        spawnAddresses(count, postalCodeIds, successCount, done);
     });
 }
 
 function prepareBookmarks(test, done) {
-    Promise.all([helper.getAllUsers(), helper.getAllHouses()]).then(promiseSuccess).catch(promiseError)
+    Promise.all([helper.getUsers(), helper.getHouses()]).then(promiseSuccess).catch(promiseError)
 
     function promiseSuccess(values) {
-        let userIds = values[0], houseIds = values[1];
-        spawnBookmarks(test.number, userIds, houseIds, 0, done);
+        let userIds = values[0];
+        let houseIds = values[1];
+        spawnBookmarks(test.count, userIds, houseIds, 0, done);
     }
 
     function promiseError(error) {
@@ -96,14 +106,14 @@ function spawnBookmarks(count, userIds, houseIds, successCount, done) {
         let result = {
             success: (successCount > 0),
             count: successCount
-        }
+        };
         return done(null, result);
     }
 
     let bookmark = {
-        user_id: userIds[helper.getRandomInt(userIds.length)],
-        house_id: houseIds[helper.getRandomInt(houseIds.length)]
-    }
+        user_id: userIds[helper.random(userIds.length)],
+        house_id: houseIds[helper.random(houseIds.length)]
+    };
 
     bookmarkModel.createBookmark(bookmark, function (error, result) {
         successCount = (error) ? successCount : successCount + 1;
@@ -113,11 +123,14 @@ function spawnBookmarks(count, userIds, houseIds, successCount, done) {
 }
 
 function prepareHouses(test, done) {
-    Promise.all([helper.getAllUsers(), helper.getAllHouseTypes(), helper.getAllAddresses(), helper.getAllCurrencies()]).then(promiseSuccess).catch(promiseError)
+    Promise.all([helper.getHouses(), helper.getHouseTypes(), helper.getAddresses(), helper.getCurrencies()]).then(promiseSuccess).catch(promiseError)
 
     function promiseSuccess(values) {
-        let userIds = values[0], houseTypeIds = values[1], addressIds = values[2], currencyIds = values[3];
-        spawnHouses(test.number, userIds, houseTypeIds, addressIds, currencyIds, 0, done);
+        let userIds = values[0]
+        let houseTypeIds = values[1];
+        let addressIds = values[2];
+        let currencyIds = values[3];
+        spawnHouses(test.count, userIds, houseTypeIds, addressIds, currencyIds, 0, done);
     }
 
     function promiseError(error) {
@@ -147,26 +160,26 @@ function spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCo
         let result = {
             success: (successCount > 0),
             count: successCount
-        }
+        };
         return done(null, result);
     }
     // create house
-    let bathrooms = helper.getRandomInt(1, 5);
-    let bedrooms = helper.getRandomInt(1, 5);
-    let rooms = bathrooms + bedrooms + helper.getRandomInt(1, 3);
-    let size = helper.getRandomInt(rooms * 10, rooms * 100);
-    let price = helper.getRandomInt(200, 1000) * size;
+    let bathrooms = helper.random(1, 5);
+    let bedrooms = helper.random(1, 5);
+    let rooms = bathrooms + bedrooms + helper.random(1, 3);
+    let size = helper.random(rooms * 10, rooms * 100);
+    let price = helper.random(200, 1000) * size;
     let house = {
         price: price,
         rooms : rooms,
         bathrooms: bathrooms,
         bedrooms: bedrooms,
         size: size,
-        user_id: userIds[helper.getRandomInt(userIds.length)],
-        address_id: addressIds[helper.getRandomInt(addressIds.length)],
-        house_type_id: typeIds[helper.getRandomInt(typeIds.length)],
+        user_id: userIds[helper.random(userIds.length)],
+        address_id: addressIds[helper.random(addressIds.length)],
+        house_type_id: typeIds[helper.random(typeIds.length)],
         house_status_id: 1, 
-        currency_id: currencyIds[helper.getRandomInt(currencyIds.length)],
+        currency_id: currencyIds[helper.random(currencyIds.length)],
     };
     houseModel.createHouse(house, function (error, result) {
         successCount = (error) ? successCount : successCount + 1;
@@ -176,38 +189,20 @@ function spawnHouses(count, userIds, typeIds, addressIds, currencyIds, successCo
 }
 
 function prepareTags(test, done) {
-    Promise.all([helper.getAllUsers(), helper.getAllHouseTypes(), helper.getAllAddresses(), helper.getAllCurrencies()]).then(promiseSuccess).catch(promiseError)
+    Promise.all([helper.getHouses(), helper.getTags()]).then(promiseSuccess).catch(promiseError)
 
     function promiseSuccess(values) {
-        let userIds = values[0], houseTypeIds = values[1], addressIds = values[2], currencyIds = values[3];
-        spawnHouses(test.number, userIds, houseTypeIds, addressIds, currencyIds, 0, done);
+        let houseIds = values[0];
+        let tagIds = values[1];
+        spawnTags(test.count, houseIds, tagIds, 0, done);
     }
 
     function promiseError(error) {
         done(error);
     }
-    
 }
 
-function prepareUsers(test, done) {
-    addressModel.getAllAddresses(function (error, results) {
-        if (error) {
-            return done(error);
-        } 
-        // extract only the address id from the results
-        let address_ids = helper.filterValuesOfList(results, 'id');
-        spawnUsers(test.number, test.names, address_ids, 0, done); 
-    });
-}
-
-/**
- * generate users
- * @param {number} count number of users to be generated
- * @param {string[]} names list of names
- * @param {string[]} addressList list of addresses
- * @param {string[]} successCount number of successful query
- */
-function spawnUsers(count, names, addressList, successCount, done) {
+function spawnTags(count, houseList, tagList, successCount, done) {
     if (!successCount) {
         successCount = 0;
     }
@@ -215,13 +210,52 @@ function spawnUsers(count, names, addressList, successCount, done) {
         let result = {
             success: (successCount > 0),
             count: successCount
-        }
+        };
+        return done(null, result);
+    }
+    let houseTag = {
+        tag_id: tagList[helper.random(tagList.length)],
+        house_id: houseList[helper.random(houseList.length)]
+    };
+    tagModel.createHouseTag(houseTag, function (error, result) {
+        successCount = (error) ? successCount : successCount + 1;
+        count--;
+        spawnTags(count, houseList, tagList, successCount, done);
+    });
+}
+
+function prepareUsers(test, done) {
+    addressModel.getAddresses(null, function (error, results) {
+        if (error) {
+            return done(error);
+        } 
+        // extract only the address id from the results
+        let address_ids = helper.filterValuesOfList(results, 'id');
+        spawnUsers(test.count, address_ids, 0, done); 
+    });
+}
+
+/**
+ * generate users
+ * @param {number} count number of users to be generated
+ * @param {string[]} addressList list of addresses
+ * @param {string[]} successCount number of successful query
+ */
+function spawnUsers(count, addressList, successCount, done) {
+    if (!successCount) {
+        successCount = 0;
+    }
+    if (count <= 0) {
+        let result = {
+            success: (successCount > 0),
+            count: successCount
+        };
         return done(null, result);
     }
     // generates an user object
-    let first_name = names[helper.getRandomInt(names.length)];
-    let last_name = names[helper.getRandomInt(names.length)];
-    let randomValue = helper.getRandomInt(1000);
+    let first_name = random.first();
+    let last_name = random.last();
+    let randomValue = helper.random(1000);
     let username = first_name + last_name + randomValue;
     let user = {
         first_name: first_name,
@@ -230,12 +264,12 @@ function spawnUsers(count, names, addressList, successCount, done) {
         password: 'test',
         email: username + '@' + last_name + '.com',
         role_id: 1,
-        address_id: addressList[helper.getRandomInt(addressList.length)]
-    }
+        address_id: addressList[helper.random(addressList.length)]
+    };
     // insert query
     userModel.createUser(user, function (error, result) {
         successCount = (error) ? successCount : successCount + 1;
         count--;
-        spawnUsers(count, names, addressList, successCount, done);
+        spawnUsers(count, addressList, successCount, done);
     });
 }
