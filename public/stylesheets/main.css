@@ -6519,3 +6519,11 @@ input[type=range].focused:focus:not(.active)::-ms-thumb {
   bottom: 0;
   margin: auto;
   z-index: 999; }
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column; }
+
+main {
+  flex: 1 0 auto; }
