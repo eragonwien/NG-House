@@ -1,21 +1,40 @@
+require('dotenv').config();
+
 let fs = require('fs');
 let readline = require('readline-sync');
-let envPath = '.env';
-require('dotenv').config();
-let dbConfigPath = './backend/config/db.js';
 
-console.log('Checking environtment file.');
-if (!fs.existsSync(envPath)) {
-    console.log('File .env does not exist.');
-    setEnv(envPath);
+const ENV_PATH = '.env';
+const DB_CONFIG_PATH = './backend/config/db.js';
+
+start();
+
+function start(done) {
+    console.log('Checking environtment file.');
+    if (!fs.existsSync(ENV_PATH)) {
+        // attemp on creating .env file
+        console.log('File .env does not exist.');
+        if (!readline.keyInYN('Do you want to create .env file now ?')) {
+            console.log('File .env not created. Setup aborted.');
+            return;
+        }
+        setEnv(ENV_PATH);   
+    }
+    let missingVariables = getMissingVariables();
+    if (missingVariables.length === 0) {
+        console.log('The .env file has the required vairables in correct format.');
+    } else {
+        console.log('Following variables are missing: ' + missingVariables.toString());
+        console.log('WARNING: Varibales in .env file are inccorect or missing. This may cause unexpected behavior.');
+        console.log('Please consider deleting the current .env file and run the set up again');
+        return;
+    }
+    console.log('Setting up .env finished');
 }
-console.log('Checking for config file.');
-if (!fs.existsSync(dbConfigPath)) {
-    console.log('Config file for database does not exist.');
-    return;
-}
+
 
 function setEnv(path) {
+    console.log('Setting up .env');
+    
     let env = '';
     let nodeEnv = readline.question('Node environtment ? (default is development)');
     if (!nodeEnv) {
@@ -55,4 +74,44 @@ function setEnv(path) {
         return;
     }
     console.log('Canceled');    
+}
+
+/**
+ * check .env file for variables
+ * @returns {string[]} list of missing variables
+ */
+function getMissingVariables() {
+    console.log('Checking .env variables');
+    require('dotenv').config();
+    let errors = [];
+    if (!process.env.NODE_ENV) {
+        console.log('Node environment variable is missing');
+        errors.push('NODE_ENV');
+    }
+    if (!process.env.DB_HOST) {
+        console.log('Database host variable is missing');
+        errors.push('DB_HOST');        
+    }
+    if (!process.env.DB_USER) {
+        console.log('Database username variable is missing');
+        errors.push('DB_USER');
+    }
+    if (!process.env.DB_PASSWORD) {
+        console.log('Database password variable is missing');
+        errors.push('DB_PASSWORD');
+    }
+    if (!process.env.DB_TEST) {
+        console.log('Test database name variable is missing');
+        errors.push('DB_TEST');
+    }
+    if (!process.env.DB_PRODUCTION) {
+        console.log('Production database name variable is missing');
+        errors.push('DB_PRODUCTION');
+    }
+    if (!process.env.DB_POOL_LIMIT) {
+        console.log('Pool limit variable is missing');
+        errors.push('DB_POOL_LIMIT');
+    }
+
+    return errors;
 }

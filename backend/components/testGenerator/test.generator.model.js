@@ -17,6 +17,9 @@ function startTest(test, done) {
         case 'address':
             prepareAddresses(test, done);
             break;
+        case 'admin':
+            prepareAdmin(test, done);
+            break;
         case 'bookmark':
             prepareBookmarks(test, done);
             break;
@@ -278,7 +281,23 @@ function prepareUsers(test, done) {
         } 
         // extract only the address id from the results
         let address_ids = helper.filterValuesOfList(results, 'id');
-        spawnUsers(test.count, address_ids, 0, null, done); 
+        spawnUsers(test.count, address_ids, 0, null, false, done); 
+    });
+}
+
+/**
+ * prepares for generating admin
+ * @param {object} test test object
+ * @param {callback} done callback
+ */
+function prepareAdmin(test, done) {
+    addressModel.getAddresses(null, function (error, results) {
+        if (error) {
+            return done(error);
+        } 
+        // extract only the address id from the results
+        let address_ids = helper.filterValuesOfList(results, 'id');
+        spawnUsers(test.count, address_ids, 0, null, true, done); 
     });
 }
 
@@ -288,9 +307,10 @@ function prepareUsers(test, done) {
  * @param {number[]} addressList list of addresses
  * @param {number[]} successCount number of successful query
  * @param {object[]} errors list of errors
+ * @param {boolean} admin true if admin is to be generated
  * @param {callback} done callback
  */
-function spawnUsers(count, addressList, successCount, errors, done) {
+function spawnUsers(count, addressList, successCount, errors, admin, done) {
     if (!successCount) {
         successCount = 0;
     }
@@ -315,7 +335,7 @@ function spawnUsers(count, addressList, successCount, errors, done) {
         username: username,
         password: 'test',
         email: username + '@' + last_name + '.com',
-        role_id: 1,
+        role_id: (!admin) ? 1 : 2,
         address_id: addressList[helper.random(addressList.length)]
     };
     // insert query
@@ -323,8 +343,24 @@ function spawnUsers(count, addressList, successCount, errors, done) {
         if (error) {
             errors.push(error);
         }
+        // only create one admin per request
+        if (admin) {
+            userModel.getUserById(result.insertId, function (error, user) {
+                if (error) {
+                    return done(error);
+                }
+                let res = {
+                    success: true,
+                    count: count,
+                    user: user
+                };
+                done(null, res);
+            });
+            return;
+        }
+
         successCount = (error) ? successCount : successCount + 1;
         count--;
-        spawnUsers(count, addressList, successCount, errors, done);
+        spawnUsers(count, addressList, successCount, errors, admin, done);
     });
 }

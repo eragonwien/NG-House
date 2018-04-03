@@ -7,8 +7,7 @@
     "start": "node bin/www",
     "set-env": "node build/env.js",
     "build-database": "node build/db.js",
-    "build": "npm run set-env && npm run build-database",
-    "setup": "node build/setup.js",
+    "setup": "npm run set-env && npm run build-database",
     "generate": "node build/generate.js",
     "test": "mocha test.js"
   },
