@@ -16,12 +16,11 @@
 <title>Nghouse</title>
 </head>
     <body ng-app="house">
-            
-        <div ui-view name="navbar"></div>
-        <div class="container">
+        <header ui-view name="navbar"></header>
+        <main class="container">
             <div ui-view name="content" style="padding: 1rem 0rem;"></div>       
-        </div>
-
+        </main>
+        <footer ui-view name="footer" class="page-footer blue darken-4"></footer>
         <!-- JQuery -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <!-- Materialize CSS -->
