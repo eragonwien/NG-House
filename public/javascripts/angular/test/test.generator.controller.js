@@ -10,6 +10,14 @@ function testController(appService, testService) {
     vm.loading = false;
 
     function generate(test) {
+        if (!test.type) {
+            appService.alert('Test type is required');
+            return;
+        }
+        if (!test.count || test.count < 0) {
+            appService.alert('Test type cannot be negative');
+            return;
+        }
         testService.sendTest(test).then(sendTestHandler);
         vm.loading = true;
 

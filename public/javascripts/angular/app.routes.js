@@ -17,6 +17,9 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/house/index/index.view.html',
                 controller: 'indexController',
                 controllerAs: 'index'
+            },
+            footer: {
+                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -24,7 +27,7 @@ function routing(stateProvider, urlRouterProvider) {
             user: getUser,
             message: getMessage
         }
-    }
+    };
 
     let signup = {
         name: 'signup',
@@ -39,13 +42,16 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/user/signup/signup.view.html',
                 controller: 'signupController',
                 controllerAs: 'signup'
+            },
+            footer: {
+                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
             user: getUser,
             regions: getRegions
         }
-    }
+    };
 
     let createAdmin = {
         name: 'createAdmin',
@@ -60,6 +66,9 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/user/admin/create/create.admin.view.html',
                 controller: 'createAdminController',
                 controllerAs: 'createAdmin'
+            },
+            footer: {
+                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -81,6 +90,9 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/user/login/login.view.html',
                 controller: 'loginController',
                 controllerAs: 'login'
+            },
+            footer: {
+                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -100,6 +112,9 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/user/redirect/redirect.view.html',
                 controller: 'redirectController',
                 controllerAs: 'redirect'
+            },
+            footer: {
+                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -120,6 +135,9 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/user/profile/profile.view.html',
                 controller: 'profileController',
                 controllerAs: 'profile'
+            },
+            footer: {
+                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -142,6 +160,9 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/house/create/create.house.view.html',
                 controller: 'createHouseController',
                 controllerAs: 'createHouse'
+            },
+            footer: {
+                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -165,6 +186,9 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/house/edit/edit.house.view.html',
                 controller: 'editHouseController',
                 controllerAs: 'editHouse'
+            },
+            footer: {
+                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -189,6 +213,9 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/house/search/search.house.view.html',
                 controller: 'searchHouseController',
                 controllerAs: 'searchHouse'
+            },
+            footer: {
+                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -212,6 +239,9 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/test/test.generator.view.html',
                 controller: 'testController',
                 controllerAs: 'test'
+            },
+            footer: {
+                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {

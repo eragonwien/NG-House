@@ -4,16 +4,17 @@
 			<a href="#" class="brand-logo" ui-sref="index" ui-sref-active="active">Nghouse</a>
 			<a href="" data-target="sidenav" class="sidenav-trigger left"><i class="material-icons">menu</i></a>			
 			<ul class="right hide-on-med-and-down">
-				<li><a class="tooltipped" href="" ui-sref="search" ui-sref-active="active" data-position="bottom" data-tooltip="Search"><i class="material-icons">search</i></a></li>
+				<li><a class="" href="" ui-sref="search" ui-sref-active="active"><i class="material-icons">search</i></a></li>
 				<li>
-					<a class="dropdown-trigger tooltipped" data-target="dropdown-module" data-position="bottom" data-tooltip="Modules" href="">
-						<i class="material-icons">view_module</i>
+					<a class="dropdown-trigger" data-target="dropdown-module" href="">
+						<i class="material-icons">settings</i>
 					</a>
 				</li>
 				<li ng-if="navbar.user">
 					<a href="" class="dropdown-trigger" data-target="dropdown-user">
 						<i class="material-icons left" ng-if="navbar.user.role != 'Admin'">person</i>
 						<i class="material-icons left" ng-if="navbar.user.role == 'Admin'">adb</i>
+						{{navbar.user.first_name}} {{navbar.user.last_name}}
 					</a>
 				</li>
 				<li><a href="" ui-sref="login" ui-sref-active="active" ng-if="!navbar.user">Login</a></li>
@@ -29,7 +30,7 @@
 <ul id="dropdown-module" class="dropdown-content">
 	<li><a href="" ui-sref="signup" ui-sref-active="active">New User</a></li>
 	<li><a href="" ui-sref="createAdmin" ui-sref-active="active">New Admin</a></li>
-	<li><a href="" ui-sref="test" ui-sref-active="active" ng-if="navbar.user.role == 'Admin'">Test generator</a></li>
+	<li><a href="" ui-sref="test" ui-sref-active="active" >Test generator</a></li>
 </ul>
 
 <!-- side nav -->
@@ -71,6 +72,5 @@
 <script>
 	$(document).ready(function () {
 		$('.dropdown-trigger').dropdown();
-		$('.tooltipped').tooltip();
 	})
 </script>

@@ -7,6 +7,7 @@ function loginController(user, userService, appService) {
     let vm = this;
     vm.loginMode = true;
     vm.login = login;
+    vm.testLogin = testLogin;
     
     if (user) {
         return appService.moveTo();
@@ -17,7 +18,21 @@ function loginController(user, userService, appService) {
             appService.alert('Form invalid');
             return;
         }
-        userService.login(vm.user.username, vm.user.password).then(loginHandler);
+        initLogin(vm.user.username, vm.user.password);
+    }
+
+    function validateForm(form) {
+        return form.$valid;
+    }
+
+    function testLogin() {
+        let username = 'test';
+        let password = 'test';
+        initLogin(username, password);
+    }
+
+    function initLogin(username, password) {
+        userService.login(username, password).then(loginHandler);
 
         function loginHandler(response) {
             let status = response.status;
@@ -34,9 +49,4 @@ function loginController(user, userService, appService) {
             console.log(response.data);
         }
     }
-
-    function validateForm(form) {
-        return form.$valid;
-    }
-
 }

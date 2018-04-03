@@ -121,31 +121,48 @@ function getUserByEmail (email, done) {
  * @param {callback} done callback
  */
 function updateUserById (id, user, done) {
-    
-    // hashes user password
+    if (!user.address_id) {
+        prepareAddressForUpdate(id, user, done);
+        return;
+    }
+    executeUpdateUser(id, user, done);
+}
+
+/**
+ * prepares password for update
+ * @param {number} id user id
+ * @param {object} user user object
+ * @param {callback} done callback
+ */
+function preparePasswordForUpdate(id, user, done) {
     let salt = (process.env.SALT) ? process.env.SALT : 10; // set salt default is 10
     bcrypt.hash(user.password, salt, function (error, hashedPassword) {
         if (error) {
             return done(error);
         }
         user.password = hashedPassword; 
-        // skip fetching address if address id exists
-        if (user.address_id) {
-            executeUpdateUser(id, user, done);
-            return;
+        prepareAddressForUpdate(id, user, done);
+    });
+}
+
+/**
+ * prepares address id for update
+ * @param {number} id user id
+ * @param {object} user user object
+ * @param {callback} done callback
+ */
+function prepareAddressForUpdate(id, user, done) {
+    let address = {
+        street_name: user.street_name,
+        house_number: user.house_number,
+        postal_code_id: user.postal_code_id
+    };
+    addressModel.createNewAddress(address, function (error, result) {
+        if (error) {
+            return done(error);
         }
-        let address = {
-            street_name: user.street_name,
-            house_number: user.house_number,
-            postal_code_id: user.postal_code_id
-        };
-        addressModel.createNewAddress(address, function (error, result) {
-            if (error) {
-                return done(error);
-            }
-            user.address_id = result.insertId;
-            executeUpdateUser(id, user, done);
-        });
+        user.address_id = result.insertId;
+        executeUpdateUser(id, user, done);
     });
 }
 
@@ -157,8 +174,8 @@ function updateUserById (id, user, done) {
  * @param {queryCallback} done callback
  */
 function executeUpdateUser(id, user, done) {
-    let cmd = 'UPDATE user SET first_name=?, last_name=?, address_id=?, role_id=?, password=? WHERE id=?;';
-    let params = [user.first_name, user.last_name, user.address_id, user.role_id, user.password, id];
+    let cmd = 'UPDATE user SET first_name=?, last_name=?, address_id=?, role_id=? WHERE id=?;';
+    let params = [user.first_name, user.last_name, user.address_id, user.role_id, id];
     pool.query(cmd, params, function (error, result) {
         if (error) {
             return done(error);

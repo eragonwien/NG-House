@@ -10,8 +10,8 @@ function signupController(regions, userService, appService) {
     appService.initRegionAutocomplete(regions);
 
     function signup(form) {
-        if (!validateForm(form)) {
-            appService.alert('Form invalid');
+        if (!form.$valid) {
+            appService.alert('INVALID FORM');
             return;
         }
         if (!vm.user.region) {
