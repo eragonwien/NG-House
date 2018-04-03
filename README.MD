@@ -68,6 +68,19 @@ DB_TEST = development_database
 DB_PRODUCTION = production_database
 DB_POOL_LIMIT = 100
 ```
+## Build with gulp
+
+Install gulp
+
+```
+npm install -g gulp
+```
+
+Build with gulp
+
+```
+npm run gulp-build
+```
 ## Start the server
 
 ```
@@ -78,6 +91,7 @@ npm start
 ```
 npm run generate admin
 ```
+
 ## Running the tests
 
 Install Mocha

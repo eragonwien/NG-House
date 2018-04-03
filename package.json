@@ -8,6 +8,7 @@
     "set-env": "node build/env.js",
     "build-database": "node build/db.js",
     "setup": "npm run set-env && npm run build-database",
+    "gulp-build": "gulp build",
     "generate": "node build/generate.js",
     "test": "mocha test.js"
   },
@@ -55,7 +56,13 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
-    "gulp-useref": "^3.1.5"
+    "gulp-concat": "^2.6.1",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-useref": "^3.1.5",
+    "run-sequence": "^2.2.1"
   }
 }
