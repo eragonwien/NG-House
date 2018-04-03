@@ -2,7 +2,6 @@ let fs = require('fs');
 require('dotenv').config();
 let readline = require('readline-sync');
 let db = require('../backend/config/db');
-let helper = require('./helper');
 const SQL_CREATE_PATH = './backend/config/sql/create.sql';
 const SQL_INSERT_PATH = './backend/config/sql/insert.sql';
 const SQL_VIEWS_PATH = './backend/config/sql/views.sql';
