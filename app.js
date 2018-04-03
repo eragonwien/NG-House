@@ -6,7 +6,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var sass = require('node-sass-middleware');
 var ejs = require('ejs');
 var session = require('express-session');
 var mySQLStore = require('express-mysql-session');
