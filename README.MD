@@ -32,7 +32,7 @@ npm install
 Set up mySQL for the application
 
 ```
-npm setup
+npm run setup
 ```
 
 ```
@@ -73,7 +73,11 @@ DB_POOL_LIMIT = 100
 ```
 npm start
 ```
+## Create an admin account
 
+```
+npm run generate admin
+```
 ## Running the tests
 
 Install Mocha
