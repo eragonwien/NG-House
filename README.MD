@@ -1,6 +1,16 @@
 # NG-HOUSE
 
-A simple full-stack application managing housing using MEAN (MySQL, ExpressJS, AngularJS, NodeJS)
+NG-House is a sample real-estate web application, allowing its user doing tasks such as:
+* viewing all current housing offers
+* searching offers by criteria
+* bookmarking housing offer
+* creating and editing owned housing offer
+* contact the owner of the offer
+* authentication via username and password
+
+## Demo
+
+Have a look at the [sample app](https://nghouse.viewdns.net/) running on a Rpi.
 
 ## Getting Started
 
@@ -9,88 +19,81 @@ See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
-NG-HOUSE application requires MySQL, ExpressJS, AngularJS and NodeJS.
-MySQL can be obtained from [MySQL Homepage](https://dev.mysql.com/downloads/)
-NodeJS can be downloaded from [NodeJS Homepage](https://nodejs.org/en/)
-Since Node versions changes very often. You can use the NVM (Node Version Manager) on Ubuntu and Mac with:
-```
-# download NPM
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | bash
-# load NPM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-# Install latest stable version
-nvm install stable
-```
+* NodeJS & NPM
+* MySQL
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
+Install the dependencies
 
 ```
-Give the example
+npm install
+```
+Set up mySQL for the application
+
+```
+npm setup
 ```
 
-And repeat
+```
+Do you want to clean all entries in these tables ? [y/n]: 
+```
+Choose yes
 
 ```
-until finished
+Do you want to re-create all the views ? [y/n]:  
 ```
+Choose yes
 
-End with an example of getting some data out of the system or using it for a little demo
+Result
+
+```
+Do you want to clean all entries in these tables ? [y/n]: y
+Creating tables.
+Tables successfully created.
+Inserting default values
+Tables successfully inserted.
+Do you want to re-create all the views ? [y/n]: y
+Creating views.
+View created.
+Setup finished.
+```
+An .env file is created with the similar result as this:
+```
+NODE_ENV = development_environment
+DB_HOST = database_host
+DB_USER = user
+DB_PASSWORD = password
+DB_TEST = development_database
+DB_PRODUCTION = production_database
+DB_POOL_LIMIT = 100
+```
+## Start the server
+
+```
+npm start
+```
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+Install Mocha
 
 ```
-Give an example
+npm install -g mocha
 ```
-
-### And coding style tests
-
-Explain what these tests test and why
+Run the test
 
 ```
-Give an example
+npm test
 ```
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* Use nodemon automatically restart the app
+* Use pm2 to automatically start the app on machine start
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Hoang Son Nguyen**
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+See also the list of [contributors](https://github.com/eragonwien/NG-House/graphs/contributors) who participated in this project.
