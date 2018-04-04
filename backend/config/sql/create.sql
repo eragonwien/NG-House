@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS land (
     id INT NOT NULL AUTO_INCREMENT,    
     name VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS city (
     id INT NOT NULL AUTO_INCREMENT,    
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS city (
     FOREIGN KEY (land_id) REFERENCES land(id),
     CONSTRAINT UNIQUE_land_city UNIQUE(name, land_id),
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS postal_code (
     id INT NOT NULL AUTO_INCREMENT,    
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS postal_code (
     FOREIGN KEY (land_id) REFERENCES land(id),
     CONSTRAINT UNIQUE_city_code UNIQUE(code, city_id, land_id),
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS address (
     id INT NOT NULL AUTO_INCREMENT,
@@ -35,43 +35,43 @@ CREATE TABLE IF NOT EXISTS address (
     FOREIGN KEY (postal_code_id) REFERENCES postal_code(id),
     CONSTRAINT UNIQUE_Address UNIQUE(street_name, house_number, postal_code_id),
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS role (
     id INT NOT NULL AUTO_INCREMENT,    
     name VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS currency (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     short VARCHAR(16) NOT NULL UNIQUE,
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS house_type (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS house_status (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS tag (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS image (
     id INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS user (
     id INT NOT NULL AUTO_INCREMENT,
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS user (
     FOREIGN KEY (address_id) REFERENCES address(id),
     FOREIGN KEY (image_id) REFERENCES image(id),
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS house (
     id INT NOT NULL AUTO_INCREMENT,
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS house (
     FOREIGN KEY (currency_id) REFERENCES currency(id),
     CONSTRAINT CHK_rooms CHECK(bathrooms >= 0 AND bedrooms >= 0 AND size > 0 AND rooms > (bathrooms + bedrooms)),
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS house_tag (
     id INT NOT NULL AUTO_INCREMENT,
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS house_tag (
     FOREIGN KEY (house_id) REFERENCES house(id),
     CONSTRAINT uq_book_house UNIQUE(tag_id, house_id),
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS house_image (
     id INT NOT NULL AUTO_INCREMENT,
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS house_image (
     FOREIGN KEY (image_id) REFERENCES image(id),
     FOREIGN KEY (house_id) REFERENCES house(id),
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS bookmark (
     id INT NOT NULL AUTO_INCREMENT,
@@ -139,4 +139,4 @@ CREATE TABLE IF NOT EXISTS bookmark (
     FOREIGN KEY (house_id) REFERENCES house(id),
     CONSTRAINT uq_book_house UNIQUE(user_id, house_id),
     PRIMARY KEY(id)
-);
+) CHARACTER SET utf8;
