@@ -1,6 +1,6 @@
 let pool = require('../../config/db').pool;
 let addressModel = require('../address/address.model');
-let bcrypt = require('bcrypt');
+let bcrypt = require('bcrypt-nodejs');
 let debug = require('debug')('user_model');
 
 /**
@@ -10,8 +10,7 @@ let debug = require('debug')('user_model');
  */
 function createUser (user, done) {
     // hashes user password
-    let salt = (process.env.SALT) ? process.env.SALT : 10; // set salt default is 10
-    bcrypt.hash(user.password, salt, function (error, hashedPassword) {
+    bcrypt.hash(user.password, null, null, function (error, hashedPassword) {
         user.password = hashedPassword;
         // if address_id is available, skip searching address
         if (user.address_id) {
@@ -135,8 +134,7 @@ function updateUserById (id, user, done) {
  * @param {callback} done callback
  */
 function preparePasswordForUpdate(id, user, done) {
-    let salt = (process.env.SALT) ? process.env.SALT : 10; // set salt default is 10
-    bcrypt.hash(user.password, salt, function (error, hashedPassword) {
+    bcrypt.hash(user.password, null, null, function (error, hashedPassword) {
         if (error) {
             return done(error);
         }
