@@ -7,12 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Material Design for Bootstrap fonts and icons -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
 <!-- Material Design Icons -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<!-- Material Design for Bootstrap CSS -->
-<link type="text/css" rel="stylesheet" href="stylesheets/main.css">
 <title>Nghouse</title>
 </head>
     <body ng-app="house">
@@ -20,14 +19,17 @@
         <main class="container">
             <div ui-view name="content" style="padding: 1rem 0rem;"></div>       
         </main>
-        <footer ui-view name="footer" class="page-footer blue darken-4"></footer>
         <!-- JQuery -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <!-- Materialize CSS -->
-        <script src="javascripts/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+        
         <!-- AngularJS -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+        <script src="javascripts/bundle.js"></script>
+                
+        <!-->
         <script src="javascripts/angular/app.module.js"></script>
         <script src="javascripts/angular/app.routes.js"></script>
         <script src="javascripts/angular/navbar/navbar.controller.js"></script>
@@ -50,5 +52,6 @@
         <script src="javascripts/angular/services/house.type.service.js"></script>
         <script src="javascripts/angular/services/test.service.js"></script>
         <script src="javascripts/angular/services/user.service.js"></script>
+        <-->
     </body>
 </html>

@@ -6,7 +6,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var sass = require('node-sass-middleware');
 var ejs = require('ejs');
 var session = require('express-session');
 var mySQLStore = require('express-mysql-session');
@@ -30,7 +29,7 @@ app.use(compression());
 var index = require('./backend/components/routes');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'public', 'views'));
+app.set('views', path.join(__dirname, 'public'));
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
 
@@ -48,7 +47,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// sass
+/*
 app.use(
 	sass({
 		src: __dirname + '/public/stylesheets/sass', 
@@ -57,7 +56,7 @@ app.use(
     prefix: '/stylesheets', 
 	})
 );
-
+*/
 // session store
 var pool = require('./backend/config/db').pool;
 var sessionStore = new mySQLStore({}, pool);

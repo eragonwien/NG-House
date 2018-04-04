@@ -17,9 +17,6 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/house/index/index.view.html',
                 controller: 'indexController',
                 controllerAs: 'index'
-            },
-            footer: {
-                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -42,9 +39,6 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/user/signup/signup.view.html',
                 controller: 'signupController',
                 controllerAs: 'signup'
-            },
-            footer: {
-                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -66,16 +60,13 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/user/admin/create/create.admin.view.html',
                 controller: 'createAdminController',
                 controllerAs: 'createAdmin'
-            },
-            footer: {
-                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
             regions: getRegions,
             user: getUser
         }
-    }
+    };
 
     let login = {
         name: 'login',
@@ -90,15 +81,12 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/user/login/login.view.html',
                 controller: 'loginController',
                 controllerAs: 'login'
-            },
-            footer: {
-                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
             user: getUser
         }
-    }
+    };
     let redirect = {
         name: 'redirect',
         url: '/redirect',
@@ -112,15 +100,12 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/user/redirect/redirect.view.html',
                 controller: 'redirectController',
                 controllerAs: 'redirect'
-            },
-            footer: {
-                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
             user: getUser
         }
-    }
+    };
 
     let profile = {
         name: 'profile',
@@ -135,9 +120,6 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/user/profile/profile.view.html',
                 controller: 'profileController',
                 controllerAs: 'profile'
-            },
-            footer: {
-                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -145,7 +127,7 @@ function routing(stateProvider, urlRouterProvider) {
             houses: getHouses,
             user: getUser
         }
-    }
+    };
 
     let createHouse = {
         name: 'createHouse',
@@ -160,9 +142,6 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/house/create/create.house.view.html',
                 controller: 'createHouseController',
                 controllerAs: 'createHouse'
-            },
-            footer: {
-                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -171,7 +150,7 @@ function routing(stateProvider, urlRouterProvider) {
             houseTypes: getHouseTypes,
             user: getUser
         }
-    }
+    };
 
     let editHouse = {
         name: 'editHouse',
@@ -186,9 +165,6 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/house/edit/edit.house.view.html',
                 controller: 'editHouseController',
                 controllerAs: 'editHouse'
-            },
-            footer: {
-                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -198,7 +174,7 @@ function routing(stateProvider, urlRouterProvider) {
             currencies: getCurrencies,
             houseTypes: getHouseTypes
         }
-    }
+    };
 
     let search = {
         name: 'search',
@@ -213,9 +189,6 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/house/search/search.house.view.html',
                 controller: 'searchHouseController',
                 controllerAs: 'searchHouse'
-            },
-            footer: {
-                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -224,7 +197,7 @@ function routing(stateProvider, urlRouterProvider) {
             currencies: getCurrencies,
             user: getUser
         }
-    }
+    };
 
     let testGenerator = {
         name: 'test',
@@ -239,9 +212,6 @@ function routing(stateProvider, urlRouterProvider) {
                 templateUrl: 'javascripts/angular/test/test.generator.view.html',
                 controller: 'testController',
                 controllerAs: 'test'
-            },
-            footer: {
-                templateUrl: 'javascripts/angular/footer/footer.view.html'
             }
         },
         resolve: {
@@ -250,7 +220,7 @@ function routing(stateProvider, urlRouterProvider) {
             currencies: getCurrencies,
             user: getUser
         }
-    }
+    };
 
     stateProvider.state(index);
     stateProvider.state(signup);
@@ -264,7 +234,7 @@ function routing(stateProvider, urlRouterProvider) {
     stateProvider.state(testGenerator);
 
     urlRouterProvider.otherwise('/login');
-};
+}
 
 /**
  * get message
