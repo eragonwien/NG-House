@@ -1,1 +1,1 @@
-let app = angular.module('house', ['ui.router']);
+angular.module('house', ['ui.router']);

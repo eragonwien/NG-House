@@ -8,6 +8,7 @@ function loginController(user, userService, appService) {
     vm.loginMode = true;
     vm.login = login;
     vm.testLogin = testLogin;
+    vm.loading = false;
     
     if (user) {
         return appService.moveTo();
@@ -32,9 +33,11 @@ function loginController(user, userService, appService) {
     }
 
     function initLogin(username, password) {
+        vm.loading = true;
         userService.login(username, password).then(loginHandler);
 
         function loginHandler(response) {
+            vm.loading = false;
             let status = response.status;
             if (status == 200) {
                 userService.setLocalUser(response.data, vm.user.remember);
@@ -42,7 +45,7 @@ function loginController(user, userService, appService) {
                 return;
             }
             if (status == 401) {
-                appService.alert(response.data);
+                appService.alert(response.data.message);
                 return;
             }
             appService.alert(response.status + ' : ' + response.statusText);

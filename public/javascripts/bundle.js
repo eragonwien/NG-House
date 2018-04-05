@@ -1,4 +1,4 @@
-let app = angular.module('house', ['ui.router']);
+angular.module('house', ['ui.router']);
 
 angular
     .module('house')
@@ -1539,58 +1539,6 @@ function searchHouseController(user, houseTypes, currencies, regions, appService
 }
 angular
     .module('house')
-    .controller('loginController', loginController);
-
-loginController.$inject = ['user', 'userService', 'appService'];
-function loginController(user, userService, appService) {
-    let vm = this;
-    vm.loginMode = true;
-    vm.login = login;
-    vm.testLogin = testLogin;
-    
-    if (user) {
-        return appService.moveTo();
-    }
-
-    function login(form) {
-        if (!validateForm(form)) {
-            appService.alert('Form invalid');
-            return;
-        }
-        initLogin(vm.user.username, vm.user.password);
-    }
-
-    function validateForm(form) {
-        return form.$valid;
-    }
-
-    function testLogin() {
-        let username = 'test';
-        let password = 'test';
-        initLogin(username, password);
-    }
-
-    function initLogin(username, password) {
-        userService.login(username, password).then(loginHandler);
-
-        function loginHandler(response) {
-            let status = response.status;
-            if (status == 200) {
-                userService.setLocalUser(response.data, vm.user.remember);
-                appService.moveTo();
-                return;
-            }
-            if (status == 401) {
-                appService.alert(response.data);
-                return;
-            }
-            appService.alert(response.status + ' : ' + response.statusText);
-            console.log(response.data);
-        }
-    }
-}
-angular
-    .module('house')
     .controller('profileController', profileController);
 
 profileController.$inject = ['user', 'regions', 'userService', 'appService', 'houseService', 'bookmarkService'];
@@ -1691,13 +1639,58 @@ function profileController(user, regions, userService, appService, houseService,
 }
 angular
     .module('house')
-    .controller('redirectController', redirectController);
+    .controller('loginController', loginController);
 
-redirectController.$inject = ['appService'];
-function redirectController(appService) {
+loginController.$inject = ['user', 'userService', 'appService'];
+function loginController(user, userService, appService) {
     let vm = this;
+    vm.loginMode = true;
+    vm.login = login;
+    vm.testLogin = testLogin;
+    vm.loading = false;
     
-    appService.moveTo();
+    if (user) {
+        return appService.moveTo();
+    }
+
+    function login(form) {
+        if (!validateForm(form)) {
+            appService.alert('Form invalid');
+            return;
+        }
+        initLogin(vm.user.username, vm.user.password);
+    }
+
+    function validateForm(form) {
+        return form.$valid;
+    }
+
+    function testLogin() {
+        let username = 'test';
+        let password = 'test';
+        initLogin(username, password);
+    }
+
+    function initLogin(username, password) {
+        vm.loading = true;
+        userService.login(username, password).then(loginHandler);
+
+        function loginHandler(response) {
+            vm.loading = false;
+            let status = response.status;
+            if (status == 200) {
+                userService.setLocalUser(response.data, vm.user.remember);
+                appService.moveTo();
+                return;
+            }
+            if (status == 401) {
+                appService.alert(response.data.message);
+                return;
+            }
+            appService.alert(response.status + ' : ' + response.statusText);
+            console.log(response.data);
+        }
+    }
 }
 angular
     .module('house')
@@ -1740,6 +1733,16 @@ function signupController(regions, userService, appService) {
     function validateForm(form) {
         return form.$valid;
     }
+}
+angular
+    .module('house')
+    .controller('redirectController', redirectController);
+
+redirectController.$inject = ['appService'];
+function redirectController(appService) {
+    let vm = this;
+    
+    appService.moveTo();
 }
 angular
     .module('house')

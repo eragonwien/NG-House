@@ -19,9 +19,14 @@ gulp.task('img', function () {
 });
 
 gulp.task('clean:bundle', function () {
-    return del.sync('public/javascripts/bundle.js')
+    return del.sync('public/javascripts/bundle.js');
 });
 
 gulp.task('build', function (done) {
     runSequence('clean:bundle', 'bundle', 'img', done);
 });
+
+gulp.task('watch', function (done) {
+    gulp.watch('public/javascripts/**/*.js', ['build']);
+});
+
