@@ -10,6 +10,7 @@ function createHouseController(user, currencies, houseTypes, regions, houseServi
     vm.submit = submit;
     vm.currencies = currencies;
     vm.houseTypes = houseTypes;
+    vm.loading = false;
 
     appService.initRegionAutocomplete(regions);
 
@@ -24,12 +25,18 @@ function createHouseController(user, currencies, houseTypes, regions, houseServi
             return;
         }
         vm.newHouse.postal_code_id = appService.getUserPostalCode(vm.newHouse.region, regions);
+        vm.loading = true;
         houseService.addHouse(vm.newHouse).then(addHouseHandler);
 
         function addHouseHandler(response) {
+            vm.loading = false;
             if (response.status == 200) {
                 appService.alert('Successfully added.');
                 appService.moveTo();
+                return;
+            }
+            if (response.status == 401) {
+                appService.alert(response.status + ': Unauthorized.');
                 return;
             }
             appService.alert(response.data);

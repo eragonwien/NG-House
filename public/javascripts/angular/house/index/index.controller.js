@@ -10,6 +10,7 @@ function indexController(user, houses, message, houseService, userService, curre
     vm.contact = contact;
     vm.sendMail = sendMail;
     vm.bookmark = bookmark;
+    vm.loading = false;
     
     if (message) {
         appService.alert(message);
@@ -59,9 +60,11 @@ function indexController(user, houses, message, houseService, userService, curre
             subject: vm.agent.message.subject,
             text: text
         }
+        vm.loading = true;
         appService.sendMail(params).then(sendMailHandler);
 
         function sendMailHandler(response) {
+            vm.loading = false;
             if (response.status == 200) {
                 return appService.alert('Email is sent.');
             }
@@ -104,10 +107,12 @@ function indexController(user, houses, message, houseService, userService, curre
             user_id: vm.user.id,
             house_id: house.id
         }
+        vm.loading = true;
         bookmarkService.createBookmark(data).then(createBookmarkHandler);
         house.bookmark = true;
 
         function createBookmarkHandler(response) {
+            vm.loading = false;
             if (response.status == 200) {
                 return appService.alert('Bookmark added: Nr.' + response.data.insertId);
             }
@@ -120,9 +125,11 @@ function indexController(user, houses, message, houseService, userService, curre
      * @param {object} house house
      */
     function removeBookmark(house) {
+        vm.loading = true;
         bookmarkService.deleteBookmarkById(house.bookmark_id).then(deleteBookmarkHandler);
 
         function deleteBookmarkHandler(response) {
+            vm.loading = false;
             if (response.status == 200) {
                 house.bookmark = false;
                 return appService.alert('Bookmark removed');

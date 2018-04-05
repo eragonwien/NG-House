@@ -6,6 +6,7 @@ signupController.$inject = ['regions', 'userService', 'appService']
 function signupController(regions, userService, appService) {
     let vm = this;
     vm.signup = signup;
+    vm.loading = false;
 
     appService.initRegionAutocomplete(regions);
 
@@ -19,10 +20,12 @@ function signupController(regions, userService, appService) {
             return;
         }
         vm.user.postal_code_id = appService.getUserPostalCode(vm.user.region, regions);
+        vm.loading = true;
         userService.signup(vm.user).then(signupHandler);
 
         function signupHandler(response) {
             let status = response.status;
+            vm.loading = false;
             if (status == 200) {
                 appService.moveTo('login');
                 return;

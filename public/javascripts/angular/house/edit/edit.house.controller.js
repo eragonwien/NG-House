@@ -38,13 +38,19 @@ function editHouseController(user, house, regions, currencies, houseTypes, house
         }
         vm.editHouse.postal_code_id = appService.getUserPostalCode(vm.editHouse.region, regions);
         delete vm.editHouse.address_id;
+        vm.loading = true;
         houseService.updateHouse(vm.editHouse).then(updateHouseHandler);
 
         function updateHouseHandler(response) {
+            vm.loading = false;
             if (response.status == 200) {
                 
                 appService.alert('updated successfully.');
                 appService.moveTo('profile');
+                return;
+            }
+            if (response.status == 401) {
+                appService.alert(response.status + ': Unauthorized.');
                 return;
             }
             appService.alert('Error: ' + response.data);      

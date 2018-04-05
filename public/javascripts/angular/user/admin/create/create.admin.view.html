@@ -39,7 +39,7 @@
             <label class="active" for="user.house_number">Nr.</label>
         </div>
         <div class="col s12">
-            <button type="submit" class="waves-effect waves-light btn blue darken-4" ng-click="createAdmin.createAdmin(createAdminForm)">Create</button>
+            <button type="submit" class="waves-effect waves-light btn blue darken-4" ng-click="createAdmin.createAdmin(createAdminForm)" ng-disabled="createAdmin.loading">Create</button>
         </div>
     </div>
 </form>

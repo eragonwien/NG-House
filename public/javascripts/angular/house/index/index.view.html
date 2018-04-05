@@ -31,7 +31,7 @@
                     <a class="modal-trigger left" href="" data-target="contactAgentModal" ng-click="index.contact(house)">contact</a>
                     <form class="right">
                         <label>
-                            <input type="checkbox" ng-click="index.bookmark(house)" ng-model="house.bookmark">
+                            <input type="checkbox" ng-click="index.bookmark(house)" ng-model="house.bookmark" ng-disabled="index.loading">
                             <span>bookmark</span>                            
                         </label>
                     </form>
@@ -61,7 +61,7 @@
                     <label for="agent.message.content">Message</label>
                 </div>
                 <button class="modal-close btn-flat waves-effect waves-light right" data-target="contactAgentModal">close</button>                
-                <button class="modal-close btn waves-effect waves-light blue darken-4 right" type="submit" ng-click="index.sendMail(index.agent)">
+                <button class="modal-close btn waves-effect waves-light blue darken-4 right" type="submit" ng-click="index.sendMail(index.agent)" ng-disabled="index.loading">
                     <i class="material-icons left">send</i>Send
                 </button>
             </div>

@@ -31,6 +31,10 @@ function testController(appService, testService) {
                 }
                 return appService.alert(response.data.count + ' ' + test.type + 's created.');
             }
+            if (response.status == 401) {
+                appService.alert(response.status + ': Access denied, only admin allowed.');
+                return;
+            }
             appService.alert(response.status + ': ' + response.statusText);
         }
     }

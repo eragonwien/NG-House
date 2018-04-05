@@ -59,7 +59,7 @@
             <label class="active" for="newHouse.region">Region</label>
         </div>
         <div class="fixed-action-btn">
-            <button type="submit" class="btn-floating btn-large green" ng-click="createHouse.submit(houseAddingForm)">
+            <button type="submit" class="btn-floating btn-large green" ng-click="createHouse.submit(houseAddingForm)" ng-disabled="createHouse.loading">
                 <i class="large material-icons">save</i>
             </button>
         </div>
